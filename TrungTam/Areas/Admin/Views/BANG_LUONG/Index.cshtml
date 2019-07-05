@@ -23,10 +23,13 @@
             <tr>
                 <th class="nowrap">
                     <span class="mr-1">Mã Loại Lương</span>
-
                 </th>
                 <th>Loại Lương</th>
-                <th>Đơn Giá</th>
+                <th>
+                    Đơn Giá
+                    <i class="fa fa-arrow-up" id="SapXepTang"></i>
+                    <i class="fa fa-arrow-down" id="SapXepGiam"></i>
+                </th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
@@ -46,6 +49,7 @@
                     <td>
                         <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
                         <button id="btnDelete" type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })</button>
+                        <a href="/BangLuong/Delete"></a>
                     </td>
                 </tr>
             }

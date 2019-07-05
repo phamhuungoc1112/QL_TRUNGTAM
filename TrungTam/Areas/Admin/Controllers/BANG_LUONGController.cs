@@ -46,7 +46,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,SO_LUONG_MIN,SO_LUONG_MAX,DON_GIA")] BANG_LUONG bANG_LUONG)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Edit([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,SO_LUONG_MIN,SO_LUONG_MAX,DON_GIA")] BANG_LUONG bANG_LUONG)
         {
             if (ModelState.IsValid)
             {

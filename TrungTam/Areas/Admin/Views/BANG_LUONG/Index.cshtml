@@ -1,0 +1,109 @@
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_LUONG>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    @Html.ActionLink("Thêm Bảng Lương", "Create")
+</button>
+<div class="card-body">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+            <tr>
+                <th class="nowrap">
+                    <span class="mr-1">Mã Loại Lương</span>
+
+                </th>
+                <th>Loại Lương</th>
+                <th>Đơn Giá</th>
+                <th><em class="fa fa-cog"></em></th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MA_LOAI_LUONG)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TEN_LOAI)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DON_GIA)
+                    </td>
+                    <td>
+                        <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
+                        <button id="btnDelete" type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Lương</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã Bảng Lương">
+                        </div>
+
+                        <span class="sp-thongbao" id="tbMaNV"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Loại Lương ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Đơn Giá ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+
+
+                </form>
+                <div class="modal-footer" id="modal-footer">
+                    <button id="btnThemNV" type="button" class="btn btn-success">Thêm Bảng Lương</button>
+                    <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>

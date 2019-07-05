@@ -23,6 +23,7 @@ namespace TrungTam.Areas.Admin.Models
         public System.Guid MA_KM { get; set; }
         public string TEN_KM { get; set; }
         public Nullable<int> TIEN_GIAM { get; set; }
+        public Nullable<int> SO_MON_DK { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONG_NO> CONG_NO { get; set; }

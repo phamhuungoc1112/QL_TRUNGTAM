@@ -130,6 +130,8 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -202,6 +204,7 @@
     <Compile Include="Areas\Admin\Models\THOI_KHOA_BIEU.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2007,9 +2010,16 @@
     </Content>
     <Content Include="Areas\Admin\Views\BANG_LUONG\Create.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Details.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

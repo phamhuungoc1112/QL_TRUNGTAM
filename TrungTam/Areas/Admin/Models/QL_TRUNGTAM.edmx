@@ -129,6 +129,7 @@
           </Key>
           <Property Name="MA_KM" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_KM" Type="nvarchar" MaxLength="50" />
+          <Property Name="SO_MON_DK" Type="int" />
           <Property Name="TIEN_GIAM" Type="int" />
         </EntityType>
         <EntityType Name="LOAI_LOP">
@@ -779,6 +780,7 @@
           <Property Name="TEN_KM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TIEN_GIAM" Type="Int32" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_KHUYEN_MAI" FromRole="KHUYEN_MAI" ToRole="CONG_NO" />
+          <Property Name="SO_MON_DK" Type="Int32" />
         </EntityType>
         <EntityType Name="LOAI_LOP">
           <Key>
@@ -1357,6 +1359,7 @@
           <EntitySetMapping Name="KHUYEN_MAI">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.KHUYEN_MAI">
               <MappingFragment StoreEntitySet="KHUYEN_MAI">
+                <ScalarProperty Name="SO_MON_DK" ColumnName="SO_MON_DK" />
                 <ScalarProperty Name="MA_KM" ColumnName="MA_KM" />
                 <ScalarProperty Name="TEN_KM" ColumnName="TEN_KM" />
                 <ScalarProperty Name="TIEN_GIAM" ColumnName="TIEN_GIAM" />

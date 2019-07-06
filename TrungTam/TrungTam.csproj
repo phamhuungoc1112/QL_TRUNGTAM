@@ -131,6 +131,7 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
     <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
@@ -2020,6 +2021,11 @@
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Index.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />

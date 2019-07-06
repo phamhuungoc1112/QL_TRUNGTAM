@@ -1,0 +1,601 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="QL_TRUNGTAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="BANG_GIA_HOC_PHI">
+    <Key>
+      <PropertyRef Name="MA_KHOI" />
+      <PropertyRef Name="MA_MON" />
+      <PropertyRef Name="MA_LOAI" />
+    </Key>
+    <Property Name="MA_KHOI" Type="Guid" Nullable="false" />
+    <Property Name="MA_MON" Type="Guid" Nullable="false" />
+    <Property Name="MA_LOAI" Type="Guid" Nullable="false" />
+    <Property Name="DON_GIA" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="SO_BUOI" Type="Double" />
+    <NavigationProperty Name="KHOI_LOP" Relationship="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP" FromRole="BANG_GIA_HOC_PHI" ToRole="KHOI_LOP" />
+    <NavigationProperty Name="LOAI_LOP" Relationship="Self.FK_BANG_GIA_HOC_PHI_LOAI_LOP" FromRole="BANG_GIA_HOC_PHI" ToRole="LOAI_LOP" />
+    <NavigationProperty Name="MON_HOC" Relationship="Self.FK_BANG_GIA_HOC_PHI_MON_HOC" FromRole="BANG_GIA_HOC_PHI" ToRole="MON_HOC" />
+  </EntityType>
+  <EntityType Name="BANG_LUONG">
+    <Key>
+      <PropertyRef Name="MA_LOAI_LUONG" />
+    </Key>
+    <Property Name="MA_LOAI_LUONG" Type="Guid" Nullable="false" />
+    <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DON_GIA" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_BANG_LUONG" FromRole="BANG_LUONG" ToRole="BUOI_HOC" />
+    <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="BANG_LUONG" ToRole="NGOAI_GIO" />
+    <Property Name="SO_LUONG_MIN" Type="Int32" />
+    <Property Name="SO_LUONG_MAX" Type="Int32" />
+  </EntityType>
+  <EntityType Name="BUOI_HOC">
+    <Key>
+      <PropertyRef Name="MA_BUOI" />
+    </Key>
+    <Property Name="MA_BUOI" Type="Guid" Nullable="false" />
+    <Property Name="TEN_BUOI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="DIEM_DANH_GV" Type="Boolean" />
+    <Property Name="SI_SO_THUC" Type="Int32" />
+    <Property Name="MA_LUONG" Type="Guid" />
+    <Property Name="MA_LOP" Type="Guid" />
+    <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_BUOI_HOC_BANG_LUONG" FromRole="BUOI_HOC" ToRole="BANG_LUONG" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC" FromRole="BUOI_HOC" ToRole="LOP_HOC" />
+    <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_BUOI_HOC" FromRole="BUOI_HOC" ToRole="CT_BUOIHOC" />
+    <NavigationProperty Name="HOA_DON" Relationship="Self.CT_HOADON" FromRole="BUOI_HOC" ToRole="HOA_DON" />
+  </EntityType>
+  <EntityType Name="CONG_NO">
+    <Key>
+      <PropertyRef Name="MA_CONG_NO" />
+    </Key>
+    <Property Name="MA_CONG_NO" Type="Guid" Nullable="false" />
+    <Property Name="TEN_CONG_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TONG_TIEN" Type="Decimal" Precision="19" Scale="4" />
+    <Property Name="NGAY_THANH_TOAN" Type="DateTime" Precision="3" />
+    <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MA_KM" Type="Guid" />
+    <NavigationProperty Name="HOC_SINH" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="CONG_NO" ToRole="HOC_SINH" />
+    <NavigationProperty Name="KHUYEN_MAI" Relationship="Self.FK_CONG_NO_KHUYEN_MAI" FromRole="CONG_NO" ToRole="KHUYEN_MAI" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.CT_CONG_NO" FromRole="CONG_NO" ToRole="LOP_HOC" />
+  </EntityType>
+  <EntityType Name="CT_BUOIHOC">
+    <Key>
+      <PropertyRef Name="MA_BUOI" />
+      <PropertyRef Name="MA_HS" />
+    </Key>
+    <Property Name="MA_BUOI" Type="Guid" Nullable="false" />
+    <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="DIEM_DANH_HS" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="NHAN_XET_GV" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+    <Property Name="BAI_TAP_VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_CT_BUOIHOC_BUOI_HOC" FromRole="CT_BUOIHOC" ToRole="BUOI_HOC" />
+    <NavigationProperty Name="HOC_SINH" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="CT_BUOIHOC" ToRole="HOC_SINH" />
+  </EntityType>
+  <EntityType Name="GIAO_VIEN">
+    <Key>
+      <PropertyRef Name="MA_GV" />
+    </Key>
+    <Property Name="MA_GV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="HO_TEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="GIOI_TINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="NG_SINH" Type="DateTime" Precision="0" />
+    <NavigationProperty Name="HOA_DON" Relationship="Self.FK_HOA_DON_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="HOA_DON" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="LOP_HOC" />
+    <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="NGOAI_GIO" />
+    <NavigationProperty Name="TAI_KHOAN" Relationship="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN" FromRole="GIAO_VIEN" ToRole="TAI_KHOAN" />
+  </EntityType>
+  <EntityType Name="HOA_DON">
+    <Key>
+      <PropertyRef Name="MA_HD" />
+    </Key>
+    <Property Name="MA_HD" Type="Guid" Nullable="false" />
+    <Property Name="TEN_HD" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="MA_GV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="NGAY_THANH_TOAN" Type="DateTime" Precision="3" />
+    <Property Name="TONG_TIEN" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_HOA_DON_GIAO_VIEN" FromRole="HOA_DON" ToRole="GIAO_VIEN" />
+    <NavigationProperty Name="BUOI_HOC" Relationship="Self.CT_HOADON" FromRole="HOA_DON" ToRole="BUOI_HOC" />
+  </EntityType>
+  <EntityType Name="HOC_SINH">
+    <Key>
+      <PropertyRef Name="MA_HS" />
+    </Key>
+    <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="HO_TEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="KHOI" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+    <Property Name="TRUONG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+    <Property Name="PHU_HUYNH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="HOC_SINH" ToRole="CONG_NO" />
+    <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_BUOIHOC" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.CT_LOP" FromRole="HOC_SINH" ToRole="LOP_HOC" />
+    <NavigationProperty Name="TAI_KHOAN" Relationship="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN" FromRole="HOC_SINH" ToRole="TAI_KHOAN" />
+  </EntityType>
+  <EntityType Name="KHOI_LOP">
+    <Key>
+      <PropertyRef Name="MA_KHOI" />
+    </Key>
+    <Property Name="MA_KHOI" Type="Guid" Nullable="false" />
+    <Property Name="TEN_KHOI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BANG_GIA_HOC_PHI" Relationship="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP" FromRole="KHOI_LOP" ToRole="BANG_GIA_HOC_PHI" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_KHOI_LOP" FromRole="KHOI_LOP" ToRole="LOP_HOC" />
+  </EntityType>
+  <EntityType Name="KHUYEN_MAI">
+    <Key>
+      <PropertyRef Name="MA_KM" />
+    </Key>
+    <Property Name="MA_KM" Type="Guid" Nullable="false" />
+    <Property Name="TEN_KM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="TIEN_GIAM" Type="Int32" />
+    <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_KHUYEN_MAI" FromRole="KHUYEN_MAI" ToRole="CONG_NO" />
+    <Property Name="SO_MON_DK" Type="Int32" />
+  </EntityType>
+  <EntityType Name="LOAI_LOP">
+    <Key>
+      <PropertyRef Name="MA_LOAI" />
+    </Key>
+    <Property Name="MA_LOAI" Type="Guid" Nullable="false" />
+    <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BANG_GIA_HOC_PHI" Relationship="Self.FK_BANG_GIA_HOC_PHI_LOAI_LOP" FromRole="LOAI_LOP" ToRole="BANG_GIA_HOC_PHI" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_LOAI_LOP1" FromRole="LOAI_LOP" ToRole="LOP_HOC" />
+  </EntityType>
+  <EntityType Name="LOP_HOC">
+    <Key>
+      <PropertyRef Name="MA_LOP" />
+    </Key>
+    <Property Name="MA_LOP" Type="Guid" Nullable="false" />
+    <Property Name="TEN_LOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="MA_LOAI" Type="Guid" />
+    <Property Name="MA_MON" Type="Guid" />
+    <Property Name="MA_KHOI" Type="Guid" />
+    <Property Name="MA_GV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC" FromRole="LOP_HOC" ToRole="BUOI_HOC" />
+    <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="LOP_HOC" ToRole="GIAO_VIEN" />
+    <NavigationProperty Name="KHOI_LOP" Relationship="Self.FK_LOP_HOC_KHOI_LOP" FromRole="LOP_HOC" ToRole="KHOI_LOP" />
+    <NavigationProperty Name="LOAI_LOP" Relationship="Self.FK_LOP_HOC_LOAI_LOP1" FromRole="LOP_HOC" ToRole="LOAI_LOP" />
+    <NavigationProperty Name="MON_HOC" Relationship="Self.FK_LOP_HOC_MON_HOC" FromRole="LOP_HOC" ToRole="MON_HOC" />
+    <NavigationProperty Name="THOI_KHOA_BIEU" Relationship="Self.FK_THOI_KHOA_BIEU_LOP_HOC" FromRole="LOP_HOC" ToRole="THOI_KHOA_BIEU" />
+    <NavigationProperty Name="CONG_NO" Relationship="Self.CT_CONG_NO" FromRole="LOP_HOC" ToRole="CONG_NO" />
+    <NavigationProperty Name="HOC_SINH" Relationship="Self.CT_LOP" FromRole="LOP_HOC" ToRole="HOC_SINH" />
+    <Property Name="SI_SO" Type="Int32" />
+  </EntityType>
+  <EntityType Name="MON_HOC">
+    <Key>
+      <PropertyRef Name="MA_MON" />
+    </Key>
+    <Property Name="MA_MON" Type="Guid" Nullable="false" />
+    <Property Name="TEN_MON" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="BANG_GIA_HOC_PHI" Relationship="Self.FK_BANG_GIA_HOC_PHI_MON_HOC" FromRole="MON_HOC" ToRole="BANG_GIA_HOC_PHI" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_MON_HOC" FromRole="MON_HOC" ToRole="LOP_HOC" />
+  </EntityType>
+  <EntityType Name="NGOAI_GIO">
+    <Key>
+      <PropertyRef Name="MA_LUONG" />
+      <PropertyRef Name="MA_GV" />
+    </Key>
+    <Property Name="MA_LUONG" Type="Guid" Nullable="false" />
+    <Property Name="MA_GV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="NGAY_LAM" Type="DateTime" Precision="3" />
+    <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="NGOAI_GIO" ToRole="BANG_LUONG" />
+    <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="NGOAI_GIO" ToRole="GIAO_VIEN" />
+  </EntityType>
+  <EntityType Name="sysdiagram">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="TAI_KHOAN">
+    <Key>
+      <PropertyRef Name="TAI_KHOAN1" />
+    </Key>
+    <Property Name="TAI_KHOAN1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
+    <Property Name="MAT_KHAU" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="GIAO_VIEN" Relationship="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="GIAO_VIEN" />
+    <NavigationProperty Name="HOC_SINH" Relationship="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="HOC_SINH" />
+  </EntityType>
+  <EntityType Name="THOI_KHOA_BIEU">
+    <Key>
+      <PropertyRef Name="MA_LOP" />
+      <PropertyRef Name="THU" />
+      <PropertyRef Name="THOI_GIAN_BD" />
+    </Key>
+    <Property Name="MA_LOP" Type="Guid" Nullable="false" />
+    <Property Name="THU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="THOI_GIAN_BD" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="THOI_GIAN_KT" Type="Time" Precision="7" />
+    <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_THOI_KHOA_BIEU_LOP_HOC" FromRole="THOI_KHOA_BIEU" ToRole="LOP_HOC" />
+  </EntityType>
+  <Association Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP">
+    <End Role="KHOI_LOP" Type="Self.KHOI_LOP" Multiplicity="1" />
+    <End Role="BANG_GIA_HOC_PHI" Type="Self.BANG_GIA_HOC_PHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHOI_LOP">
+        <PropertyRef Name="MA_KHOI" />
+      </Principal>
+      <Dependent Role="BANG_GIA_HOC_PHI">
+        <PropertyRef Name="MA_KHOI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BANG_GIA_HOC_PHI_LOAI_LOP">
+    <End Role="LOAI_LOP" Type="Self.LOAI_LOP" Multiplicity="1" />
+    <End Role="BANG_GIA_HOC_PHI" Type="Self.BANG_GIA_HOC_PHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAI_LOP">
+        <PropertyRef Name="MA_LOAI" />
+      </Principal>
+      <Dependent Role="BANG_GIA_HOC_PHI">
+        <PropertyRef Name="MA_LOAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BANG_GIA_HOC_PHI_MON_HOC">
+    <End Role="MON_HOC" Type="Self.MON_HOC" Multiplicity="1" />
+    <End Role="BANG_GIA_HOC_PHI" Type="Self.BANG_GIA_HOC_PHI" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MON_HOC">
+        <PropertyRef Name="MA_MON" />
+      </Principal>
+      <Dependent Role="BANG_GIA_HOC_PHI">
+        <PropertyRef Name="MA_MON" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BUOI_HOC_BANG_LUONG">
+    <End Role="BANG_LUONG" Type="Self.BANG_LUONG" Multiplicity="0..1" />
+    <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANG_LUONG">
+        <PropertyRef Name="MA_LOAI_LUONG" />
+      </Principal>
+      <Dependent Role="BUOI_HOC">
+        <PropertyRef Name="MA_LUONG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NGOAI_GIO_BANG_LUONG">
+    <End Role="BANG_LUONG" Type="Self.BANG_LUONG" Multiplicity="1" />
+    <End Role="NGOAI_GIO" Type="Self.NGOAI_GIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BANG_LUONG">
+        <PropertyRef Name="MA_LOAI_LUONG" />
+      </Principal>
+      <Dependent Role="NGOAI_GIO">
+        <PropertyRef Name="MA_LUONG" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_BUOI_HOC_LOP_HOC">
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="0..1" />
+    <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP_HOC">
+        <PropertyRef Name="MA_LOP" />
+      </Principal>
+      <Dependent Role="BUOI_HOC">
+        <PropertyRef Name="MA_LOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CT_BUOIHOC_BUOI_HOC">
+    <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="1" />
+    <End Role="CT_BUOIHOC" Type="Self.CT_BUOIHOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BUOI_HOC">
+        <PropertyRef Name="MA_BUOI" />
+      </Principal>
+      <Dependent Role="CT_BUOIHOC">
+        <PropertyRef Name="MA_BUOI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONG_NO_HOC_SINH">
+    <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="1" />
+    <End Role="CONG_NO" Type="Self.CONG_NO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HOC_SINH">
+        <PropertyRef Name="MA_HS" />
+      </Principal>
+      <Dependent Role="CONG_NO">
+        <PropertyRef Name="MA_HS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CONG_NO_KHUYEN_MAI">
+    <End Role="KHUYEN_MAI" Type="Self.KHUYEN_MAI" Multiplicity="0..1" />
+    <End Role="CONG_NO" Type="Self.CONG_NO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHUYEN_MAI">
+        <PropertyRef Name="MA_KM" />
+      </Principal>
+      <Dependent Role="CONG_NO">
+        <PropertyRef Name="MA_KM" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_CT_BUOIHOC_HOC_SINH">
+    <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="1" />
+    <End Role="CT_BUOIHOC" Type="Self.CT_BUOIHOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="HOC_SINH">
+        <PropertyRef Name="MA_HS" />
+      </Principal>
+      <Dependent Role="CT_BUOIHOC">
+        <PropertyRef Name="MA_HS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOA_DON_GIAO_VIEN">
+    <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="1" />
+    <End Role="HOA_DON" Type="Self.HOA_DON" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GIAO_VIEN">
+        <PropertyRef Name="MA_GV" />
+      </Principal>
+      <Dependent Role="HOA_DON">
+        <PropertyRef Name="MA_GV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_HOC_GIAO_VIEN">
+    <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="1" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GIAO_VIEN">
+        <PropertyRef Name="MA_GV" />
+      </Principal>
+      <Dependent Role="LOP_HOC">
+        <PropertyRef Name="MA_GV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_NGOAI_GIO_GIAO_VIEN">
+    <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="1" />
+    <End Role="NGOAI_GIO" Type="Self.NGOAI_GIO" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GIAO_VIEN">
+        <PropertyRef Name="MA_GV" />
+      </Principal>
+      <Dependent Role="NGOAI_GIO">
+        <PropertyRef Name="MA_GV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_HOC_KHOI_LOP">
+    <End Role="KHOI_LOP" Type="Self.KHOI_LOP" Multiplicity="0..1" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="KHOI_LOP">
+        <PropertyRef Name="MA_KHOI" />
+      </Principal>
+      <Dependent Role="LOP_HOC">
+        <PropertyRef Name="MA_KHOI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_HOC_LOAI_LOP1">
+    <End Role="LOAI_LOP" Type="Self.LOAI_LOP" Multiplicity="0..1" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOAI_LOP">
+        <PropertyRef Name="MA_LOAI" />
+      </Principal>
+      <Dependent Role="LOP_HOC">
+        <PropertyRef Name="MA_LOAI" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LOP_HOC_MON_HOC">
+    <End Role="MON_HOC" Type="Self.MON_HOC" Multiplicity="0..1" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="MON_HOC">
+        <PropertyRef Name="MA_MON" />
+      </Principal>
+      <Dependent Role="LOP_HOC">
+        <PropertyRef Name="MA_MON" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_THOI_KHOA_BIEU_LOP_HOC">
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="1" />
+    <End Role="THOI_KHOA_BIEU" Type="Self.THOI_KHOA_BIEU" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LOP_HOC">
+        <PropertyRef Name="MA_LOP" />
+      </Principal>
+      <Dependent Role="THOI_KHOA_BIEU">
+        <PropertyRef Name="MA_LOP" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CT_CONG_NO">
+    <End Role="CONG_NO" Type="Self.CONG_NO" Multiplicity="*" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+  </Association>
+  <Association Name="CT_HOADON">
+    <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="*" />
+    <End Role="HOA_DON" Type="Self.HOA_DON" Multiplicity="*" />
+  </Association>
+  <Association Name="CT_LOP">
+    <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="*" />
+    <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="QL_TRUNGTAMEntities1" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" />
+    <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" />
+    <EntitySet Name="BUOI_HOC" EntityType="Self.BUOI_HOC" />
+    <EntitySet Name="CONG_NO" EntityType="Self.CONG_NO" />
+    <EntitySet Name="CT_BUOIHOC" EntityType="Self.CT_BUOIHOC" />
+    <EntitySet Name="GIAO_VIEN" EntityType="Self.GIAO_VIEN" />
+    <EntitySet Name="HOA_DON" EntityType="Self.HOA_DON" />
+    <EntitySet Name="HOC_SINH" EntityType="Self.HOC_SINH" />
+    <EntitySet Name="KHOI_LOP" EntityType="Self.KHOI_LOP" />
+    <EntitySet Name="KHUYEN_MAI" EntityType="Self.KHUYEN_MAI" />
+    <EntitySet Name="LOAI_LOP" EntityType="Self.LOAI_LOP" />
+    <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" />
+    <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" />
+    <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+    <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
+    <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" />
+    <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
+      <End Role="KHOI_LOP" EntitySet="KHOI_LOP" />
+      <End Role="BANG_GIA_HOC_PHI" EntitySet="BANG_GIA_HOC_PHI" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BANG_GIA_HOC_PHI_LOAI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_LOAI_LOP">
+      <End Role="LOAI_LOP" EntitySet="LOAI_LOP" />
+      <End Role="BANG_GIA_HOC_PHI" EntitySet="BANG_GIA_HOC_PHI" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BANG_GIA_HOC_PHI_MON_HOC" Association="Self.FK_BANG_GIA_HOC_PHI_MON_HOC">
+      <End Role="MON_HOC" EntitySet="MON_HOC" />
+      <End Role="BANG_GIA_HOC_PHI" EntitySet="BANG_GIA_HOC_PHI" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BUOI_HOC_BANG_LUONG" Association="Self.FK_BUOI_HOC_BANG_LUONG">
+      <End Role="BANG_LUONG" EntitySet="BANG_LUONG" />
+      <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NGOAI_GIO_BANG_LUONG" Association="Self.FK_NGOAI_GIO_BANG_LUONG">
+      <End Role="BANG_LUONG" EntitySet="BANG_LUONG" />
+      <End Role="NGOAI_GIO" EntitySet="NGOAI_GIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_BUOI_HOC_LOP_HOC" Association="Self.FK_BUOI_HOC_LOP_HOC">
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+      <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CT_BUOIHOC_BUOI_HOC" Association="Self.FK_CT_BUOIHOC_BUOI_HOC">
+      <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
+      <End Role="CT_BUOIHOC" EntitySet="CT_BUOIHOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONG_NO_HOC_SINH" Association="Self.FK_CONG_NO_HOC_SINH">
+      <End Role="HOC_SINH" EntitySet="HOC_SINH" />
+      <End Role="CONG_NO" EntitySet="CONG_NO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CONG_NO_KHUYEN_MAI" Association="Self.FK_CONG_NO_KHUYEN_MAI">
+      <End Role="KHUYEN_MAI" EntitySet="KHUYEN_MAI" />
+      <End Role="CONG_NO" EntitySet="CONG_NO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_CT_BUOIHOC_HOC_SINH" Association="Self.FK_CT_BUOIHOC_HOC_SINH">
+      <End Role="HOC_SINH" EntitySet="HOC_SINH" />
+      <End Role="CT_BUOIHOC" EntitySet="CT_BUOIHOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOA_DON_GIAO_VIEN" Association="Self.FK_HOA_DON_GIAO_VIEN">
+      <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
+      <End Role="HOA_DON" EntitySet="HOA_DON" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_HOC_GIAO_VIEN" Association="Self.FK_LOP_HOC_GIAO_VIEN">
+      <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_NGOAI_GIO_GIAO_VIEN" Association="Self.FK_NGOAI_GIO_GIAO_VIEN">
+      <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
+      <End Role="NGOAI_GIO" EntitySet="NGOAI_GIO" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_HOC_KHOI_LOP" Association="Self.FK_LOP_HOC_KHOI_LOP">
+      <End Role="KHOI_LOP" EntitySet="KHOI_LOP" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_HOC_LOAI_LOP1" Association="Self.FK_LOP_HOC_LOAI_LOP1">
+      <End Role="LOAI_LOP" EntitySet="LOAI_LOP" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LOP_HOC_MON_HOC" Association="Self.FK_LOP_HOC_MON_HOC">
+      <End Role="MON_HOC" EntitySet="MON_HOC" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="FK_THOI_KHOA_BIEU_LOP_HOC" Association="Self.FK_THOI_KHOA_BIEU_LOP_HOC">
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+      <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
+    </AssociationSet>
+    <AssociationSet Name="CT_CONG_NO" Association="Self.CT_CONG_NO">
+      <End Role="CONG_NO" EntitySet="CONG_NO" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <AssociationSet Name="CT_HOADON" Association="Self.CT_HOADON">
+      <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
+      <End Role="HOA_DON" EntitySet="HOA_DON" />
+    </AssociationSet>
+    <AssociationSet Name="CT_LOP" Association="Self.CT_LOP">
+      <End Role="HOC_SINH" EntitySet="HOC_SINH" />
+      <End Role="LOP_HOC" EntitySet="LOP_HOC" />
+    </AssociationSet>
+    <FunctionImport Name="sp_alterdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_creatediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="version" Mode="In" Type="Int32" />
+      <Parameter Name="definition" Mode="In" Type="Binary" />
+    </FunctionImport>
+    <FunctionImport Name="sp_dropdiagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagrams_Result)">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_renamediagram">
+      <Parameter Name="diagramname" Mode="In" Type="String" />
+      <Parameter Name="owner_id" Mode="In" Type="Int32" />
+      <Parameter Name="new_diagramname" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_upgraddiagrams" />
+    <AssociationSet Name="FK_GIAO_VIEN_TAI_KHOAN" Association="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN">
+      <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
+      <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
+    </AssociationSet>
+    <AssociationSet Name="FK_HOC_SINH_TAI_KHOAN" Association="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN">
+      <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
+      <End Role="HOC_SINH" EntitySet="HOC_SINH" />
+    </AssociationSet>
+  </EntityContainer>
+  <ComplexType Name="sp_helpdiagramdefinition_Result">
+    <Property Type="Int32" Name="version" Nullable="true" />
+    <Property Type="Binary" Name="definition" Nullable="true" />
+  </ComplexType>
+  <ComplexType Name="sp_helpdiagrams_Result">
+    <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
+    <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
+    <Property Type="Int32" Name="ID" Nullable="false" />
+    <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
+    <Property Type="Int32" Name="OwnerID" Nullable="false" />
+  </ComplexType>
+  <Association Name="FK_GIAO_VIEN_TAI_KHOAN">
+    <End Type="QL_TRUNGTAMModel.TAI_KHOAN" Role="TAI_KHOAN" Multiplicity="1" />
+    <End Type="QL_TRUNGTAMModel.GIAO_VIEN" Role="GIAO_VIEN" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TAI_KHOAN">
+        <PropertyRef Name="TAI_KHOAN1" />
+      </Principal>
+      <Dependent Role="GIAO_VIEN">
+        <PropertyRef Name="MA_GV" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_HOC_SINH_TAI_KHOAN">
+    <End Type="QL_TRUNGTAMModel.TAI_KHOAN" Role="TAI_KHOAN" Multiplicity="1" />
+    <End Type="QL_TRUNGTAMModel.HOC_SINH" Role="HOC_SINH" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="TAI_KHOAN">
+        <PropertyRef Name="TAI_KHOAN1" />
+      </Principal>
+      <Dependent Role="HOC_SINH">
+        <PropertyRef Name="MA_HS" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

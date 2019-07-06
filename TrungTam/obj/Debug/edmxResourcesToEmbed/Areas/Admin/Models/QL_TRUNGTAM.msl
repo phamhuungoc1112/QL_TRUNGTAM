@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="QL_TRUNGTAMModelStoreContainer" CdmEntityContainer="QL_TRUNGTAMEntities1">
+    <EntitySetMapping Name="BANG_GIA_HOC_PHI">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BANG_GIA_HOC_PHI">
+        <MappingFragment StoreEntitySet="BANG_GIA_HOC_PHI">
+          <ScalarProperty Name="MA_KHOI" ColumnName="MA_KHOI" />
+          <ScalarProperty Name="MA_MON" ColumnName="MA_MON" />
+          <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
+          <ScalarProperty Name="DON_GIA" ColumnName="DON_GIA" />
+          <ScalarProperty Name="SO_BUOI" ColumnName="SO_BUOI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BANG_LUONG">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BANG_LUONG">
+        <MappingFragment StoreEntitySet="BANG_LUONG">
+          <ScalarProperty Name="SO_LUONG_MAX" ColumnName="SO_LUONG_MAX" />
+          <ScalarProperty Name="SO_LUONG_MIN" ColumnName="SO_LUONG_MIN" />
+          <ScalarProperty Name="MA_LOAI_LUONG" ColumnName="MA_LOAI_LUONG" />
+          <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
+          <ScalarProperty Name="DON_GIA" ColumnName="DON_GIA" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BUOI_HOC">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BUOI_HOC">
+        <MappingFragment StoreEntitySet="BUOI_HOC">
+          <ScalarProperty Name="MA_BUOI" ColumnName="MA_BUOI" />
+          <ScalarProperty Name="TEN_BUOI" ColumnName="TEN_BUOI" />
+          <ScalarProperty Name="DIEM_DANH_GV" ColumnName="DIEM_DANH_GV" />
+          <ScalarProperty Name="SI_SO_THUC" ColumnName="SI_SO_THUC" />
+          <ScalarProperty Name="MA_LUONG" ColumnName="MA_LUONG" />
+          <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONG_NO">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.CONG_NO">
+        <MappingFragment StoreEntitySet="CONG_NO">
+          <ScalarProperty Name="MA_CONG_NO" ColumnName="MA_CONG_NO" />
+          <ScalarProperty Name="TEN_CONG_NO" ColumnName="TEN_CONG_NO" />
+          <ScalarProperty Name="TONG_TIEN" ColumnName="TONG_TIEN" />
+          <ScalarProperty Name="NGAY_THANH_TOAN" ColumnName="NGAY_THANH_TOAN" />
+          <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
+          <ScalarProperty Name="MA_KM" ColumnName="MA_KM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CT_BUOIHOC">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.CT_BUOIHOC">
+        <MappingFragment StoreEntitySet="CT_BUOIHOC">
+          <ScalarProperty Name="MA_BUOI" ColumnName="MA_BUOI" />
+          <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
+          <ScalarProperty Name="DIEM_DANH_HS" ColumnName="DIEM_DANH_HS" />
+          <ScalarProperty Name="NHAN_XET_GV" ColumnName="NHAN_XET_GV" />
+          <ScalarProperty Name="BAI_TAP_VN" ColumnName="BAI_TAP_VN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="GIAO_VIEN">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.GIAO_VIEN">
+        <MappingFragment StoreEntitySet="GIAO_VIEN">
+          <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
+          <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="GIOI_TINH" ColumnName="GIOI_TINH" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+          <ScalarProperty Name="NG_SINH" ColumnName="NG_SINH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HOA_DON">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.HOA_DON">
+        <MappingFragment StoreEntitySet="HOA_DON">
+          <ScalarProperty Name="MA_HD" ColumnName="MA_HD" />
+          <ScalarProperty Name="TEN_HD" ColumnName="TEN_HD" />
+          <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
+          <ScalarProperty Name="NGAY_THANH_TOAN" ColumnName="NGAY_THANH_TOAN" />
+          <ScalarProperty Name="TONG_TIEN" ColumnName="TONG_TIEN" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="HOC_SINH">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.HOC_SINH">
+        <MappingFragment StoreEntitySet="HOC_SINH">
+          <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
+          <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
+          <ScalarProperty Name="KHOI" ColumnName="KHOI" />
+          <ScalarProperty Name="TRUONG" ColumnName="TRUONG" />
+          <ScalarProperty Name="SDT" ColumnName="SDT" />
+          <ScalarProperty Name="PHU_HUYNH" ColumnName="PHU_HUYNH" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHOI_LOP">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.KHOI_LOP">
+        <MappingFragment StoreEntitySet="KHOI_LOP">
+          <ScalarProperty Name="MA_KHOI" ColumnName="MA_KHOI" />
+          <ScalarProperty Name="TEN_KHOI" ColumnName="TEN_KHOI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="KHUYEN_MAI">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.KHUYEN_MAI">
+        <MappingFragment StoreEntitySet="KHUYEN_MAI">
+          <ScalarProperty Name="SO_MON_DK" ColumnName="SO_MON_DK" />
+          <ScalarProperty Name="MA_KM" ColumnName="MA_KM" />
+          <ScalarProperty Name="TEN_KM" ColumnName="TEN_KM" />
+          <ScalarProperty Name="TIEN_GIAM" ColumnName="TIEN_GIAM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOAI_LOP">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOAI_LOP">
+        <MappingFragment StoreEntitySet="LOAI_LOP">
+          <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
+          <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LOP_HOC">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOP_HOC">
+        <MappingFragment StoreEntitySet="LOP_HOC">
+          <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
+          <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+          <ScalarProperty Name="TEN_LOP" ColumnName="TEN_LOP" />
+          <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
+          <ScalarProperty Name="MA_MON" ColumnName="MA_MON" />
+          <ScalarProperty Name="MA_KHOI" ColumnName="MA_KHOI" />
+          <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MON_HOC">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.MON_HOC">
+        <MappingFragment StoreEntitySet="MON_HOC">
+          <ScalarProperty Name="MA_MON" ColumnName="MA_MON" />
+          <ScalarProperty Name="TEN_MON" ColumnName="TEN_MON" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="NGOAI_GIO">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.NGOAI_GIO">
+        <MappingFragment StoreEntitySet="NGOAI_GIO">
+          <ScalarProperty Name="MA_LUONG" ColumnName="MA_LUONG" />
+          <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
+          <ScalarProperty Name="NGAY_LAM" ColumnName="NGAY_LAM" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="sysdiagrams">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagram">
+        <MappingFragment StoreEntitySet="sysdiagrams">
+          <ScalarProperty Name="name" ColumnName="name" />
+          <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+          <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TAI_KHOAN">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.TAI_KHOAN">
+        <MappingFragment StoreEntitySet="TAI_KHOAN">
+          <ScalarProperty Name="TAI_KHOAN1" ColumnName="TAI_KHOAN" />
+          <ScalarProperty Name="MAT_KHAU" ColumnName="MAT_KHAU" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="THOI_KHOA_BIEU">
+      <EntityTypeMapping TypeName="QL_TRUNGTAMModel.THOI_KHOA_BIEU">
+        <MappingFragment StoreEntitySet="THOI_KHOA_BIEU">
+          <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+          <ScalarProperty Name="THU" ColumnName="THU" />
+          <ScalarProperty Name="THOI_GIAN_BD" ColumnName="THOI_GIAN_BD" />
+          <ScalarProperty Name="THOI_GIAN_KT" ColumnName="THOI_GIAN_KT" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="CT_CONG_NO" TypeName="QL_TRUNGTAMModel.CT_CONG_NO" StoreEntitySet="CT_CONG_NO">
+      <EndProperty Name="CONG_NO">
+        <ScalarProperty Name="MA_CONG_NO" ColumnName="MA_CONG_NO" />
+      </EndProperty>
+      <EndProperty Name="LOP_HOC">
+        <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CT_HOADON" TypeName="QL_TRUNGTAMModel.CT_HOADON" StoreEntitySet="CT_HOADON">
+      <EndProperty Name="BUOI_HOC">
+        <ScalarProperty Name="MA_BUOI" ColumnName="MA_BUOI" />
+      </EndProperty>
+      <EndProperty Name="HOA_DON">
+        <ScalarProperty Name="MA_HD" ColumnName="MA_HD" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="CT_LOP" TypeName="QL_TRUNGTAMModel.CT_LOP" StoreEntitySet="CT_LOP">
+      <EndProperty Name="HOC_SINH">
+        <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
+      </EndProperty>
+      <EndProperty Name="LOP_HOC">
+        <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_alterdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_creatediagram" />
+    <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_dropdiagram" />
+    <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagramdefinition">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result">
+          <ScalarProperty Name="version" ColumnName="version" />
+          <ScalarProperty Name="definition" ColumnName="definition" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagrams">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagrams_Result">
+          <ScalarProperty Name="Database" ColumnName="Database" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="Owner" ColumnName="Owner" />
+          <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_renamediagram" />
+    <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_upgraddiagrams" />
+  </EntityContainerMapping>
+</Mapping>

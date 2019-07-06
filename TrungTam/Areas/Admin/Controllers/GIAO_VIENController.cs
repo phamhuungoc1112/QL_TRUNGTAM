@@ -46,7 +46,7 @@ namespace TrungTam.Areas.Admin.Controllers
                     gIAO_VIEN.MA_GV = ma.ToString();
                 }
                 db.GIAO_VIEN.Add(gIAO_VIEN);
-                bASE.create_TAI_KHOAN(gIAO_VIEN.MA_GV, gIAO_VIEN.HO_TEN);
+                bASE.create_TAI_KHOAN(gIAO_VIEN.MA_GV);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

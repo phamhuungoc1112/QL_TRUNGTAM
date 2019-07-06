@@ -8,7 +8,7 @@ namespace TrungTam.Function_Base
     public class BASE
     {
         QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
-        public void create_TAI_KHOAN(string tk, string hoten)
+        public void create_TAI_KHOAN(string tk)
         {
             TAI_KHOAN tAI_KHOAN = new TAI_KHOAN();
             tAI_KHOAN.TAI_KHOAN1 = tk;

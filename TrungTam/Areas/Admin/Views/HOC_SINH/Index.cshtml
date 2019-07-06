@@ -1,0 +1,64 @@
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.HOC_SINH>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HO_TEN)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.KHOI)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TRUONG)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SDT)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PHU_HUYNH)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TAI_KHOAN.TAI_KHOAN1)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HO_TEN)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.KHOI)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TRUONG)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SDT)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PHU_HUYNH)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TAI_KHOAN.TAI_KHOAN1)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MA_HS }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MA_HS }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MA_HS })
+        </td>
+    </tr>
+}
+
+</table>

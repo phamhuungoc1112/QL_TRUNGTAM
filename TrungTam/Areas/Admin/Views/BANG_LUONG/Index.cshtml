@@ -21,9 +21,6 @@
     <table class="table table-bordered table-hover myTable">
         <thead class="text-primary">
             <tr>
-                <th class="nowrap">
-                    <span class="mr-1">Mã Loại Lương</span>
-                </th>
                 <th>Loại Lương</th>
                 <th>
                     Đơn Giá
@@ -38,13 +35,10 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MA_LOAI_LUONG)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.TEN_LOAI)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DON_GIA)
+                        @Html.FormatValue(@Html.DisplayFor(modelItem => item.DON_GIA),"{0:c}")
                     </td>
                     <td>
                         <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>

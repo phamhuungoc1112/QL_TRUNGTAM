@@ -29,7 +29,6 @@ namespace TrungTam.Areas.Admin.Models
         public Nullable<System.Guid> MA_MON { get; set; }
         public Nullable<System.Guid> MA_KHOI { get; set; }
         public string MA_GV { get; set; }
-        public Nullable<int> SI_SO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }

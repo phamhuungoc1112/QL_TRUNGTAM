@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BANG_GIA_HOC_PHI">
           <Key>
             <PropertyRef Name="MA_KHOI" />
@@ -23,8 +23,8 @@
           </Key>
           <Property Name="MA_LOAI_LUONG" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_LOAI" Type="nvarchar" MaxLength="50" />
-          <Property Name="SO_LUONG_MIN" Type="int" />
-          <Property Name="SO_LUONG_MAX" Type="int" />
+          <Property Name="SO_LUONG_MIN" Type="nchar" MaxLength="10" />
+          <Property Name="SOLUONG_MAX" Type="nchar" MaxLength="10" />
           <Property Name="DON_GIA" Type="money" />
         </EntityType>
         <EntityType Name="BUOI_HOC">
@@ -144,7 +144,6 @@
           </Key>
           <Property Name="MA_LOP" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_LOP" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="SI_SO" Type="int" />
           <Property Name="MA_LOAI" Type="uniqueidentifier" />
           <Property Name="MA_MON" Type="uniqueidentifier" />
           <Property Name="MA_KHOI" Type="uniqueidentifier" />
@@ -494,37 +493,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QL_TRUNGTAMModelStoreContainer">
           <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" Schema="dbo" store:Type="Tables" />
@@ -647,7 +615,8 @@
             <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QL_TRUNGTAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -672,11 +641,11 @@
           </Key>
           <Property Name="MA_LOAI_LUONG" Type="Guid" Nullable="false" />
           <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SO_LUONG_MIN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SOLUONG_MAX" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="DON_GIA" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_BANG_LUONG" FromRole="BANG_LUONG" ToRole="BUOI_HOC" />
           <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="BANG_LUONG" ToRole="NGOAI_GIO" />
-          <Property Name="SO_LUONG_MIN" Type="Int32" />
-          <Property Name="SO_LUONG_MAX" Type="Int32" />
         </EntityType>
         <EntityType Name="BUOI_HOC">
           <Key>
@@ -730,10 +699,10 @@
           <Property Name="GIOI_TINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="NG_SINH" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="TAI_KHOAN" Relationship="Self.FK_GIAO_VIEN_TAI_KHOAN" FromRole="GIAO_VIEN" ToRole="TAI_KHOAN" />
           <NavigationProperty Name="HOA_DON" Relationship="Self.FK_HOA_DON_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="HOA_DON" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="LOP_HOC" />
           <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="NGOAI_GIO" />
-          <NavigationProperty Name="TAI_KHOAN" Relationship="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN" FromRole="GIAO_VIEN" ToRole="TAI_KHOAN" />
         </EntityType>
         <EntityType Name="HOA_DON">
           <Key>
@@ -759,8 +728,8 @@
           <Property Name="PHU_HUYNH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="HOC_SINH" ToRole="CONG_NO" />
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_BUOIHOC" />
+          <NavigationProperty Name="TAI_KHOAN" Relationship="Self.FK_HOC_SINH_TAI_KHOAN" FromRole="HOC_SINH" ToRole="TAI_KHOAN" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.CT_LOP" FromRole="HOC_SINH" ToRole="LOP_HOC" />
-          <NavigationProperty Name="TAI_KHOAN" Relationship="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN" FromRole="HOC_SINH" ToRole="TAI_KHOAN" />
         </EntityType>
         <EntityType Name="KHOI_LOP">
           <Key>
@@ -807,7 +776,6 @@
           <NavigationProperty Name="THOI_KHOA_BIEU" Relationship="Self.FK_THOI_KHOA_BIEU_LOP_HOC" FromRole="LOP_HOC" ToRole="THOI_KHOA_BIEU" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.CT_CONG_NO" FromRole="LOP_HOC" ToRole="CONG_NO" />
           <NavigationProperty Name="HOC_SINH" Relationship="Self.CT_LOP" FromRole="LOP_HOC" ToRole="HOC_SINH" />
-          <Property Name="SI_SO" Type="Int32" />
         </EntityType>
         <EntityType Name="MON_HOC">
           <Key>
@@ -829,7 +797,7 @@
           <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="NGOAI_GIO" ToRole="BANG_LUONG" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="NGOAI_GIO" ToRole="GIAO_VIEN" />
         </EntityType>
-        <EntityType Name="sysdiagram">
+        <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
           </Key>
@@ -845,8 +813,8 @@
           </Key>
           <Property Name="TAI_KHOAN1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="MAT_KHAU" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="GIAO_VIEN" Relationship="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="GIAO_VIEN" />
-          <NavigationProperty Name="HOC_SINH" Relationship="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="HOC_SINH" />
+          <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_GIAO_VIEN_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="GIAO_VIEN" />
+          <NavigationProperty Name="HOC_SINH" Relationship="Self.FK_HOC_SINH_TAI_KHOAN" FromRole="TAI_KHOAN" ToRole="HOC_SINH" />
         </EntityType>
         <EntityType Name="THOI_KHOA_BIEU">
           <Key>
@@ -980,6 +948,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_GIAO_VIEN_TAI_KHOAN">
+          <End Role="TAI_KHOAN" Type="Self.TAI_KHOAN" Multiplicity="1" />
+          <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TAI_KHOAN">
+              <PropertyRef Name="TAI_KHOAN1" />
+            </Principal>
+            <Dependent Role="GIAO_VIEN">
+              <PropertyRef Name="MA_GV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_HOA_DON_GIAO_VIEN">
           <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="1" />
           <End Role="HOA_DON" Type="Self.HOA_DON" Multiplicity="*" />
@@ -1013,6 +993,18 @@
             </Principal>
             <Dependent Role="NGOAI_GIO">
               <PropertyRef Name="MA_GV" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_HOC_SINH_TAI_KHOAN">
+          <End Role="TAI_KHOAN" Type="Self.TAI_KHOAN" Multiplicity="1" />
+          <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="TAI_KHOAN">
+              <PropertyRef Name="TAI_KHOAN1" />
+            </Principal>
+            <Dependent Role="HOC_SINH">
+              <PropertyRef Name="MA_HS" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1076,7 +1068,7 @@
           <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="*" />
           <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="QL_TRUNGTAMEntities1" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QL_TRUNGTAM1Entities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" />
           <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" />
           <EntitySet Name="BUOI_HOC" EntityType="Self.BUOI_HOC" />
@@ -1091,7 +1083,7 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" />
           <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
@@ -1134,6 +1126,10 @@
             <End Role="HOC_SINH" EntitySet="HOC_SINH" />
             <End Role="CT_BUOIHOC" EntitySet="CT_BUOIHOC" />
           </AssociationSet>
+          <AssociationSet Name="FK_GIAO_VIEN_TAI_KHOAN" Association="Self.FK_GIAO_VIEN_TAI_KHOAN">
+            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
+            <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
+          </AssociationSet>
           <AssociationSet Name="FK_HOA_DON_GIAO_VIEN" Association="Self.FK_HOA_DON_GIAO_VIEN">
             <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
             <End Role="HOA_DON" EntitySet="HOA_DON" />
@@ -1145,6 +1141,10 @@
           <AssociationSet Name="FK_NGOAI_GIO_GIAO_VIEN" Association="Self.FK_NGOAI_GIO_GIAO_VIEN">
             <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
             <End Role="NGOAI_GIO" EntitySet="NGOAI_GIO" />
+          </AssociationSet>
+          <AssociationSet Name="FK_HOC_SINH_TAI_KHOAN" Association="Self.FK_HOC_SINH_TAI_KHOAN">
+            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
+            <End Role="HOC_SINH" EntitySet="HOC_SINH" />
           </AssociationSet>
           <AssociationSet Name="FK_LOP_HOC_KHOI_LOP" Association="Self.FK_LOP_HOC_KHOI_LOP">
             <End Role="KHOI_LOP" EntitySet="KHOI_LOP" />
@@ -1174,86 +1174,13 @@
             <End Role="HOC_SINH" EntitySet="HOC_SINH" />
             <End Role="LOP_HOC" EntitySet="LOP_HOC" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <AssociationSet Name="FK_GIAO_VIEN_TAI_KHOAN" Association="QL_TRUNGTAMModel.FK_GIAO_VIEN_TAI_KHOAN">
-            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
-            <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_HOC_SINH_TAI_KHOAN" Association="QL_TRUNGTAMModel.FK_HOC_SINH_TAI_KHOAN">
-            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
-            <End Role="HOC_SINH" EntitySet="HOC_SINH" />
-          </AssociationSet>
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <Association Name="FK_GIAO_VIEN_TAI_KHOAN">
-          <End Type="QL_TRUNGTAMModel.TAI_KHOAN" Role="TAI_KHOAN" Multiplicity="1" />
-          <End Type="QL_TRUNGTAMModel.GIAO_VIEN" Role="GIAO_VIEN" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TAI_KHOAN">
-              <PropertyRef Name="TAI_KHOAN1" />
-            </Principal>
-            <Dependent Role="GIAO_VIEN">
-              <PropertyRef Name="MA_GV" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_HOC_SINH_TAI_KHOAN">
-          <End Type="QL_TRUNGTAMModel.TAI_KHOAN" Role="TAI_KHOAN" Multiplicity="1" />
-          <End Type="QL_TRUNGTAMModel.HOC_SINH" Role="HOC_SINH" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="TAI_KHOAN">
-              <PropertyRef Name="TAI_KHOAN1" />
-            </Principal>
-            <Dependent Role="HOC_SINH">
-              <PropertyRef Name="MA_HS" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QL_TRUNGTAMModelStoreContainer" CdmEntityContainer="QL_TRUNGTAMEntities1">
+        <EntityContainerMapping StorageEntityContainer="QL_TRUNGTAMModelStoreContainer" CdmEntityContainer="QL_TRUNGTAM1Entities">
           <EntitySetMapping Name="BANG_GIA_HOC_PHI">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BANG_GIA_HOC_PHI">
               <MappingFragment StoreEntitySet="BANG_GIA_HOC_PHI">
@@ -1268,10 +1195,10 @@
           <EntitySetMapping Name="BANG_LUONG">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BANG_LUONG">
               <MappingFragment StoreEntitySet="BANG_LUONG">
-                <ScalarProperty Name="SO_LUONG_MAX" ColumnName="SO_LUONG_MAX" />
-                <ScalarProperty Name="SO_LUONG_MIN" ColumnName="SO_LUONG_MIN" />
                 <ScalarProperty Name="MA_LOAI_LUONG" ColumnName="MA_LOAI_LUONG" />
                 <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
+                <ScalarProperty Name="SO_LUONG_MIN" ColumnName="SO_LUONG_MIN" />
+                <ScalarProperty Name="SOLUONG_MAX" ColumnName="SOLUONG_MAX" />
                 <ScalarProperty Name="DON_GIA" ColumnName="DON_GIA" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1374,7 +1301,6 @@
           <EntitySetMapping Name="LOP_HOC">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOP_HOC">
               <MappingFragment StoreEntitySet="LOP_HOC">
-                <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
                 <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
                 <ScalarProperty Name="TEN_LOP" ColumnName="TEN_LOP" />
                 <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
@@ -1402,7 +1328,7 @@
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagram">
+            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagrams">
               <MappingFragment StoreEntitySet="sysdiagrams">
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="principal_id" ColumnName="principal_id" />
@@ -1454,30 +1380,6 @@
               <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
             </EndProperty>
           </AssociationSetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_upgraddiagrams" />
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1492,7 +1394,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

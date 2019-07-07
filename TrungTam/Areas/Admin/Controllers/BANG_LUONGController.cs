@@ -12,8 +12,8 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class BANG_LUONGController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
-
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
+    
         // GET: Admin/BANG_LUONG
         public ActionResult Index()
         {

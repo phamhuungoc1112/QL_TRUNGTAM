@@ -29,12 +29,12 @@ namespace TrungTam.Areas.Admin.Models
         public string EMAIL { get; set; }
         public Nullable<System.DateTime> NG_SINH { get; set; }
     
+        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOA_DON> HOA_DON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NGOAI_GIO> NGOAI_GIO { get; set; }
-        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
     }
 }

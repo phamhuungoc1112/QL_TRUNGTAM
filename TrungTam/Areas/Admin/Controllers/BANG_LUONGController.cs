@@ -7,17 +7,17 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class BANG_LUONGController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
-
+        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+    
         // GET: Admin/BANG_LUONG
-        public ActionResult Index()
-        {
-            return View(db.BANG_LUONG.ToList());
+        public ActionResult Index(int page = 1, int pageSize = 10)
+        {            
+            return View(db.BANG_LUONG.OrderByDescending(l => l.TEN_LOAI).ToPagedList(page, pageSize));
         }
 
         // GET: Admin/BANG_LUONG/Details/5
@@ -36,29 +36,45 @@ namespace TrungTam.Areas.Admin.Controllers
         }
 
         // GET: Admin/BANG_LUONG/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //public ActionResult Create()
+        //{
+        //    return View();
+        //}
 
         // POST: Admin/BANG_LUONG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        bANG_LUONG.MA_LOAI_LUONG = Guid.NewGuid();
+        //        db.BANG_LUONG.Add(bANG_LUONG);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(bANG_LUONG);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Create(FormCollection r)
         {
             if (ModelState.IsValid)
             {
-                bANG_LUONG.MA_LOAI_LUONG = Guid.NewGuid();
-                db.BANG_LUONG.Add(bANG_LUONG);
+                BANG_LUONG bl = new BANG_LUONG();
+                bl.MA_LOAI_LUONG = Guid.NewGuid();
+                bl.TEN_LOAI = r["tenloai"];
+                bl.DON_GIA = decimal.Parse(r["dongia"]);
+                db.BANG_LUONG.Add(bl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //return RedirectToRoute("BANG_LUONG");
+                return RedirectToAction("Index", "BANG_LUONG", new { area = "Admin"});
             }
-
-            return View(bANG_LUONG);
+            return View();
         }
-
         // GET: Admin/BANG_LUONG/Edit/5
         public ActionResult Edit(Guid? id)
         {

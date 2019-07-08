@@ -1,12 +1,12 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_LUONG>
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_LUONG>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.BANG_LUONG>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-    @Html.ActionLink("Thêm Bảng Lương", "Create")
-</button>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
 <div class="card-body">
     <div class="row mb-3">
         <div class="col">
@@ -51,6 +51,7 @@
             }
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
 </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -63,24 +64,14 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã Bảng Lương">
-                        </div>
-
-                        <span class="sp-thongbao" id="tbMaNV"></span>
-                    </div>
-
+                <form action="/BANG_LUONG/Create" method="post" role="form">
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Loại Lương ">
+                            <input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
@@ -89,21 +80,26 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Đơn Giá ">
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
-
-
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
+                        <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
                 </form>
-                <div class="modal-footer" id="modal-footer">
-                    <button id="btnThemNV" type="button" class="btn btn-success">Thêm Bảng Lương</button>
-                    <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
-                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                </div>
             </div>
             <!-- Modal footer -->
 
         </div>
     </div>
 </div>
+<section>
+    @*<script>
+        $.ajax({
+            url: "
+        })
+    </script>*@
+</section>

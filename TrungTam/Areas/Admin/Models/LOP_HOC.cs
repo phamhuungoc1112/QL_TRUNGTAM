@@ -25,11 +25,11 @@ namespace TrungTam.Areas.Admin.Models
     
         public System.Guid MA_LOP { get; set; }
         public string TEN_LOP { get; set; }
+        public Nullable<int> SI_SO { get; set; }
         public Nullable<System.Guid> MA_LOAI { get; set; }
         public Nullable<System.Guid> MA_MON { get; set; }
         public Nullable<System.Guid> MA_KHOI { get; set; }
         public string MA_GV { get; set; }
-        public Nullable<int> SI_SO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }

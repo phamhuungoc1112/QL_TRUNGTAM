@@ -8,23 +8,35 @@ namespace TrungTam
         // For more information on bundling, visit https://go.microsoft.com/fwlink/?LinkId=301862
         public static void RegisterBundles(BundleCollection bundles)
         {
-            bundles.Add(new ScriptBundle("~/bundles/jquery").Include(
-                        "~/Scripts/jquery-{version}.js"));
+            bundles.UseCdn = true;
+            bundles.Add(new ScriptBundle("~/bundles/jscore").Include(      
+                        "~/Asset/admin/vendor/jquery/jquery.min.js",
+                        "~/Asset/admin/vendor/bootstrap/js/bootstrap.bundle.min.js",
+                        "~/Asset/admin/vendor/jquery-easing/jquery.easing.min.js",
+                        "~/Asset/admin/js/sb-admin-2.min.js",
+                        "~/Asset/admin/vendor/chart.js/Chart.min.js",
+                        "~/Asset/admin/js/demo/chart-area-demo.js",
+                        "~/Asset/admin/js/demo/chart-pie-demo.js",
+                        "~/Scripts/jquery.unobtrusive-ajax.min.js"
+                        ));
 
-            bundles.Add(new ScriptBundle("~/bundles/jqueryval").Include(
-                        "~/Scripts/jquery.validate*"));
-
-            // Use the development version of Modernizr to develop with and learn from. Then, when you're
-            // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
-            bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(
-                        "~/Scripts/modernizr-*"));
-
-            bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
-                      "~/Scripts/bootstrap.js"));
-
+            
+            var fontCDNPath = "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i";
+            bundles.Add(new StyleBundle("~/bundles/fonts", fontCDNPath).Include(
+                               
+                        ));
             bundles.Add(new StyleBundle("~/Content/css").Include(
-                      "~/Content/bootstrap.css",
-                      "~/Content/site.css"));
+                                  "~/Content/bootstrap.min.css",
+                                  "~/Content/Site.css",
+                                  "~/Content/PagedList.css"
+                ));
+            bundles.Add(new StyleBundle("~/bundles/core").Include(
+
+                      "~/Asset/admin/vendor/fontawesome-free/css/all.min.css",
+                      "~/Asset/admin/vendor/fontawesome-free/css/fontawesome.min.css",
+                       "~/Asset/admin/vendor/fontawesome-free/css/regular.min.css",
+                      "~/Asset/admin/css/sb-admin-2.min.css"));
+            BundleTable.EnableOptimizations = true;
         }
     }
 }

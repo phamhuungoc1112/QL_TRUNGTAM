@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_LUONG>
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.BANG_LUONG>
+@using PagedList.Mvc;
 
 @{
     ViewBag.Title = "Index";
@@ -26,7 +28,7 @@
                     </td>
                     <td>
                         <button id="btnCapNhatNV" type="button" class="btn btn-success">
-                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_LOAI_LUONG})
+                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_LOAI_LUONG })
                         </button>
                         <button id="btnDelete" type="button" class="btn btn-danger">
                             @Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })
@@ -36,6 +38,7 @@
             }
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 
 <!-- Modal -->
@@ -87,7 +90,7 @@
                         </div>
                         <span class="sp-thongbao" id="dongia"></span>
                     </div>
-</div>
+            </div>
             <div class="modal-footer" id="modal-footer">
                 <button id="btnThemNV" type="submit" class="btn btn-success">Thêm người dùng</button>
                 <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
@@ -98,3 +101,10 @@
 
     </div>
 </div>
+<section>
+    @*<script>
+            $.ajax({
+                url: "
+            })
+        </script>*@
+</section>

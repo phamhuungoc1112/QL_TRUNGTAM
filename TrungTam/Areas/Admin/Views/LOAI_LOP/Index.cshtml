@@ -1,0 +1,62 @@
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOAI_LOP>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TEN_LOAI)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TEN_LOAI)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.MA_LOAI }) |
+            @Html.ActionLink("Details", "Details", new { id=item.MA_LOAI }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.MA_LOAI })
+        </td>
+    </tr>
+}
+
+</table>
+<!--Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Lương</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/LOAI_LOP/Create" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lớp">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>                    
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Loại Lớp</button>                        
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>

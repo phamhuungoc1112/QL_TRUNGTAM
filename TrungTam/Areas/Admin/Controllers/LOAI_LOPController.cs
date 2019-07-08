@@ -7,127 +7,125 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
-using PagedList;
+
 namespace TrungTam.Areas.Admin.Controllers
 {
-    public class BANG_LUONGController : Controller
+    public class LOAI_LOPController : Controller
     {
         private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
-    
-        // GET: Admin/BANG_LUONG
-        public ActionResult Index(int page = 1, int pageSize = 10)
-        {            
-            return View(db.BANG_LUONG.OrderByDescending(l => l.TEN_LOAI).ToPagedList(page, pageSize));
+
+        // GET: Admin/LOAI_LOP
+        public ActionResult Index()
+        {
+            return View(db.LOAI_LOP.ToList());
         }
 
-        // GET: Admin/BANG_LUONG/Details/5
+        // GET: Admin/LOAI_LOP/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BANG_LUONG bANG_LUONG = db.BANG_LUONG.Find(id);
-            if (bANG_LUONG == null)
+            LOAI_LOP lOAI_LOP = db.LOAI_LOP.Find(id);
+            if (lOAI_LOP == null)
             {
                 return HttpNotFound();
             }
-            return View(bANG_LUONG);
+            return View(lOAI_LOP);
         }
 
-        // GET: Admin/BANG_LUONG/Create
-        //public ActionResult Create()
-        //{
-        //    return View();
-        //}
+        // GET: Admin/LOAI_LOP/Create
+        public ActionResult Create()
+        {
+            return View();
+        }
 
-        // POST: Admin/BANG_LUONG/Create
+        // POST: Admin/LOAI_LOP/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         //[HttpPost]
         //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        //public ActionResult Create([Bind(Include = "MA_LOAI,TEN_LOAI")] LOAI_LOP lOAI_LOP)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        bANG_LUONG.MA_LOAI_LUONG = Guid.NewGuid();
-        //        db.BANG_LUONG.Add(bANG_LUONG);
+        //        lOAI_LOP.MA_LOAI = Guid.NewGuid();
+        //        db.LOAI_LOP.Add(lOAI_LOP);
         //        db.SaveChanges();
         //        return RedirectToAction("Index");
         //    }
 
-        //    return View(bANG_LUONG);
+        //    return View(lOAI_LOP);
         //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection r)
+        public ActionResult Create(FormCollection f)
         {
-            if (ModelState.IsValid)
+            if(ModelState.IsValid)
             {
-                BANG_LUONG bl = new BANG_LUONG();
-                bl.MA_LOAI_LUONG = Guid.NewGuid();
-                bl.TEN_LOAI = r["tenloai"];
-                bl.DON_GIA = decimal.Parse(r["dongia"]);
-                db.BANG_LUONG.Add(bl);
+                LOAI_LOP lOAI_LOP = new LOAI_LOP();
+                lOAI_LOP.MA_LOAI = Guid.NewGuid();
+                lOAI_LOP.TEN_LOAI = f["tenloai"];
+                db.LOAI_LOP.Add(lOAI_LOP);
                 db.SaveChanges();
-                //return RedirectToRoute("BANG_LUONG");
-                return RedirectToAction("Index", "BANG_LUONG", new { area = "Admin"});
+                return RedirectToAction("Index", "LOAI_LOP", new { area = "Admin" });
             }
             return View();
         }
-        // GET: Admin/BANG_LUONG/Edit/5
+        // GET: Admin/LOAI_LOP/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BANG_LUONG bANG_LUONG = db.BANG_LUONG.Find(id);
-            if (bANG_LUONG == null)
+            LOAI_LOP lOAI_LOP = db.LOAI_LOP.Find(id);
+            if (lOAI_LOP == null)
             {
                 return HttpNotFound();
             }
-            return View(bANG_LUONG);
+            return View(lOAI_LOP);
         }
 
-        // POST: Admin/BANG_LUONG/Edit/5
+        // POST: Admin/LOAI_LOP/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Edit([Bind(Include = "MA_LOAI,TEN_LOAI")] LOAI_LOP lOAI_LOP)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(bANG_LUONG).State = EntityState.Modified;
+                db.Entry(lOAI_LOP).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(bANG_LUONG);
+            return View(lOAI_LOP);
         }
 
-        // GET: Admin/BANG_LUONG/Delete/5
+        // GET: Admin/LOAI_LOP/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            BANG_LUONG bANG_LUONG = db.BANG_LUONG.Find(id);
-            if (bANG_LUONG == null)
+            LOAI_LOP lOAI_LOP = db.LOAI_LOP.Find(id);
+            if (lOAI_LOP == null)
             {
                 return HttpNotFound();
             }
-            return View(bANG_LUONG);
+            return View(lOAI_LOP);
         }
 
-        // POST: Admin/BANG_LUONG/Delete/5
+        // POST: Admin/LOAI_LOP/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            BANG_LUONG bANG_LUONG = db.BANG_LUONG.Find(id);
-            db.BANG_LUONG.Remove(bANG_LUONG);
+            LOAI_LOP lOAI_LOP = db.LOAI_LOP.Find(id);
+            db.LOAI_LOP.Remove(lOAI_LOP);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

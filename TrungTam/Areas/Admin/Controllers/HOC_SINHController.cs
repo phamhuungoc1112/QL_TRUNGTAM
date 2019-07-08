@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class HOC_SINHController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
+        private QL_TRUNGTAMEntities2 db = new QL_TRUNGTAMEntities2();
         private BASE bASE = new BASE();
         // GET: Admin/HOC_SINH
         public ActionResult Index()
@@ -47,32 +47,48 @@ namespace TrungTam.Areas.Admin.Controllers
         // POST: Admin/HOC_SINH/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        db.HOC_SINH.Add(hOC_SINH);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
+        //    return View(hOC_SINH);
+        //}
+        //=========================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_HS,HO_TEN,KHOI,TRUONG,SDT,PHU_HUYNH")] HOC_SINH hOC_SINH)
+        public ActionResult Create(FormCollection f)
         {
-            if (ModelState.IsValid)
+            HOC_SINH hs = new HOC_SINH();
+            var MA_HS = db.HOC_SINH.Find("2000000001");
+            if (MA_HS == null)
+                hs.MA_HS = "2000000001";
+            else
             {
-                var ma_hs = db.HOC_SINH.Find("2000000001");
-                if (ma_hs != null)
-                {
-                    long ma = long.Parse(db.HOC_SINH.Select(m => m.MA_HS).ToList().Last()) + 1;
-                    hOC_SINH.MA_HS = ma.ToString();
-                }
-                else
-                {
-                    hOC_SINH.MA_HS = "2000000001";
-                }
-                db.HOC_SINH.Add(hOC_SINH);
-                bASE.create_TAI_KHOAN(hOC_SINH.MA_HS);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                int ma = int.Parse(db.HOC_SINH.Select(m => m.MA_HS).ToList().Last()) + 1;
+                hs.MA_HS = ma.ToString();
             }
-
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
-            return View(hOC_SINH);
+            hs.HO_TEN = f["name"];
+            hs.SDT = f["SDT"];
+            hs.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
+            hs.GIOI_TINH = f["Gioitinh"];
+            hs.TRUONG = f["truong"];
+            hs.PHU_HUYNH = f["phuhuynh"];
+            hs.DIA_CHI = f["diachi"];
+            hs.KHOI = int.Parse(f["khoi"]);
+            db.HOC_SINH.Add(hs);
+            bASE.create_TAI_KHOAN(hs.MA_HS);
+            db.SaveChanges();
+            return View();
         }
-
+        //=========================================================
         // GET: Admin/HOC_SINH/Edit/5
         public ActionResult Edit(string id)
         {
@@ -94,7 +110,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,KHOI,TRUONG,SDT,PHU_HUYNH")] HOC_SINH hOC_SINH)
+        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
         {
             if (ModelState.IsValid)
             {
@@ -128,8 +144,6 @@ namespace TrungTam.Areas.Admin.Controllers
         {
             HOC_SINH hOC_SINH = db.HOC_SINH.Find(id);
             db.HOC_SINH.Remove(hOC_SINH);
-            TAI_KHOAN x = db.TAI_KHOAN.Find(id);
-            db.TAI_KHOAN.Remove(x);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

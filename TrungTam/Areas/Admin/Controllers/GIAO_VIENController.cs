@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class GIAO_VIENController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
+        private QL_TRUNGTAMEntities2 db = new QL_TRUNGTAMEntities2();
         private BASE bASE = new BASE();
         // GET: Admin/GIAO_VIEN
         public ActionResult Index()
@@ -31,29 +31,53 @@ namespace TrungTam.Areas.Admin.Controllers
         // POST: Admin/GIAO_VIEN/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        ////[HttpPost]
+        ////[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_GV,HO_TEN,SDT,GIOI_TINH,EMAIL,NG_SINH")] GIAO_VIEN gIAO_VIEN)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        var ma_gv = db.GIAO_VIEN.Where(m => m.MA_GV == "1000000001");
+        //        if (ma_gv == null)
+        //            gIAO_VIEN.MA_GV = "1000000001";
+        //        else
+        //        {
+        //            int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
+        //            gIAO_VIEN.MA_GV = ma.ToString();
+        //        }
+        //        db.GIAO_VIEN.Add(gIAO_VIEN);
+        //        bASE.create_TAI_KHOAN(gIAO_VIEN.MA_GV);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(gIAO_VIEN);
+        //}
+        //=====================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_GV,HO_TEN,SDT,GIOI_TINH,EMAIL,NG_SINH")] GIAO_VIEN gIAO_VIEN)
+        public ActionResult Create(FormCollection f)
         {
-            if (ModelState.IsValid)
+            GIAO_VIEN gv = new GIAO_VIEN();
+            var ma_gv = db.GIAO_VIEN.Where(m => m.MA_GV == "1000000001");
+            if (ma_gv == null)
+                gv.MA_GV = "1000000001";
+            else
             {
-                var ma_gv = db.GIAO_VIEN.Where(m => m.MA_GV == "1000000001");
-                if (ma_gv == null)
-                    gIAO_VIEN.MA_GV = "1000000001";
-                else
-                {
-                    int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
-                    gIAO_VIEN.MA_GV = ma.ToString();
-                }
-                db.GIAO_VIEN.Add(gIAO_VIEN);
-                bASE.create_TAI_KHOAN(gIAO_VIEN.MA_GV);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
+                gv.MA_GV = ma.ToString();
             }
-
-            return View(gIAO_VIEN);
+            gv.HO_TEN = f["name"];
+            gv.SDT = f["SDT"];
+            gv.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
+            gv.GIOI_TINH = f["Gioitinh"];
+            gv.EMAIL = f["email"];
+            db.GIAO_VIEN.Add(gv);
+            bASE.create_TAI_KHOAN(gv.MA_GV);
+            db.SaveChanges();
+            return View();
         }
-
+        //======================================================
         // GET: Admin/GIAO_VIEN/Edit/5
         public ActionResult Edit(string id)
         {

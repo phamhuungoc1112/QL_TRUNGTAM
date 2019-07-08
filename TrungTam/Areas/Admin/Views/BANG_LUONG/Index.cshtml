@@ -4,29 +4,13 @@
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-    @Html.ActionLink("Thêm Bảng Lương", "Create")
-</button>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm loại lương</button>
 <div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
     <table class="table table-bordered table-hover myTable">
         <thead class="text-primary">
             <tr>
-                <th>Loại Lương</th>
-                <th>
-                    Đơn Giá
-                    <i class="fa fa-arrow-up" id="SapXepTang"></i>
-                    <i class="fa fa-arrow-down" id="SapXepGiam"></i>
-                </th>
+                <th>Loại lương</th>
+                <th>Đơn giá</th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
@@ -38,47 +22,41 @@
                         @Html.DisplayFor(modelItem => item.TEN_LOAI)
                     </td>
                     <td>
-                        @Html.FormatValue(@Html.DisplayFor(modelItem => item.DON_GIA),"{0:c}")
+                        @Html.DisplayFor(modelItem => item.DON_GIA)
                     </td>
                     <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
-                        <button id="btnDelete" type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })</button>
-                        <a href="/BangLuong/Delete"></a>
+                        <button id="btnCapNhatNV" type="button" class="btn btn-success">
+                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_LOAI_LUONG})
+                        </button>
+                        <button id="btnDelete" type="button" class="btn btn-danger">
+                            @Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })
+                        </button>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Lương</h2>
+                <h2 class="modal-title " id="exampleModalLabel">Thêm Loại Lương</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form">
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-user"></i></span>
-                            </div>
-                            <input type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã Bảng Lương">
-                        </div>
-
-                        <span class="sp-thongbao" id="tbMaNV"></span>
-                    </div>
-
+                <form role="form" action="/BANG_LUONG/Create" method="post">
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Loại Lương ">
+                            <input type="text" name="name" id="name" class="form-control input-sm" placeholder="Tên Loại">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
@@ -87,21 +65,36 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Đơn Giá ">
+                            <input type="number" name="sisomin" id="sisomin" class="form-control input-sm" placeholder="Sỉ số min">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbsisomin"></span>
                     </div>
-
-
-                </form>
-                <div class="modal-footer" id="modal-footer">
-                    <button id="btnThemNV" type="button" class="btn btn-success">Thêm Bảng Lương</button>
-                    <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
-                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="sisomax" id="sisomax" class="form-control input-sm" placeholder="Sỉ số max">
+                        </div>
+                        <span class="sp-thongbao" id="tbsisomax"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn giá">
+                        </div>
+                        <span class="sp-thongbao" id="dongia"></span>
+                    </div>
+</div>
+            <div class="modal-footer" id="modal-footer">
+                <button id="btnThemNV" type="submit" class="btn btn-success">Thêm người dùng</button>
+                <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
             </div>
-            <!-- Modal footer -->
-
+            </form>
         </div>
+        <!-- Modal footer -->
+
     </div>
 </div>

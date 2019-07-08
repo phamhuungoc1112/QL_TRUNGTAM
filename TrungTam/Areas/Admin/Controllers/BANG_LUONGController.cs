@@ -12,7 +12,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class BANG_LUONGController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
+        private QL_TRUNGTAMEntities2 db = new QL_TRUNGTAMEntities2();
 
         // GET: Admin/BANG_LUONG
         public ActionResult Index()
@@ -29,21 +29,36 @@ namespace TrungTam.Areas.Admin.Controllers
         // POST: Admin/BANG_LUONG/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,SO_LUONG_MIN,SO_LUONG_MAX,DON_GIA")] BANG_LUONG bANG_LUONG)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        bANG_LUONG.MA_LOAI_LUONG = Guid.NewGuid();
+        //        db.BANG_LUONG.Add(bANG_LUONG);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(bANG_LUONG);
+        //}
+        //====================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,SO_LUONG_MIN,SO_LUONG_MAX,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Create(FormCollection f)
         {
-            if (ModelState.IsValid)
-            {
-                bANG_LUONG.MA_LOAI_LUONG = Guid.NewGuid();
-                db.BANG_LUONG.Add(bANG_LUONG);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(bANG_LUONG);
+            BANG_LUONG bl = new BANG_LUONG();
+            bl.MA_LOAI_LUONG = Guid.NewGuid();
+            bl.TEN_LOAI = f["name"];
+            bl.SO_LUONG_MIN = int.Parse(f["sisomin"]);
+            bl.SO_LUONG_MAX = int.Parse(f["sisomax"]);
+            bl.DON_GIA = int.Parse(f["dongia"]);
+            db.BANG_LUONG.Add(bl);
+            db.SaveChanges();
+            return View();
         }
-
+        //====================================================
         // GET: Admin/BANG_LUONG/Edit/5
         public ActionResult Edit(Guid? id)
         {

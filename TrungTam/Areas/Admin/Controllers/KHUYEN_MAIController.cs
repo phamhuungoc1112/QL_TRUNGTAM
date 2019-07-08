@@ -12,7 +12,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class KHUYEN_MAIController : Controller
     {
-        private QL_TRUNGTAMEntities1 db = new QL_TRUNGTAMEntities1();
+        private QL_TRUNGTAMEntities2 db = new QL_TRUNGTAMEntities2();
 
         // GET: Admin/KHUYEN_MAI
         public ActionResult Index()
@@ -28,21 +28,35 @@ namespace TrungTam.Areas.Admin.Controllers
         // POST: Admin/KHUYEN_MAI/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_KM,TEN_KM,SO_MON_DK,TIEN_GIAM")] KHUYEN_MAI kHUYEN_MAI)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        kHUYEN_MAI.MA_KM = Guid.NewGuid();
+        //        db.KHUYEN_MAI.Add(kHUYEN_MAI);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(kHUYEN_MAI);
+        //}
+        //===================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_KM,TEN_KM,SO_MON_DK,TIEN_GIAM")] KHUYEN_MAI kHUYEN_MAI)
+        public ActionResult Create(FormCollection f)
         {
-            if (ModelState.IsValid)
-            {
-                kHUYEN_MAI.MA_KM = Guid.NewGuid();
-                db.KHUYEN_MAI.Add(kHUYEN_MAI);
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-
-            return View(kHUYEN_MAI);
+            KHUYEN_MAI km = new KHUYEN_MAI();
+            km.MA_KM = Guid.NewGuid();
+            km.TEN_KM = f["name"];
+            km.SO_MON_DK = int.Parse(f["somon"]);
+            km.TIEN_GIAM = int.Parse(f["phantramgiam"]);
+            db.KHUYEN_MAI.Add(km);
+            db.SaveChanges();
+            return View();
         }
-
+        //===================================================
         // GET: Admin/KHUYEN_MAI/Edit/5
         public ActionResult Edit(Guid? id)
         {

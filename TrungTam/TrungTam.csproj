@@ -133,6 +133,7 @@
     <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
     <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
+    <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -190,22 +191,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\sysdiagram.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Admin\Models\TAI_KHOAN.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\THOI_KHOA_BIEU.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -2002,6 +1993,15 @@
     <Content Include="Asset\admin\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Asset\admin\vendor\jquery\jquery.min.map" />
     <Content Include="Asset\admin\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Areas\Admin\Views\BANG_LUONG\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_LUONG\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_LUONG\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
     <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
@@ -2009,19 +2009,6 @@
     <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\GIAO_VIEN\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\GIAO_VIEN\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\GIAO_VIEN\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\GIAO_VIEN\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Create.cshtml" />
-    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\HOC_SINH\Create.cshtml" />
     <Content Include="Areas\Admin\Views\HOC_SINH\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\HOC_SINH\Details.cshtml" />
     <Content Include="Areas\Admin\Views\HOC_SINH\Edit.cshtml" />

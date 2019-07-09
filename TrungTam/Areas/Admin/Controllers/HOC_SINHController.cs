@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class HOC_SINHController : Controller
     {
-        private QL_TRUNGTAMEntities2 db = new QL_TRUNGTAMEntities2();
+        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
         private BASE bASE = new BASE();
         // GET: Admin/HOC_SINH
         public ActionResult Index()

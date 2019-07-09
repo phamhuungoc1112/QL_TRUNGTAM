@@ -131,8 +131,13 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHOI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Controllers\LOAI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MON_HOCController.cs" />
+    <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -2041,6 +2046,20 @@
     <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\Admin\Views\MON_HOC\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

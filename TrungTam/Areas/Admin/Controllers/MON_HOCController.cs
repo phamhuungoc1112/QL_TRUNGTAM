@@ -10,106 +10,108 @@ using TrungTam.Areas.Admin.Models;
 
 namespace TrungTam.Areas.Admin.Controllers
 {
-    public class KHUYEN_MAIController : Controller
+    public class MON_HOCController : Controller
     {
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
-        // GET: Admin/KHUYEN_MAI
+        // GET: Admin/MON_HOC
         public ActionResult Index()
         {
-            return View(db.KHUYEN_MAI.ToList());
+            return View(db.MON_HOC.ToList());
         }
-        // GET: Admin/KHUYEN_MAI/Create
+
+        // GET: Admin/MON_HOC/Details/5
+        public ActionResult Details(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            MON_HOC mON_HOC = db.MON_HOC.Find(id);
+            if (mON_HOC == null)
+            {
+                return HttpNotFound();
+            }
+            return View(mON_HOC);
+        }
+
+        // GET: Admin/MON_HOC/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/KHUYEN_MAI/Create
+        // POST: Admin/MON_HOC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_KM,TEN_KM,SO_MON_DK,TIEN_GIAM")] KHUYEN_MAI kHUYEN_MAI)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        kHUYEN_MAI.MA_KM = Guid.NewGuid();
-        //        db.KHUYEN_MAI.Add(kHUYEN_MAI);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(kHUYEN_MAI);
-        //}
-        //===================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(FormCollection f)
+        public ActionResult Create([Bind(Include = "MA_MON,TEN_MON")] MON_HOC mON_HOC)
         {
-            KHUYEN_MAI km = new KHUYEN_MAI();
-            km.MA_KM = Guid.NewGuid();
-            km.TEN_KM = f["name"];
-            km.SO_MON_DK = int.Parse(f["somon"]);
-            km.TIEN_GIAM = int.Parse(f["phantramgiam"]);
-            db.KHUYEN_MAI.Add(km);
-            db.SaveChanges();
-            return View();
+            if (ModelState.IsValid)
+            {
+                mON_HOC.MA_MON = Guid.NewGuid();
+                db.MON_HOC.Add(mON_HOC);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(mON_HOC);
         }
-        //===================================================
-        // GET: Admin/KHUYEN_MAI/Edit/5
+
+        // GET: Admin/MON_HOC/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KHUYEN_MAI kHUYEN_MAI = db.KHUYEN_MAI.Find(id);
-            if (kHUYEN_MAI == null)
+            MON_HOC mON_HOC = db.MON_HOC.Find(id);
+            if (mON_HOC == null)
             {
                 return HttpNotFound();
             }
-            return View(kHUYEN_MAI);
+            return View(mON_HOC);
         }
 
-        // POST: Admin/KHUYEN_MAI/Edit/5
+        // POST: Admin/MON_HOC/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_KM,TEN_KM,SO_MON_DK,TIEN_GIAM")] KHUYEN_MAI kHUYEN_MAI)
+        public ActionResult Edit([Bind(Include = "MA_MON,TEN_MON")] MON_HOC mON_HOC)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(kHUYEN_MAI).State = EntityState.Modified;
+                db.Entry(mON_HOC).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(kHUYEN_MAI);
+            return View(mON_HOC);
         }
 
-        // GET: Admin/KHUYEN_MAI/Delete/5
+        // GET: Admin/MON_HOC/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            KHUYEN_MAI kHUYEN_MAI = db.KHUYEN_MAI.Find(id);
-            if (kHUYEN_MAI == null)
+            MON_HOC mON_HOC = db.MON_HOC.Find(id);
+            if (mON_HOC == null)
             {
                 return HttpNotFound();
             }
-            return View(kHUYEN_MAI);
+            return View(mON_HOC);
         }
 
-        // POST: Admin/KHUYEN_MAI/Delete/5
+        // POST: Admin/MON_HOC/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            KHUYEN_MAI kHUYEN_MAI = db.KHUYEN_MAI.Find(id);
-            db.KHUYEN_MAI.Remove(kHUYEN_MAI);
+            MON_HOC mON_HOC = db.MON_HOC.Find(id);
+            db.MON_HOC.Remove(mON_HOC);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

@@ -12,7 +12,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class LOAI_LOPController : Controller
     {
-        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
+        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
         // GET: Admin/LOAI_LOP
         public ActionResult Index()

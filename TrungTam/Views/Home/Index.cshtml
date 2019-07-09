@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+    Thêm Giáo Viên
+</button>
+<div class="card-body">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+            <tr>
+                <th class="nowrap">
+                    <span class="mr-1">Mã giáo viên</span>
+                    <i class="fa fa-arrow-up" id="SapXepTang"></i>
+                    <i class="fa fa-arrow-down" id="SapXepGiam"></i>
+                </th>
+                <th>Họ và tên giáo viên</th>
+                <th>Email</th>
+                <th>Số ĐT</th>
+                <th>Giới tính</th>
+                <th>Ngày sinh</th>
+                <th><em class="fa fa-cog"></em></th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach">
+        <td>GV001</td>
+        <td>Sơn Tùng MTP</td>
+        <td>tngf@gmail.com</td>
+        <td>0389453020</td>
+        <td>Nam</td>
+        <td>19/7/1994</td>
+        <td>
+            <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Cập nhật</button>
+            <button id="btnDelete" type="button" class="btn btn-danger">Xóa</button>
+        </td>
+        </tbody>
+    </table>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Giáo Viên</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form">
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-user"></i></span>
+                            </div>
+                            <input type="msnv" name="msnv" id="msnv" class="form-control input-sm" placeholder="Mã giáo viên">
+                        </div>
+
+                        <span class="sp-thongbao" id="tbMaNV"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="name" name="name" id="name" class="form-control input-sm" placeholder="Họ và tên">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                            </div>
+                            <input type="email" name="email" id="email" class="form-control input-sm" placeholder="Email">
+                        </div>
+
+                        <span class="sp-thongbao" id="tbEmail"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="SoDT" id="sodt" class="form-control input-sm" placeholder="Số ĐT">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-key"></i></span>
+                            </div>
+                            <input type="password" name="password" id="password" class="form-control input-sm" placeholder="Mật khẩu">
+                        </div>
+                        <span class="sp-thongbao" id="tbMatKhau"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-calendar"></i></span>
+                            </div>
+                            <input type="datetime" name="ngaylam" id="datepicker" class="form-control" placeholder="Ngày Sinh">
+                        </div>
+
+                        <span class="sp-thongbao" id="tbNgay"></span>
+                    </div>
+
+
+
+                    <span class="sp-thongbao" id="tbChucVu"></span>
+            </div>
+
+
+            </form>
+            <div class="modal-footer" id="modal-footer">
+                <button id="btnThemNV" type="button" class="btn btn-success">Thêm người dùng</button>
+                <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
+                <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+        <!-- Modal footer -->
+
+    </div>
+</div>
+</div>
+

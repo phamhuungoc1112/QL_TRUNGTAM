@@ -131,8 +131,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHOI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Controllers\LOAI_LOPController.cs" />
+    <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>

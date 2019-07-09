@@ -13,10 +13,10 @@ namespace TrungTam.Areas.Admin.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QL_TRUNGTAM1Entities : DbContext
+    public partial class QL_TRUNGTAMEntities : DbContext
     {
-        public QL_TRUNGTAM1Entities()
-            : base("name=QL_TRUNGTAM1Entities")
+        public QL_TRUNGTAMEntities()
+            : base("name=QL_TRUNGTAMEntities")
         {
         }
     
@@ -39,7 +39,6 @@ namespace TrungTam.Areas.Admin.Models
         public virtual DbSet<LOP_HOC> LOP_HOC { get; set; }
         public virtual DbSet<MON_HOC> MON_HOC { get; set; }
         public virtual DbSet<NGOAI_GIO> NGOAI_GIO { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<TAI_KHOAN> TAI_KHOAN { get; set; }
         public virtual DbSet<THOI_KHOA_BIEU> THOI_KHOA_BIEU { get; set; }
     }

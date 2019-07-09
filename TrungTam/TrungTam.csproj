@@ -190,9 +190,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\Models\sysdiagrams.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Admin\Models\TAI_KHOAN.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -2023,13 +2020,6 @@
     <Content Include="Scripts\esm\popper.js.map" />
     <Content Include="Scripts\esm\popper-utils.min.js.map" />
     <Content Include="Scripts\esm\popper-utils.js.map" />
-    <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
-      <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
-    </Content>
     <Content Include="Areas\Admin\Views\KHOI_LOP\Create.cshtml" />
     <Content Include="Areas\Admin\Views\KHOI_LOP\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\KHOI_LOP\Details.cshtml" />
@@ -2044,6 +2034,13 @@
     <Content Include="Areas\Admin\Views\LOAI_LOP\Details.cshtml" />
     <Content Include="Areas\Admin\Views\LOAI_LOP\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LOAI_LOP\Index.cshtml" />
+    <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
+      <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

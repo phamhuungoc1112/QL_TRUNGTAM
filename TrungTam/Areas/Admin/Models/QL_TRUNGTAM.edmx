@@ -23,8 +23,8 @@
           </Key>
           <Property Name="MA_LOAI_LUONG" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_LOAI" Type="nvarchar" MaxLength="50" />
-          <Property Name="SO_LUONG_MIN" Type="nchar" MaxLength="10" />
-          <Property Name="SOLUONG_MAX" Type="nchar" MaxLength="10" />
+          <Property Name="SO_LUONG_MIN" Type="int" />
+          <Property Name="SO_LUONG_MAX" Type="int" />
           <Property Name="DON_GIA" Type="money" />
         </EntityType>
         <EntityType Name="BUOI_HOC">
@@ -111,9 +111,12 @@
           </Key>
           <Property Name="MA_HS" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="HO_TEN" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="KHOI" Type="nvarchar" MaxLength="30" />
+          <Property Name="NG_SINH" Type="datetime" />
+          <Property Name="GIOI_TINH" Type="nvarchar" MaxLength="10" />
+          <Property Name="KHOI" Type="int" />
           <Property Name="TRUONG" Type="nvarchar" MaxLength="50" />
           <Property Name="SDT" Type="nchar" MaxLength="15" />
+          <Property Name="DIA_CHI" Type="nvarchar" MaxLength="100" />
           <Property Name="PHU_HUYNH" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="KHOI_LOP">
@@ -129,6 +132,7 @@
           </Key>
           <Property Name="MA_KM" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_KM" Type="nvarchar" MaxLength="50" />
+          <Property Name="SO_MON_DK" Type="int" />
           <Property Name="TIEN_GIAM" Type="int" />
         </EntityType>
         <EntityType Name="LOAI_LOP">
@@ -144,6 +148,7 @@
           </Key>
           <Property Name="MA_LOP" Type="uniqueidentifier" Nullable="false" />
           <Property Name="TEN_LOP" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="SI_SO" Type="int" />
           <Property Name="MA_LOAI" Type="uniqueidentifier" />
           <Property Name="MA_MON" Type="uniqueidentifier" />
           <Property Name="MA_KHOI" Type="uniqueidentifier" />
@@ -164,16 +169,6 @@
           <Property Name="MA_LUONG" Type="uniqueidentifier" Nullable="false" />
           <Property Name="MA_GV" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="NGAY_LAM" Type="datetime" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
@@ -511,7 +506,6 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
@@ -641,8 +635,8 @@
           </Key>
           <Property Name="MA_LOAI_LUONG" Type="Guid" Nullable="false" />
           <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="SO_LUONG_MIN" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-          <Property Name="SOLUONG_MAX" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="SO_LUONG_MIN" Type="Int32" />
+          <Property Name="SO_LUONG_MAX" Type="Int32" />
           <Property Name="DON_GIA" Type="Decimal" Precision="19" Scale="4" />
           <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_BANG_LUONG" FromRole="BANG_LUONG" ToRole="BUOI_HOC" />
           <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="BANG_LUONG" ToRole="NGOAI_GIO" />
@@ -722,9 +716,12 @@
           </Key>
           <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="HO_TEN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="KHOI" Type="String" MaxLength="30" FixedLength="false" Unicode="true" />
+          <Property Name="NG_SINH" Type="DateTime" Precision="3" />
+          <Property Name="GIOI_TINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="KHOI" Type="Int32" />
           <Property Name="TRUONG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="DIA_CHI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="PHU_HUYNH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="HOC_SINH" ToRole="CONG_NO" />
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_BUOIHOC" />
@@ -746,6 +743,7 @@
           </Key>
           <Property Name="MA_KM" Type="Guid" Nullable="false" />
           <Property Name="TEN_KM" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="SO_MON_DK" Type="Int32" />
           <Property Name="TIEN_GIAM" Type="Int32" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_KHUYEN_MAI" FromRole="KHUYEN_MAI" ToRole="CONG_NO" />
         </EntityType>
@@ -764,6 +762,7 @@
           </Key>
           <Property Name="MA_LOP" Type="Guid" Nullable="false" />
           <Property Name="TEN_LOP" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="SI_SO" Type="Int32" />
           <Property Name="MA_LOAI" Type="Guid" />
           <Property Name="MA_MON" Type="Guid" />
           <Property Name="MA_KHOI" Type="Guid" />
@@ -796,16 +795,6 @@
           <Property Name="NGAY_LAM" Type="DateTime" Precision="3" />
           <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="NGOAI_GIO" ToRole="BANG_LUONG" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="NGOAI_GIO" ToRole="GIAO_VIEN" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
@@ -1068,7 +1057,7 @@
           <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="*" />
           <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="*" />
         </Association>
-        <EntityContainer Name="QL_TRUNGTAM1Entities" annotation:LazyLoadingEnabled="true">
+        <EntityContainer Name="QL_TRUNGTAMEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" />
           <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" />
           <EntitySet Name="BUOI_HOC" EntityType="Self.BUOI_HOC" />
@@ -1083,7 +1072,6 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" />
           <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
@@ -1180,7 +1168,7 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="QL_TRUNGTAMModelStoreContainer" CdmEntityContainer="QL_TRUNGTAM1Entities">
+        <EntityContainerMapping StorageEntityContainer="QL_TRUNGTAMModelStoreContainer" CdmEntityContainer="QL_TRUNGTAMEntities">
           <EntitySetMapping Name="BANG_GIA_HOC_PHI">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.BANG_GIA_HOC_PHI">
               <MappingFragment StoreEntitySet="BANG_GIA_HOC_PHI">
@@ -1198,7 +1186,7 @@
                 <ScalarProperty Name="MA_LOAI_LUONG" ColumnName="MA_LOAI_LUONG" />
                 <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
                 <ScalarProperty Name="SO_LUONG_MIN" ColumnName="SO_LUONG_MIN" />
-                <ScalarProperty Name="SOLUONG_MAX" ColumnName="SOLUONG_MAX" />
+                <ScalarProperty Name="SO_LUONG_MAX" ColumnName="SO_LUONG_MAX" />
                 <ScalarProperty Name="DON_GIA" ColumnName="DON_GIA" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1266,9 +1254,12 @@
               <MappingFragment StoreEntitySet="HOC_SINH">
                 <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
                 <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
+                <ScalarProperty Name="NG_SINH" ColumnName="NG_SINH" />
+                <ScalarProperty Name="GIOI_TINH" ColumnName="GIOI_TINH" />
                 <ScalarProperty Name="KHOI" ColumnName="KHOI" />
                 <ScalarProperty Name="TRUONG" ColumnName="TRUONG" />
                 <ScalarProperty Name="SDT" ColumnName="SDT" />
+                <ScalarProperty Name="DIA_CHI" ColumnName="DIA_CHI" />
                 <ScalarProperty Name="PHU_HUYNH" ColumnName="PHU_HUYNH" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1286,6 +1277,7 @@
               <MappingFragment StoreEntitySet="KHUYEN_MAI">
                 <ScalarProperty Name="MA_KM" ColumnName="MA_KM" />
                 <ScalarProperty Name="TEN_KM" ColumnName="TEN_KM" />
+                <ScalarProperty Name="SO_MON_DK" ColumnName="SO_MON_DK" />
                 <ScalarProperty Name="TIEN_GIAM" ColumnName="TIEN_GIAM" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1303,6 +1295,7 @@
               <MappingFragment StoreEntitySet="LOP_HOC">
                 <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
                 <ScalarProperty Name="TEN_LOP" ColumnName="TEN_LOP" />
+                <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
                 <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
                 <ScalarProperty Name="MA_MON" ColumnName="MA_MON" />
                 <ScalarProperty Name="MA_KHOI" ColumnName="MA_KHOI" />
@@ -1324,17 +1317,6 @@
                 <ScalarProperty Name="MA_LUONG" ColumnName="MA_LUONG" />
                 <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
                 <ScalarProperty Name="NGAY_LAM" ColumnName="NGAY_LAM" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagrams">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

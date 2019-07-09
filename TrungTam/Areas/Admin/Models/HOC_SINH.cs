@@ -24,9 +24,12 @@ namespace TrungTam.Areas.Admin.Models
     
         public string MA_HS { get; set; }
         public string HO_TEN { get; set; }
-        public string KHOI { get; set; }
+        public Nullable<System.DateTime> NG_SINH { get; set; }
+        public string GIOI_TINH { get; set; }
+        public Nullable<int> KHOI { get; set; }
         public string TRUONG { get; set; }
         public string SDT { get; set; }
+        public string DIA_CHI { get; set; }
         public string PHU_HUYNH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

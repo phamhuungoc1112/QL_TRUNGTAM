@@ -23,8 +23,8 @@ namespace TrungTam.Areas.Admin.Models
     
         public System.Guid MA_LOAI_LUONG { get; set; }
         public string TEN_LOAI { get; set; }
-        public string SO_LUONG_MIN { get; set; }
-        public string SOLUONG_MAX { get; set; }
+        public Nullable<int> SO_LUONG_MIN { get; set; }
+        public Nullable<int> SO_LUONG_MAX { get; set; }
         public Nullable<decimal> DON_GIA { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

@@ -25,6 +25,7 @@ namespace TrungTam.Areas.Admin.Models
     
         public System.Guid MA_LOP { get; set; }
         public string TEN_LOP { get; set; }
+        public Nullable<int> SI_SO { get; set; }
         public Nullable<System.Guid> MA_LOAI { get; set; }
         public Nullable<System.Guid> MA_MON { get; set; }
         public Nullable<System.Guid> MA_KHOI { get; set; }

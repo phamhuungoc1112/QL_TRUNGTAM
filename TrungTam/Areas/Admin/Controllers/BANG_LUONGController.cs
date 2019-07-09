@@ -15,7 +15,7 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
     
         // GET: Admin/BANG_LUONG
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        public ActionResult Index(int page = 1, int pageSize = 5)
         {            
             return View(db.BANG_LUONG.OrderByDescending(l => l.TEN_LOAI).ToPagedList(page, pageSize));
         }

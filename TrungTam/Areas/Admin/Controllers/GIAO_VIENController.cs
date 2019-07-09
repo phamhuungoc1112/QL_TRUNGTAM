@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
 using TrungTam.Function_Base;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class GIAO_VIENController : Controller
@@ -16,10 +16,11 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
         private BASE bASE = new BASE();
         // GET: Admin/GIAO_VIEN
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
+
             var gIAO_VIEN = db.GIAO_VIEN.Include(g => g.TAI_KHOAN);
-            return View(gIAO_VIEN.ToList());
+            return View(gIAO_VIEN.OrderBy(m=>m.HO_TEN).ToPagedList(page, pageSize));
         }
         // GET: Admin/GIAO_VIEN/Create
         public ActionResult Create()
@@ -58,23 +59,27 @@ namespace TrungTam.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection f)
         {
-            GIAO_VIEN gv = new GIAO_VIEN();
-            var ma_gv = db.GIAO_VIEN.Where(m => m.MA_GV == "1000000001");
-            if (ma_gv == null)
-                gv.MA_GV = "1000000001";
-            else
+            if (ModelState.IsValid)
             {
-                int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
-                gv.MA_GV = ma.ToString();
+                GIAO_VIEN gv = new GIAO_VIEN();
+                var ma_gv = db.GIAO_VIEN.Find("1000000001");
+                if (ma_gv == null)
+                    gv.MA_GV = "1000000001";
+                else
+                {
+                    int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
+                    gv.MA_GV = ma.ToString();
+                }
+                gv.HO_TEN = f["name"];
+                gv.SDT = f["SDT"];
+                gv.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
+                gv.GIOI_TINH = f["Gioitinh"];
+                gv.EMAIL = f["email"];
+                db.GIAO_VIEN.Add(gv);
+                bASE.create_TAI_KHOAN(gv.MA_GV);
+                db.SaveChanges();
+                return RedirectToAction("Index", "GIAO_VIEN", new { area = "Admin"});
             }
-            gv.HO_TEN = f["name"];
-            gv.SDT = f["SDT"];
-            gv.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
-            gv.GIOI_TINH = f["Gioitinh"];
-            gv.EMAIL = f["email"];
-            db.GIAO_VIEN.Add(gv);
-            bASE.create_TAI_KHOAN(gv.MA_GV);
-            db.SaveChanges();
             return View();
         }
         //======================================================

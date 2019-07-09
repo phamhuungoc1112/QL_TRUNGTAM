@@ -130,6 +130,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BANG_GIA_HOC_PHIController.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
     <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
     <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
@@ -1825,6 +1826,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\dropdown.css" />
     <Content Include="Content\PagedList.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -2060,6 +2062,10 @@
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

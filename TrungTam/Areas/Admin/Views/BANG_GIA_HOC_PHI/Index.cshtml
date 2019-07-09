@@ -1,0 +1,161 @@
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>
+
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var listkhoi = (List<TrungTam.Areas.Admin.Models.KHOI_LOP>)ViewBag.listkhoi;
+    var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
+    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;    
+    
+}
+<link href="~/Content/dropdown.css" rel="stylesheet" />
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
+<div class="card-body">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Giá" id="searchName">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+            <tr>
+                <th class="nowrap">
+                    <span class="mr-1">Tên khối</span>
+                </th>
+                <th>Loại lớp</th>
+                <th>Tên môn</th>
+                <th>Đơn giá</th>
+                <th>Số buổi</th>
+                <th><em class="fa fa-cog"></em></th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach">
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOAI_LOP.TEN_LOAI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DON_GIA)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SO_BUOI)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
+            }
+            </tbody>
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+    </div>
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Thông Bảng Học Phí</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/BANG_GIA_HOC_PHI/Create" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="makhoi">
+                                    Chọn tên khối
+                                    @foreach (var item in listkhoi)
+                                    {
+                                        <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="maloai">
+                                    @foreach (var item in listloailop)
+                                    {
+                                        <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="mamon">
+                                    @foreach (var item in listmonhoc)
+                                    {
+                                        <option value="@item.MA_MON">@item.TEN_MON</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="sobuoi" id="sobuoi" class="form-control input-sm" placeholder="Đơn Giá ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>

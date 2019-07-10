@@ -8,23 +8,9 @@
 }
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
 <div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
     <table class="table table-bordered table-hover myTable">
         <thead class="text-primary">
             <tr>
-                <th class="nowrap">
-                    <span class="mr-1">Mã Loại Lương</span>
-
-                </th>
                 <th>Loại Lương</th>
                 <th>Đơn Giá</th>
                 <th><em class="fa fa-cog"></em></th>
@@ -35,16 +21,13 @@
             {
                 <tr>
                     <td>
-                        @Html.DisplayFor(modelItem => item.MA_LOAI_LUONG)
-                    </td>
-                    <td>
                         @Html.DisplayFor(modelItem => item.TEN_LOAI)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DON_GIA)
                     </td>
                     <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
+                        <button id="btnCapNhatNV" type="button" class="btn btn-success"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
                         <button id="btnDelete" type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })</button>
                     </td>
                 </tr>
@@ -80,13 +63,30 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
+                            <input type="number" name="sisomin" id="sisomin" class="form-control input-sm" placeholder="Sỉ số min ">
+                        </div>
+                        <span class="sp-thongbao" id="tbsisomin"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="sisomax" id="sisomax" class="form-control input-sm" placeholder="Sỉ số max ">
+                        </div>
+                        <span class="sp-thongbao" id="tbsisomax"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
                             <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
+                        <button id="btnThemBL" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                     </div>
                 </form>

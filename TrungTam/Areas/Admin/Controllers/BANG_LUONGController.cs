@@ -67,6 +67,8 @@ namespace TrungTam.Areas.Admin.Controllers
                 BANG_LUONG bl = new BANG_LUONG();
                 bl.MA_LOAI_LUONG = Guid.NewGuid();
                 bl.TEN_LOAI = r["tenloai"];
+                bl.SO_LUONG_MIN = int.Parse(r["sisomin"]);
+                bl.SO_LUONG_MAX = int.Parse(r["sisomax"]);
                 bl.DON_GIA = decimal.Parse(r["dongia"]);
                 db.BANG_LUONG.Add(bl);
                 db.SaveChanges();
@@ -95,7 +97,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,DON_GIA")] BANG_LUONG bANG_LUONG)
+        public ActionResult Edit([Bind(Include = "MA_LOAI_LUONG,TEN_LOAI,SO_LUONG_MIN,SO_LUONG_MAX,DON_GIA")] BANG_LUONG bANG_LUONG)
         {
             if (ModelState.IsValid)
             {

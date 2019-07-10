@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="e6dd6db9ae234373bc6d3b735e1cbb23" Name="Diagram1">
+      <Diagram DiagramId="e27ccb1b15ad405f84199a508b915493" Name="Diagram1">
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.BANG_GIA_HOC_PHI" Width="1.5" PointX="5.25" PointY="20.875" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.BANG_LUONG" Width="1.5" PointX="3" PointY="2.25" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.BUOI_HOC" Width="1.5" PointX="10.5" PointY="10" IsExpanded="true" />
@@ -19,6 +19,7 @@
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.LOP_HOC" Width="1.5" PointX="5.25" PointY="9.5" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.MON_HOC" Width="1.5" PointX="3" PointY="20.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.NGOAI_GIO" Width="1.5" PointX="5.25" PointY="3.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="QL_TRUNGTAMModel.sysdiagram" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.TAI_KHOAN" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
         <EntityTypeShape EntityType="QL_TRUNGTAMModel.THOI_KHOA_BIEU" Width="1.5" PointX="7.5" PointY="14.25" IsExpanded="true" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_BANG_GIA_HOC_PHI_KHOI_LOP" ManuallyRouted="false" />
@@ -26,7 +27,7 @@
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_BANG_GIA_HOC_PHI_MON_HOC" ManuallyRouted="false" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_BUOI_HOC_BANG_LUONG" ManuallyRouted="false" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_NGOAI_GIO_BANG_LUONG" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAMModel.FK_BUOI_HOC_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="QL_TRUNGTAMModel.FK_BUOI_HOC_LOP_HOC1" ManuallyRouted="false" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_CT_BUOIHOC_BUOI_HOC" ManuallyRouted="false" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_CONG_NO_HOC_SINH" ManuallyRouted="false" />
         <AssociationConnector Association="QL_TRUNGTAMModel.FK_CONG_NO_KHUYEN_MAI" ManuallyRouted="false" />

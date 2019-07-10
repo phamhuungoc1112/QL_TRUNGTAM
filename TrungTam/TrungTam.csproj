@@ -131,8 +131,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BANG_LUONGController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHOI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Controllers\LOAI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\MON_HOCController.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -189,6 +193,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\sysdiagram.cs">
+      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\TAI_KHOAN.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
@@ -1993,9 +2000,7 @@
     <Content Include="Asset\admin\vendor\fontawesome-free\webfonts\fa-solid-900.woff2" />
     <Content Include="Asset\admin\vendor\jquery\jquery.min.map" />
     <Content Include="Asset\admin\vendor\jquery\jquery.slim.min.map" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Create.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Delete.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_LUONG\Details.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_LUONG\Index.cshtml" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -2034,6 +2039,21 @@
     <Content Include="Areas\Admin\Views\LOAI_LOP\Details.cshtml" />
     <Content Include="Areas\Admin\Views\LOAI_LOP\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\LOAI_LOP\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIAO_VIEN\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\HOC_SINH\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\KHUYEN_MAI\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\MON_HOC\Index.cshtml" />
     <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>

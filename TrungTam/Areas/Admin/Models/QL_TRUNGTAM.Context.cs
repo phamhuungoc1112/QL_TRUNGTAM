@@ -39,6 +39,7 @@ namespace TrungTam.Areas.Admin.Models
         public virtual DbSet<LOP_HOC> LOP_HOC { get; set; }
         public virtual DbSet<MON_HOC> MON_HOC { get; set; }
         public virtual DbSet<NGOAI_GIO> NGOAI_GIO { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<TAI_KHOAN> TAI_KHOAN { get; set; }
         public virtual DbSet<THOI_KHOA_BIEU> THOI_KHOA_BIEU { get; set; }
     }

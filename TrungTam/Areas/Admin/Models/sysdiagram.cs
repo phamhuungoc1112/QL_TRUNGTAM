@@ -12,13 +12,12 @@ namespace TrungTam.Areas.Admin.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class THOI_KHOA_BIEU
+    public partial class sysdiagram
     {
-        public System.Guid MA_LOP { get; set; }
-        public int THU { get; set; }
-        public System.TimeSpan THOI_GIAN_BD { get; set; }
-        public Nullable<System.TimeSpan> THOI_GIAN_KT { get; set; }
-    
-        public virtual LOP_HOC LOP_HOC { get; set; }
+        public string name { get; set; }
+        public int principal_id { get; set; }
+        public int diagram_id { get; set; }
+        public Nullable<int> version { get; set; }
+        public byte[] definition { get; set; }
     }
 }

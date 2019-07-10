@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BANG_GIA_HOC_PHI">
           <Key>
             <PropertyRef Name="MA_KHOI" />
@@ -140,6 +140,7 @@
             <PropertyRef Name="MA_LOAI" />
           </Key>
           <Property Name="MA_LOAI" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SI_SO" Type="int" />
           <Property Name="TEN_LOAI" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LOP_HOC">
@@ -170,6 +171,16 @@
           <Property Name="MA_GV" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="NGAY_LAM" Type="datetime" />
         </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
             <PropertyRef Name="TAI_KHOAN" />
@@ -184,7 +195,7 @@
             <PropertyRef Name="THOI_GIAN_BD" />
           </Key>
           <Property Name="MA_LOP" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="THU" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="THU" Type="int" Nullable="false" />
           <Property Name="THOI_GIAN_BD" Type="time" Precision="7" Nullable="false" />
           <Property Name="THOI_GIAN_KT" Type="time" Precision="7" />
         </EntityType>
@@ -236,7 +247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BUOI_HOC_LOP_HOC">
+        <Association Name="FK_BUOI_HOC_LOP_HOC1">
           <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="0..1" />
           <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="*" />
           <ReferentialConstraint>
@@ -506,6 +517,7 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
@@ -524,7 +536,7 @@
             <End Role="BANG_LUONG" EntitySet="BANG_LUONG" />
             <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
           </AssociationSet>
-          <AssociationSet Name="FK_BUOI_HOC_LOP_HOC" Association="Self.FK_BUOI_HOC_LOP_HOC">
+          <AssociationSet Name="FK_BUOI_HOC_LOP_HOC1" Association="Self.FK_BUOI_HOC_LOP_HOC1">
             <End Role="LOP_HOC" EntitySet="LOP_HOC" />
             <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
           </AssociationSet>
@@ -609,8 +621,7 @@
             <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QL_TRUNGTAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -652,7 +663,7 @@
           <Property Name="MA_LUONG" Type="Guid" />
           <Property Name="MA_LOP" Type="Guid" />
           <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_BUOI_HOC_BANG_LUONG" FromRole="BUOI_HOC" ToRole="BANG_LUONG" />
-          <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC" FromRole="BUOI_HOC" ToRole="LOP_HOC" />
+          <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC1" FromRole="BUOI_HOC" ToRole="LOP_HOC" />
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_BUOI_HOC" FromRole="BUOI_HOC" ToRole="CT_BUOIHOC" />
           <NavigationProperty Name="HOA_DON" Relationship="Self.CT_HOADON" FromRole="BUOI_HOC" ToRole="HOA_DON" />
         </EntityType>
@@ -755,6 +766,7 @@
           <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BANG_GIA_HOC_PHI" Relationship="Self.FK_BANG_GIA_HOC_PHI_LOAI_LOP" FromRole="LOAI_LOP" ToRole="BANG_GIA_HOC_PHI" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_LOAI_LOP1" FromRole="LOAI_LOP" ToRole="LOP_HOC" />
+          <Property Name="SI_SO" Type="Int32" />
         </EntityType>
         <EntityType Name="LOP_HOC">
           <Key>
@@ -767,7 +779,7 @@
           <Property Name="MA_MON" Type="Guid" />
           <Property Name="MA_KHOI" Type="Guid" />
           <Property Name="MA_GV" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC" FromRole="LOP_HOC" ToRole="BUOI_HOC" />
+          <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_LOP_HOC1" FromRole="LOP_HOC" ToRole="BUOI_HOC" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="LOP_HOC" ToRole="GIAO_VIEN" />
           <NavigationProperty Name="KHOI_LOP" Relationship="Self.FK_LOP_HOC_KHOI_LOP" FromRole="LOP_HOC" ToRole="KHOI_LOP" />
           <NavigationProperty Name="LOAI_LOP" Relationship="Self.FK_LOP_HOC_LOAI_LOP1" FromRole="LOP_HOC" ToRole="LOAI_LOP" />
@@ -796,6 +808,16 @@
           <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG" FromRole="NGOAI_GIO" ToRole="BANG_LUONG" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="NGOAI_GIO" ToRole="GIAO_VIEN" />
         </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
             <PropertyRef Name="TAI_KHOAN1" />
@@ -812,7 +834,7 @@
             <PropertyRef Name="THOI_GIAN_BD" />
           </Key>
           <Property Name="MA_LOP" Type="Guid" Nullable="false" />
-          <Property Name="THU" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="THU" Type="Int32" Nullable="false" />
           <Property Name="THOI_GIAN_BD" Type="Time" Nullable="false" Precision="7" />
           <Property Name="THOI_GIAN_KT" Type="Time" Precision="7" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_THOI_KHOA_BIEU_LOP_HOC" FromRole="THOI_KHOA_BIEU" ToRole="LOP_HOC" />
@@ -877,7 +899,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_BUOI_HOC_LOP_HOC">
+        <Association Name="FK_BUOI_HOC_LOP_HOC1">
           <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="0..1" />
           <End Role="BUOI_HOC" Type="Self.BUOI_HOC" Multiplicity="*" />
           <ReferentialConstraint>
@@ -1072,6 +1094,7 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" />
           <AssociationSet Name="FK_BANG_GIA_HOC_PHI_KHOI_LOP" Association="Self.FK_BANG_GIA_HOC_PHI_KHOI_LOP">
@@ -1094,7 +1117,7 @@
             <End Role="BANG_LUONG" EntitySet="BANG_LUONG" />
             <End Role="NGOAI_GIO" EntitySet="NGOAI_GIO" />
           </AssociationSet>
-          <AssociationSet Name="FK_BUOI_HOC_LOP_HOC" Association="Self.FK_BUOI_HOC_LOP_HOC">
+          <AssociationSet Name="FK_BUOI_HOC_LOP_HOC1" Association="Self.FK_BUOI_HOC_LOP_HOC1">
             <End Role="LOP_HOC" EntitySet="LOP_HOC" />
             <End Role="BUOI_HOC" EntitySet="BUOI_HOC" />
           </AssociationSet>
@@ -1285,6 +1308,7 @@
           <EntitySetMapping Name="LOAI_LOP">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOAI_LOP">
               <MappingFragment StoreEntitySet="LOAI_LOP">
+                <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
                 <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
                 <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
               </MappingFragment>
@@ -1317,6 +1341,17 @@
                 <ScalarProperty Name="MA_LUONG" ColumnName="MA_LUONG" />
                 <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
                 <ScalarProperty Name="NGAY_LAM" ColumnName="NGAY_LAM" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1376,7 +1411,7 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
         <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
         <DesignerProperty Name="UseLegacyProvider" Value="false" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />

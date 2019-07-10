@@ -1,15 +1,16 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.GIAO_VIEN>
-
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.GIAO_VIEN>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.GIAO_VIEN>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm nhân viên</button>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm giáo viên</button>
 <div class="card-body">
     <div class="row mb-3">
         <div class="col">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
+                <input type="text" class="form-control" placeholder="Tên giáo viên" id="searchName">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
                 </div>
@@ -63,11 +64,10 @@
                         </button>
                     </td>
                 </tr>
-            }
-            
-            
+            }                        
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
 </div>
 
 <!-- Modal -->
@@ -136,7 +136,7 @@
                     <span class="sp-thongbao" id="tbChucVu"></span>
             </div>
             <div class="modal-footer" id="modal-footer">
-                <button id="btnThemNV" type="submit" class="btn btn-success">Thêm người dùng</button>
+                <button id="btnThemNV" type="submit" class="btn btn-success">Thêm giáo viên</button>
                 <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
             </div>
             </form>

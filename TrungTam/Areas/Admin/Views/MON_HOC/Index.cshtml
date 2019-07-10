@@ -1,5 +1,6 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.MON_HOC>
-
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.MON_HOC>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.MON_HOC>
+@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
@@ -7,17 +8,31 @@
 
 <h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.TEN_MON)
-        </th>
-        <th></th>
-    </tr>
-
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+    Thêm Môn Học
+</button>
+<div class="card-body">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Tên Môn Học" id="searchName">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+            <tr>
+                <th class="nowrap">
+                    <span class="mr-1">Mã Môn Học</span>
+                </th>
+                <th>Tên Môn Học</th>
+                <th><em class="fa fa-cog"></em></th>>    
+            </tr>
+        </thead>        
+        <tbody id="tableDanhSach">
 @foreach (var item in Model) {
     <tr>
         <td>
@@ -30,5 +45,38 @@
         </td>
     </tr>
 }
-
+	</tbody>
 </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+ </div>
+    <!--Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title " id="exampleModalLabel">Thông Môn Học</h2>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form action="/MON_HOC/Create" method="post" role="form">
+                        @Html.AntiForgeryToken()
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                </div>
+                                <input type="text" name="tenmon" id="tenmon" class="form-control input-sm" placeholder="Tên Môn Học">
+                            </div>
+                            <span class="sp-thongbao" id="tbTen"></span>
+                        </div>
+                        <div class="modal-footer" id="modal-footer">
+                            <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Môn Học</button>
+                            <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class KHOI_LOPController : Controller
@@ -15,9 +15,9 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
         // GET: Admin/KHOI_LOP
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
-            return View(db.KHOI_LOP.ToList());
+            return View(db.KHOI_LOP.OrderByDescending(m=> m.TEN_KHOI).ToPagedList(page, pageSize));
         }
 
         // GET: Admin/KHOI_LOP/Details/5
@@ -44,21 +44,35 @@ namespace TrungTam.Areas.Admin.Controllers
         // POST: Admin/KHOI_LOP/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_KHOI,TEN_KHOI")] KHOI_LOP kHOI_LOP)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        kHOI_LOP.MA_KHOI = Guid.NewGuid();
+        //        db.KHOI_LOP.Add(kHOI_LOP);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(kHOI_LOP);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_KHOI,TEN_KHOI")] KHOI_LOP kHOI_LOP)
+        public ActionResult Create(FormCollection f)
         {
             if (ModelState.IsValid)
             {
-                kHOI_LOP.MA_KHOI = Guid.NewGuid();
-                db.KHOI_LOP.Add(kHOI_LOP);
+                KHOI_LOP kl = new KHOI_LOP();
+                kl.MA_KHOI = Guid.NewGuid();
+                kl.TEN_KHOI = f["tenkhoi"];
+                db.KHOI_LOP.Add(kl);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "KHOI_LOP", new { area = "Admin" });
             }
-
-            return View(kHOI_LOP);
+            return View();
         }
-
         // GET: Admin/KHOI_LOP/Edit/5
         public ActionResult Edit(Guid? id)
         {

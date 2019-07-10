@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class MON_HOCController : Controller
@@ -15,9 +15,9 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
         // GET: Admin/MON_HOC
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
-            return View(db.MON_HOC.ToList());
+            return View(db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToPagedList(page, pageSize));
         }
 
         // GET: Admin/MON_HOC/Details/5
@@ -35,30 +35,40 @@ namespace TrungTam.Areas.Admin.Controllers
             return View(mON_HOC);
         }
 
-        // GET: Admin/MON_HOC/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        // GET: Admin/MON_HOC/Create    
 
         // POST: Admin/MON_HOC/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult Create([Bind(Include = "MA_MON,TEN_MON")] MON_HOC mON_HOC)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        mON_HOC.MA_MON = Guid.NewGuid();
+        //        db.MON_HOC.Add(mON_HOC);
+        //        db.SaveChanges();
+        //        return RedirectToAction("Index");
+        //    }
+
+        //    return View(mON_HOC);
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "MA_MON,TEN_MON")] MON_HOC mON_HOC)
+        public ActionResult Create(FormCollection f)
         {
             if (ModelState.IsValid)
             {
-                mON_HOC.MA_MON = Guid.NewGuid();
-                db.MON_HOC.Add(mON_HOC);
+                MON_HOC mh = new MON_HOC();
+                mh.MA_MON = Guid.NewGuid();
+                mh.TEN_MON = f["tenmon"];
+                db.MON_HOC.Add(mh);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("Index", "MON_HOC", new { area = "Admin" });
             }
-
-            return View(mON_HOC);
+            return View();
         }
-
         // GET: Admin/MON_HOC/Edit/5
         public ActionResult Edit(Guid? id)
         {

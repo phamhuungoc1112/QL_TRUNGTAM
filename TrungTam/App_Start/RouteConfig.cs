@@ -14,7 +14,7 @@ namespace TrungTam
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
-                name: "BANG_LUONG",
+                name: "luongG",
                 url: "Admin/{controller}/{action}/{id}",
                 defaults: new { controller = "BANG_LUONG", action = "Index", id = UrlParameter.Optional }
             );

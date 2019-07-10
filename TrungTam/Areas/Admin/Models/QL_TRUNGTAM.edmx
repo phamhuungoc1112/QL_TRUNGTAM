@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="QL_TRUNGTAMModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BANG_GIA_HOC_PHI">
           <Key>
             <PropertyRef Name="MA_KHOI" />
@@ -140,6 +140,7 @@
             <PropertyRef Name="MA_LOAI" />
           </Key>
           <Property Name="MA_LOAI" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="SI_SO" Type="int" />
           <Property Name="TEN_LOAI" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="LOP_HOC">
@@ -609,8 +610,7 @@
             <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="QL_TRUNGTAMModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -755,6 +755,7 @@
           <Property Name="TEN_LOAI" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="BANG_GIA_HOC_PHI" Relationship="Self.FK_BANG_GIA_HOC_PHI_LOAI_LOP" FromRole="LOAI_LOP" ToRole="BANG_GIA_HOC_PHI" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_LOAI_LOP1" FromRole="LOAI_LOP" ToRole="LOP_HOC" />
+          <Property Name="SI_SO" Type="Int32" />
         </EntityType>
         <EntityType Name="LOP_HOC">
           <Key>
@@ -1285,6 +1286,7 @@
           <EntitySetMapping Name="LOAI_LOP">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOAI_LOP">
               <MappingFragment StoreEntitySet="LOAI_LOP">
+                <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
                 <ScalarProperty Name="MA_LOAI" ColumnName="MA_LOAI" />
                 <ScalarProperty Name="TEN_LOAI" ColumnName="TEN_LOAI" />
               </MappingFragment>

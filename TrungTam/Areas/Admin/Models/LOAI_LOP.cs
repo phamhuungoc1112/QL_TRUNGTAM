@@ -23,6 +23,7 @@ namespace TrungTam.Areas.Admin.Models
     
         public System.Guid MA_LOAI { get; set; }
         public string TEN_LOAI { get; set; }
+        public Nullable<int> SI_SO { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BANG_GIA_HOC_PHI> BANG_GIA_HOC_PHI { get; set; }

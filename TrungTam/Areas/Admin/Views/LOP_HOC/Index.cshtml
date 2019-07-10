@@ -1,14 +1,14 @@
-﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>*@
-@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
 
-@using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
     var listkhoi = (List<TrungTam.Areas.Admin.Models.KHOI_LOP>)ViewBag.listkhoi;
     var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
-    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;    
+    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;
+    var listgiaovien = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgiaovien;
 }
+
 <link href="~/Content/dropdown.css" rel="stylesheet" />
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
 <div class="card-body">
@@ -26,57 +26,70 @@
         <thead class="text-primary">
             <tr>
                 <th class="nowrap">
-                    <span class="mr-1">Tên khối</span>
+                    <span class="mr-1">Tên lớp</span>
                 </th>
                 <th>Loại lớp</th>
                 <th>Tên môn</th>
-                <th>Đơn giá</th>
-                <th>Số buổi</th>
+                <th>Tên khối</th>
+                <th>Tên giáo viên</th>
+                <th>Sỉ số</th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
         <tbody id="tableDanhSach">
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.LOAI_LOP.TEN_LOAI)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DON_GIA)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SO_BUOI)
-                    </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TEN_LOP)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.LOAI_LOP.TEN_LOAI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GIAO_VIEN.HO_TEN)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.SI_SO)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.MA_LOP }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.MA_LOP }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.MA_LOP })
+                </td>
+            </tr>
             }
-            </tbody>
+        </tbody>
     </table>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
 </div>
+<!--Modal-->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Thông Bảng Học Phí</h2>
+                <h2 class="modal-title " id="exampleModalLabel">Lớp học</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/BANG_GIA_HOC_PHI/Create" method="post" role="form">
-                    @Html.AntiForgeryToken()                    
+                <form action="/LOP_HOC/Create" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="tenlop" id="tenlop" class="form-control input-sm" placeholder="Tên lớp ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -128,7 +141,24 @@
                             </div>
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
-                    </div>                 
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="magiaovien">
+                                    @foreach (var item in listgiaovien)
+                                    {
+                                        <option value="@item.MA_GV">@item.HO_TEN</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
                     <div class="modal-footer" id="modal-footer">
                         <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
@@ -140,3 +170,4 @@
         </div>
     </div>
 </div>
+

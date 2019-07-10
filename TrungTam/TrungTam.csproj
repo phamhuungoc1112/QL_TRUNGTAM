@@ -137,6 +137,7 @@
     <Compile Include="Areas\Admin\Controllers\KHOI_LOPController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHUYEN_MAIController.cs" />
     <Compile Include="Areas\Admin\Controllers\LOAI_LOPController.cs" />
+    <Compile Include="Areas\Admin\Controllers\LOP_HOCController.cs" />
     <Compile Include="Areas\Admin\Controllers\MON_HOCController.cs" />
     <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
@@ -2066,6 +2067,11 @@
     <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Details.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Delete.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Index.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

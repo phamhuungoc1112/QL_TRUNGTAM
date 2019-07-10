@@ -76,7 +76,7 @@
             </div>
             <div class="modal-body">
                 <form action="/BANG_GIA_HOC_PHI/Create" method="post" role="form">
-                    @Html.AntiForgeryToken()                    
+                    @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -128,7 +128,25 @@
                             </div>
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
-                    </div>                 
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Tên lớp ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="number" name="sobuoi" id="sobuoi" class="form-control input-sm" placeholder="Tên lớp ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
                     <div class="modal-footer" id="modal-footer">
                         <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>

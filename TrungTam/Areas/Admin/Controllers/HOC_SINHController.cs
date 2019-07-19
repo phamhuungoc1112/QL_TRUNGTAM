@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
 using TrungTam.Function_Base;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class HOC_SINHController : Controller
@@ -16,10 +16,10 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
         private BASE bASE = new BASE();
         // GET: Admin/HOC_SINH
-        public ActionResult Index()
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
             var hOC_SINH = db.HOC_SINH.Include(h => h.TAI_KHOAN);
-            return View(hOC_SINH.ToList());
+            return View(hOC_SINH.OrderByDescending(m=>m.MA_HS).ToPagedList(page,pageSize));
         }
 
         // GET: Admin/HOC_SINH/Details/5
@@ -66,26 +66,30 @@ namespace TrungTam.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection f)
         {
-            HOC_SINH hs = new HOC_SINH();
-            var MA_HS = db.HOC_SINH.Find("2000000001");
-            if (MA_HS == null)
-                hs.MA_HS = "2000000001";
-            else
+            if (ModelState.IsValid)
             {
-                int ma = int.Parse(db.HOC_SINH.Select(m => m.MA_HS).ToList().Last()) + 1;
-                hs.MA_HS = ma.ToString();
+                HOC_SINH hs = new HOC_SINH();
+                var MA_HS = db.HOC_SINH.Find("2000000001");
+                if (MA_HS == null)
+                    hs.MA_HS = "2000000001";
+                else
+                {
+                    int ma = int.Parse(db.HOC_SINH.Select(m => m.MA_HS).ToList().Last()) + 1;
+                    hs.MA_HS = ma.ToString();
+                }
+                hs.HO_TEN = f["name"];
+                hs.SDT = f["SDT"];
+                hs.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
+                hs.GIOI_TINH = f["Gioitinh"];
+                hs.TRUONG = f["truong"];
+                hs.PHU_HUYNH = f["phuhuynh"];
+                hs.DIA_CHI = f["diachi"];
+                hs.KHOI = int.Parse(f["khoi"]);
+                db.HOC_SINH.Add(hs);
+                bASE.create_TAI_KHOAN(hs.MA_HS);
+                db.SaveChanges();
+                return RedirectToAction("Index", "HOC_SINH", new { area = "Admin" });
             }
-            hs.HO_TEN = f["name"];
-            hs.SDT = f["SDT"];
-            hs.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
-            hs.GIOI_TINH = f["Gioitinh"];
-            hs.TRUONG = f["truong"];
-            hs.PHU_HUYNH = f["phuhuynh"];
-            hs.DIA_CHI = f["diachi"];
-            hs.KHOI = int.Parse(f["khoi"]);
-            db.HOC_SINH.Add(hs);
-            bASE.create_TAI_KHOAN(hs.MA_HS);
-            db.SaveChanges();
             return View();
         }
         //=========================================================

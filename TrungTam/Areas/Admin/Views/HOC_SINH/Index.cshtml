@@ -1,5 +1,6 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.HOC_SINH>
-
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.HOC_SINH>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.HOC_SINH>
+@using PagedList.Mvc;    
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
@@ -74,6 +75,7 @@
             }
         </tbody>
     </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
 </div>
 
 <!-- Modal -->
@@ -112,7 +114,11 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">
+                            @*<input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">*@
+                            <select class="form-control" name="Gioitinh">
+                                <option>Nam</option>
+                                <option>Nữ</option>
+                            </select>
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>

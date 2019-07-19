@@ -9,7 +9,7 @@
     var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
     var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;    
 }
-<link href="~/Content/dropdown.css" rel="stylesheet" />
+@*<link href="~/Content/dropdown.css" rel="stylesheet" />*@
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
 <div class="card-body">
     <div class="row mb-3">
@@ -83,16 +83,15 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="makhoi">
+                            
+                                <select class="form-control" name="makhoi">
                                     Chọn tên khối
                                     @foreach (var item in listkhoi)
                                     {
                                         <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
                                     }
                                 </select>
-                            </div>
-                        </div>
+                            </div>             
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="form-group">
@@ -101,15 +100,14 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="maloai">
+                            
+                                <select class="form-control" name="maloai">
                                     @foreach (var item in listloailop)
                                     {
                                         <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
                                     }
                                 </select>
                             </div>
-                        </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="form-group">
@@ -118,14 +116,13 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="mamon">
+                            
+                                <select class="form-control" name="mamon">
                                     @foreach (var item in listmonhoc)
                                     {
                                         <option value="@item.MA_MON">@item.TEN_MON</option>
                                     }
                                 </select>
-                            </div>
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
@@ -134,7 +131,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Tên lớp ">
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn giá">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
@@ -143,7 +140,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="number" name="sobuoi" id="sobuoi" class="form-control input-sm" placeholder="Tên lớp ">
+                            <input type="number" name="sobuoi" id="sobuoi" class="form-control input-sm" placeholder="Số buổi">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>

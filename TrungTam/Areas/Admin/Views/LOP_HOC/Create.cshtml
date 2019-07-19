@@ -1,76 +1,173 @@
-﻿@model TrungTam.Areas.Admin.Models.LOP_HOC
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var listkhoi = (List<TrungTam.Areas.Admin.Abstracts.HocPhi_Khoi>)ViewBag.listkhoi;
+    var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
+    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;
+    var listgiaovien = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgiaovien;
 }
 
-<h2>Create</h2>
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>LOP_HOC</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.TEN_LOP, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.TEN_LOP, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.TEN_LOP, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.SI_SO, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.SI_SO, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.SI_SO, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MA_LOAI, "MA_LOAI", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MA_LOAI", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_LOAI, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MA_MON, "MA_MON", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MA_MON", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_MON, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MA_KHOI, "MA_KHOI", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MA_KHOI", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_KHOI, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MA_GV, "MA_GV", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("MA_GV", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.MA_GV, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+<link href="~/Content/dropdown.css" rel="stylesheet" />
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Mở lớp</button>
+<div class="card-body">
+    <div class="row mb-3">
+        <div class="col">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Giá" id="searchName">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
+                </div>
             </div>
         </div>
     </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-primary">
+            <tr>
+                <th class="nowrap">
+                    <span class="mr-1">Tên lớp</span>
+                </th>
+                <th>Loại lớp</th>
+                <th>Tên môn</th>
+                <th>Tên khối</th>
+                <th>Tên giáo viên</th>
+                <th>Sỉ số</th>
+                <th><em class="fa fa-cog"></em></th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach">
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TEN_LOP)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LOAI_LOP.TEN_LOAI)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.GIAO_VIEN.HO_TEN)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.SI_SO)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.MA_LOP }) |
+                        @Html.ActionLink("Details", "Details", new { id = item.MA_LOP }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.MA_LOP })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 </div>
+<!--Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title " id="exampleModalLabel">Lớp học</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/LOP_HOC/Create" method="post" role="form">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="tenlop" id="tenlop" class="form-control input-sm" placeholder="Tên lớp ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="makhoi">
+                                    Chọn tên khối
+                                    @foreach (var item in listkhoi)
+                                    {
+                                        <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="maloai">
+                                    @foreach (var item in listloailop)
+                                    {
+                                        <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="mamon">
+                                    @foreach (var item in listmonhoc)
+                                    {
+                                        <option value="@item.MA_MON">@item.TEN_MON</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+                            <div class="dropdown">
+                                <select class="dropdown-select" name="magiaovien">
+                                    @foreach (var item in listgiaovien)
+                                    {
+                                        <option value="@item.MA_GV">@item.HO_TEN</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Mở lớp</button>
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>
+

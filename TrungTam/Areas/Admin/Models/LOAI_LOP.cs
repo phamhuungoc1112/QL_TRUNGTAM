@@ -18,16 +18,13 @@ namespace TrungTam.Areas.Admin.Models
         public LOAI_LOP()
         {
             this.BANG_GIA_HOC_PHI = new HashSet<BANG_GIA_HOC_PHI>();
-            this.LOP_HOC = new HashSet<LOP_HOC>();
         }
     
         public System.Guid MA_LOAI { get; set; }
-        public string TEN_LOAI { get; set; }
         public Nullable<int> SI_SO { get; set; }
+        public string TEN_LOAI { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BANG_GIA_HOC_PHI> BANG_GIA_HOC_PHI { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
     }
 }

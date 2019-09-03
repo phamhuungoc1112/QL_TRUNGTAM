@@ -18,7 +18,11 @@ namespace TrungTam
                 url: "Admin/{controller}/{action}/{id}",
                 defaults: new { controller = "BANG_LUONG", action = "Index", id = UrlParameter.Optional }
             );
-
+           // routes.MapRoute(
+           //    name: "Details",
+           //    url: "Admin/{controller}/{action}/{id}",
+           //    defaults: new { controller = "CONG_NO", action = "Details", id = UrlParameter.Optional }
+           //);
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",

@@ -61,7 +61,7 @@
                     @Html.DisplayFor(modelItem => item.DIA_CHI)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TAI_KHOAN.TAI_KHOAN1)
+                    @Html.DisplayFor(modelItem => item.TAI_KHOAN.TEN)
                 </td>
                 <td>
                     <button id="btnCapNhatNV" type="button" class="btn btn-success">
@@ -166,6 +166,15 @@
                             <input type="text" name="diachi" id="diachi" class="form-control input-sm" placeholder="Địa chỉ">
                         </div>
                         <span class="sp-thongbao" id="tbdiachi"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="username" id="name" class="form-control input-sm" placeholder="Tên đăng nhập (viết liền không dấu)">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
                     </div>
 </div>
             <div class="modal-footer" id="modal-footer">

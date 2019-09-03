@@ -15,45 +15,11 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
         // GET: Admin/MON_HOC
-        public ActionResult Index(int page = 1, int pageSize = 10)
+        public ActionResult Index(int page = 1, int pageSize = 7)
         {
             return View(db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToPagedList(page, pageSize));
         }
-
-        // GET: Admin/MON_HOC/Details/5
-        public ActionResult Details(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MON_HOC mON_HOC = db.MON_HOC.Find(id);
-            if (mON_HOC == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mON_HOC);
-        }
-
-        // GET: Admin/MON_HOC/Create    
-
-        // POST: Admin/MON_HOC/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_MON,TEN_MON")] MON_HOC mON_HOC)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        mON_HOC.MA_MON = Guid.NewGuid();
-        //        db.MON_HOC.Add(mON_HOC);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(mON_HOC);
-        //}
+  
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection f)
@@ -98,33 +64,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 return RedirectToAction("Index");
             }
             return View(mON_HOC);
-        }
-
-        // GET: Admin/MON_HOC/Delete/5
-        public ActionResult Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            MON_HOC mON_HOC = db.MON_HOC.Find(id);
-            if (mON_HOC == null)
-            {
-                return HttpNotFound();
-            }
-            return View(mON_HOC);
-        }
-
-        // POST: Admin/MON_HOC/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            MON_HOC mON_HOC = db.MON_HOC.Find(id);
-            db.MON_HOC.Remove(mON_HOC);
-            db.SaveChanges();
-            return RedirectToAction("Index");
-        }
+        } 
 
         protected override void Dispose(bool disposing)
         {

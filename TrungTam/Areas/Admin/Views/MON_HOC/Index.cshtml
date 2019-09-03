@@ -6,30 +6,20 @@
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Môn học</h2>
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
     Thêm Môn Học
 </button>
-<div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên Môn Học" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
+<div class="card-body">    
     <table class="table table-bordered table-hover myTable">
         <thead class="text-primary">
             <tr>
-                <th class="nowrap">
+                @*<th class="nowrap">
                     <span class="mr-1">Mã Môn Học</span>
-                </th>
+                </th>*@
                 <th>Tên Môn Học</th>
-                <th><em class="fa fa-cog"></em></th>>    
+                <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>        
         <tbody id="tableDanhSach">
@@ -39,9 +29,7 @@
             @Html.DisplayFor(modelItem => item.TEN_MON)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.MA_MON }) |
-            @Html.ActionLink("Details", "Details", new { id=item.MA_MON }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.MA_MON })
+            @Html.ActionLink("Edit", "Edit", new { id=item.MA_MON })                
         </td>
     </tr>
 }

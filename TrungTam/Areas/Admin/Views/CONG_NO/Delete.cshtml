@@ -1,0 +1,65 @@
+﻿@model TrungTam.Areas.Admin.Models.CONG_NO
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CONG_NO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.TEN_CONG_NO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TEN_CONG_NO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TONG_TIEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TONG_TIEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.NGAY_THANH_TOAN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.NGAY_THANH_TOAN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HOC_SINH.HO_TEN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HOC_SINH.HO_TEN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.KHUYEN_MAI.TEN_KM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.KHUYEN_MAI.TEN_KM)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

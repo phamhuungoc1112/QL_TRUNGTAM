@@ -18,30 +18,29 @@ namespace TrungTam.Areas.Admin.Models
         public LOP_HOC()
         {
             this.BUOI_HOC = new HashSet<BUOI_HOC>();
+            this.CT_CONG_NO = new HashSet<CT_CONG_NO>();
+            this.CT_LOP_HOC = new HashSet<CT_LOP_HOC>();
             this.THOI_KHOA_BIEU = new HashSet<THOI_KHOA_BIEU>();
-            this.CONG_NO = new HashSet<CONG_NO>();
-            this.HOC_SINH = new HashSet<HOC_SINH>();
         }
     
         public System.Guid MA_LOP { get; set; }
         public string TEN_LOP { get; set; }
         public Nullable<int> SI_SO { get; set; }
-        public Nullable<System.Guid> MA_LOAI { get; set; }
-        public Nullable<System.Guid> MA_MON { get; set; }
-        public Nullable<System.Guid> MA_KHOI { get; set; }
+        public Nullable<System.DateTime> NGAY_AP_DUNG { get; set; }
         public string MA_GV { get; set; }
+        public Nullable<System.DateTime> NGAY_KET_THUC { get; set; }
+        public Nullable<System.DateTime> NGAY_BAT_DAU { get; set; }
+        public Nullable<short> TRANG_THAI { get; set; }
     
+        public virtual BANG_GIA_HOC_PHI BANG_GIA_HOC_PHI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CT_CONG_NO> CT_CONG_NO { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CT_LOP_HOC> CT_LOP_HOC { get; set; }
         public virtual GIAO_VIEN GIAO_VIEN { get; set; }
-        public virtual KHOI_LOP KHOI_LOP { get; set; }
-        public virtual LOAI_LOP LOAI_LOP { get; set; }
-        public virtual MON_HOC MON_HOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<THOI_KHOA_BIEU> THOI_KHOA_BIEU { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CONG_NO> CONG_NO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HOC_SINH> HOC_SINH { get; set; }
     }
 }

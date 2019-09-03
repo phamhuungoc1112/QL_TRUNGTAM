@@ -1,0 +1,74 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var chonlop = (List<TrungTam.Areas.Admin.Abstracts.THOI_KHOA_BIEU_LOP_HOC>)ViewBag.chonlop;
+    var lop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.Lop;
+}
+
+<body>
+ 
+    <div id="container" style="min-width: 300px; height: 400px; margin: 0 auto"></div>
+    <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+    <table id="datatable">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Jane</th>
+                <th>John</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th>Apples</th>
+                <td>3</td>
+                <td>4</td>
+            </tr>
+            <tr>
+                <th>Pears</th>
+                <td>2</td>
+                <td>0</td>
+            </tr>
+            <tr>
+                <th>Plums</th>
+                <td>5</td>
+                <td>11</td>
+            </tr>
+            <tr>
+                <th>Bananas</th>
+                <td>1</td>
+                <td>1</td>
+            </tr>
+            <tr>
+                <th>Oranges</th>
+                <td>2</td>
+                <td>4</td>
+            </tr>
+        </tbody>
+    </table>
+    <script type="text/javascript">
+        Highcharts.chart('container', {
+            data: {
+                table: 'datatable'
+            },
+            chart: {
+                type: 'column'
+            },
+            title: {
+                text: 'Data extracted from a HTML table in the page'
+            },
+            yAxis: {
+                allowDecimals: false,
+                title: {
+                    text: 'Units'
+                }
+            },
+            tooltip: {
+                formatter: function () {
+                    return '<b>' + this.series.name + '</b><br/>' +
+                        this.point.y + ' ' + this.point.name.toLowerCase();
+                }
+            }
+        });
+    </script>
+</body>

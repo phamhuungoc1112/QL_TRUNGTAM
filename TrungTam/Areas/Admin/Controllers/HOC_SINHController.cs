@@ -40,7 +40,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/HOC_SINH/Create
         public ActionResult Create()
         {
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU");
+            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU");
             return View();
         }
 
@@ -86,7 +86,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 hs.DIA_CHI = f["diachi"];
                 hs.KHOI = int.Parse(f["khoi"]);
                 db.HOC_SINH.Add(hs);
-                bASE.create_TAI_KHOAN(hs.MA_HS);
+                bASE.create_TAI_KHOAN(hs.MA_HS,f["username"],"HS");
                 db.SaveChanges();
                 return RedirectToAction("Index", "HOC_SINH", new { area = "Admin" });
             }
@@ -105,7 +105,7 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
+            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU", hOC_SINH.MA_HS);
             return View(hOC_SINH);
         }
 
@@ -122,7 +122,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
+            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU", hOC_SINH.MA_HS);
             return View(hOC_SINH);
         }
 

@@ -1,351 +1,64 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
+﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>*@
+@model PagedList.IPagedList<TrungTam.Areas.Admin.Abstracts.LopHoc_New>
+    @using PagedList.Mvc;
+    @{
+        ViewBag.Title = "Index";
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
 
-@{
-    ViewBag.Title = "Create";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
-    var listkhoi = (List<TrungTam.Areas.Admin.Abstracts.HocPhi_Khoi>)ViewBag.listkhoi;
-    var listloailop = (List<TrungTam.Areas.Admin.Abstracts.HocPhi_LoaiLop>)ViewBag.listloailop;
-    var listmonhoc = (List<TrungTam.Areas.Admin.Abstracts.HocPhi_MonHoc>)ViewBag.listmonhoc;
-    var listgiaovien = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgiaovien;
-    var listbanghp = (List<TrungTam.Areas.Admin.Abstracts.BangHP_Khoi_Loai_Mon>)ViewBag.listbanghp;
-    var listHocSinh = (List<TrungTam.Areas.Admin.Models.HOC_SINH>)ViewBag.listHocSinh;
-}
-<script src="https://code.jquery.com/jquery-latest.js"></script>
-<h2>Mở lớp</h2>
-<div class="container">    
+    <h2>Danh sách các lớp</h2>
 
-        @*@Html.AntiForgeryToken()*@       
-        <div class="well well-sm">
-            <h4>Thông tin lớp</h4>
-            <hr />
-            <table class="table table-bordered table-hover myTable">
-                <thead class="text-primary">
-                    <tr>
-                        <th class="nowrap">
-                            <span class="mr-1">Tên khối</span>
-                        </th>
-                        <th>Loại lớp</th>
-                        <th>Tên môn</th>
-                        <th>Đơn giá</th>
-                        <th>Số buổi</th>
-                        <th><em class="fa fa-cog"></em></th>
-                    </tr>
-                </thead>
-                <tbody id="tableBangHP">
-                    @foreach (var item in listbanghp)
-                    {
-                        <tr id="onRow">
-                            <td>
-                                @item.TEN_KHOI
-                                <input type="hidden" name="khoi" value="@{@item.MA_KHOI} " />
-                            </td>
-                            <td>
-                                @item.TEN_MON
-                                <input type="hidden" name="mon" value="@{@item.MA_MON} "/>
-                            </td>
-                            <td>
-                                @item.TEN_LOAI
-                                <input type="hidden" name="loai" value="@{@item.MA_LOAI} " />
-                            </td>
-                            <td>
-                                @item.DON_GIA
-                            </td>
-                            <td id="buoi">
-                                @item.SO_BUOI
-                            </td>
-                            <td>
-                                <input id="ChonBanghp" class="custom-radio" type="radio" name="banggia" value="@item.SO_BUOI"/>
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-            <div class="form-control-lg">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                    </div>
-                    <input type="text" name="tenlop" id="tenlop" class="form-control input-sm" placeholder="Tên lớp ">
-                </div>
-                <span class="sp-thongbao" id="tbTen"></span>
-            </div>
-            <div class="form-control-lg">
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                    </div>
-                    @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                    <select class="form-control" id="magiaovien" name="magiaovien">
-                        @foreach (var item in listgiaovien)
-                        {
-                            <option value="@item.MA_GV">@item.HO_TEN</option>
-                        }
-                    </select>
-                </div>
-                <span class="sp-thongbao" id="tbTen"></span>
-            </div>
-        </div>
- </div>
-        <hr />
-        <div class="row">            
-            <div class="col-sm-6">
+    <table class="table">
+        <tr>
+            <th>
+                Tên lớp
+            </th>
+            <th>
+                Sỉ số
+            </th>
+            <th>
+                Giáo viên
+            </th>
+            <th>
+                Khối
+            </th>
+            <th>
+                Loại
+            </th>
+            <th>
+                Môn
+            </th>
+            <th></th>
+        </tr>
 
-                @*======================*@
-                <h4>Thời gian học</h4>
-                <br />
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                        </div>
-                        <select class="form-control" name="thu" id="thu"></select>
-                    </div>
-                    <span class="sp-thongbao" id="tbTen"></span>
-                </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                        </div>
-                        <input type="time" name="tgbd" id="tgbd" class="form-control input-sm" placeholder="Tên lớp ">
-                    </div>
-                    <span class="sp-thongbao" id="tbTen"></span>
-                </div>
-                <div class="form-group">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                        </div>
-                        <input type="time" name="tgkt" id="tgkt" class="form-control input-sm" placeholder="Tên lớp ">
-                    </div>
-                    <span class="sp-thongbao" id="tbTen"></span>
-                </div>
-                <button class="btn btn-success" id="them" type="button">Thêm</button>
-                <button class="btn btn-danger" type="button" id="xoa">Xóa</button>
-                <table class="table table-bordered table-hover myTable" id="tkb">
-                    <thead class="text-primary">
-                        <tr id="abc">
-                            <th class="nowrap">
-                                <span class="mr-1">Thứ</span>
-                            </th>
-                            <th>
-                                <span class="mr-1">Thời gian bắt đầu</span>
-                            </th>
-                            <th>
-                                <span class="mr-1">Thời gian kết thúc</span>
-                            </th>
-                            <th>
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="tableDanhSach1"></tbody>
-                </table>
-            </div>               
-            @*=========================*@
-            <div class="col-sm-6">
-                <h4>Danh sách học sinh</h4>
-                <br />   
-                    <div class="row mb-2">
-                        <div class="col-sm-3">
-                            <select class="form-control" name="khoi">
-                                @foreach (var i in listkhoi)
-                                {
-                                    <option value="@i.MA_KHOI">
-                                        @i.TEN_KHOI
-                                    </option>
-                                }
-                            </select>
-                        </div>
-                        <div class="col-sm-4">
-                            <select class="form-control" name="goiy">
-                                <option value="1">
-                                    Gợi ý
-                                </option>
-                                <option value="0">Không gợi ý</option>
-                            </select>
-                        </div>
-                        <div class="col-sm-2">
-                            <button class="btn btn-primary" type="button" name="lochs">Lọc</button>
-                        </div>
-                        <div class="col-sm-3">
-                            <button class="btn btn-success" type="button" name="boloc">Bỏ lọc</button>
-                        </div>
-                    </div>   
-                <div style="overflow-y:auto; position:relative;">
-                    <table class="table table-bordered table-striped mb-0">
-                        <thead class="text-primary">
-                            <tr>
-                                <th>Họ tên</th>
-                                <th>Giới tính</th>
-                                <th>Ngày sinh</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @*@foreach (var i in listHocSinh)
-                            {
-                                <tr>
-                                    <td>
-                                        @i.HO_TEN
-                                    </td>
-                                    <td>
-                                        @i.GIOI_TINH
-                                    </td>
-                                    <td>
-                                        @i.NG_SINH
-                                    </td>
-                                </tr>
-                            }*@
-                        </tbody>
-                    </table>   
-                </div>
-        </div>
-            <div id="MoLop" class="col-sm-6 MoLop">
-                <button class="btn btn-success" type="button" id="molop">Mở lớp</button>
-            </div>    
-</div>
-<section>
-    <script>
-        //$('#lochs').click(function () {
-        //    $.ajax({
-        //        url: "/LOP_HOC/Ajax_Loc",
-        //        data: { Khoi: khoi, GoiY: goiy },
-        //        success: function (response) {
-
-        //        },
-        //        type: GET,
-        //        dataType: JSON
-        //    });
-        //});
-    </script>
-    <script>
-        var mangThu = new Array("Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7", "CN");
-        var m = document.getElementById("thu");
-
-        for (var i = 0; i < mangThu.length; i++) {
-            var option = document.createElement("option"), txt = document.createTextNode(mangThu[i]);
-            option.setAttribute("value", mangThu[i]);
-            option.appendChild(txt);
-            m.insertBefore(option, m.lastChild);
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenlop)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.siso)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.hoten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenkhoi)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenloai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.tenmon)
+                </td>
+                <td>
+                    @Html.ActionLink("Chi tiết lớp", "Details", new{id  = item.malop})|
+                    @Html.ActionLink("Sửa", "Edit", new { id = item.malop }) |
+                    @Html.ActionLink("Xoá", "Delete", new { id = item.malop })
+                </td>
+            </tr>
         }
-    </script>
-    <script>
-        $('#molop').click(function () {
-            bootbox.confirm({
-                title: "Thông báo",
-                message: "Bạn có muốn lưu hay không?",
-                buttons: {
-                    confirm: {
-                        label: 'Có',
-                        className: 'btn-success'
-                    },
-                    cancel: {
-                        label: 'Không',
-                        className: 'btn-danger'
-                    }
-                },
-                callback: function (result) {
-                    console.log('This was logged in the callback: ' + result);
-                    if (result) {
-                        var banghp;
-                        var check = document.getElementsByName("banggia");
-                        var i = 0;
-                        var flag = false;
-                        $('#tableBangHP tr').each(function () {
-                            if (check[i].checked) {
-                                var makhoi = $("input[name='khoi']:hidden").val();
-                                var mamon = $("input[name='mon']:hidden").val();
-                                var maloai = $("input[name='loai']:hidden").val();                       
-                                var tenlop = $("input[name='tenlop']").val();
-                                var magiaovien = $('#magiaovien').val();
-                                banghp = { makhoi: makhoi, mamon: mamon, maloai: maloai, tenlop: tenlop, magiaovien: magiaovien };
-                                flag = true;
-                            }
-                            i++;
-                            console.log(banghp);
-                        });                       
-                        if (flag) {
-                            var tkb = [];
-                            var buoi = $("input[name='banggia']:checked").val();
-                            var dongtkb = $("#tkb tr").length;
-                            console.log(dongtkb);
-                            if (buoi < dongtkb) {
-                                $('#tkb tr').each(function () {
-                                    var thu = $(this).find("td").eq(0).html();
-                                    var tgbt = $(this).find("td").eq(1).html();
-                                    var tgkt = $(this).find("td").eq(2).html();
-                                    tkb.push({ thu: thu, tgbt: tgbt, tgkt: tgkt });
-                                });
-                                //var token = $('[name=__RequestVerificationToken]').val();
-                                var ajaxBangHP = JSON.stringify(banghp);
-                                var ajaxTKB = JSON.stringify(tkb);
-                                var all = JSON.stringify({ a: ajaxBangHP, b: ajaxTKB });
-                                $.ajax({
-                                    //method:Post
-                                    url: "/LOP_HOC/Create",
-                                    type: 'POST',
-                                    dataType: "JSON",
-                                    traditional: true,
-                                    data:  all,
-                                    contentType: "application/json; chartset=utf-8",
-                                    success: function (response) {
-                                        //$(response).each(function (i, e) {
-                                        //    console.log(e.magiaovien);
-                                        //})
-                                        bootbox.alert("Mở lớp thành công!");
-                                    },
-                                    error: function (xhr, ajaxOptions, thrownError) {
-                                        bootbox.alert("Mở lớp thất bại!");
-                                    }
-                                });
-                            } else {
-                                bootbox.alert("Bạn chưa sắp đủ thời khóa biểu");
-                                banghp = null;
-                            }
-                        } else {
-                            bootbox.alert("Bạn chưa chọn giá học phí");
-                            banghp = null;
-                        }
-                    }
-                }
-            });
-        });
-        $('#them').click(function () {
-            //$('#tableBangHP tr').each(function () {
-            //    //var i = $(this).find("td").eq(5).val();
-            //    //alert(i);
-            //    if ($('input[name="banggia"]:checked').val()) {
-            //        alert("yeah");
-            //    }
-            //});
-            var i = $("input[name='banggia']:checked").val();
-            var tkb = $("#tkb tr").length;
-            //alert(tkb);
-            if (i >= tkb) {                           
-                var thu = $('#thu').val();
-                var tkbd = $('#tgbd').val();
-                var tgkt = $('#tgkt').val();
-                var tb = document.getElementById("tableDanhSach1");
-                var tr = document.createElement("tr");
-                //var td = document.createElement("td"), txt = document.createTextNode(thu);
-                //td.appendChild(txt);
-                //tb.appendChild(tr);
-                var td = "<tr id = 'tkb'><td>" + thu + "</td><td>" + tkbd + "</td><td>" + tgkt + "</td><td><input type='checkbox' name='record' /></td></tr>";
-                console.log(td);
-                //$('tbody #tableDanhSach1').add(td).appendTo('tbody #tableDanhSach1');
-                $('#tableDanhSach1').append(td);
-            //if ($('tr').getElementById() != "abc")
-                //$('tr').add(td).appendTo('tbody');
-            }
-        });
-        $('#xoa').click(function () {
-            $('table tbody').find('input[name="record"]').each(function () {
-                if ($(this).is(":checked")) {
-                    $(this).parents("tr").remove();
-                }
-            });
 
-        });
-
-    </script>
-</section>
+    </table>
+    @Html.PagedListPager(Model, page => Url.Action("Index", new {page}))        

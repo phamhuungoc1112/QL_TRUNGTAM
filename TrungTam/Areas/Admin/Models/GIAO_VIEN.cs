@@ -17,6 +17,7 @@ namespace TrungTam.Areas.Admin.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public GIAO_VIEN()
         {
+            this.BUOI_HOC = new HashSet<BUOI_HOC>();
             this.HOA_DON = new HashSet<HOA_DON>();
             this.LOP_HOC = new HashSet<LOP_HOC>();
             this.NGOAI_GIO = new HashSet<NGOAI_GIO>();
@@ -29,12 +30,14 @@ namespace TrungTam.Areas.Admin.Models
         public string EMAIL { get; set; }
         public Nullable<System.DateTime> NG_SINH { get; set; }
     
-        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<HOA_DON> HOA_DON { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NGOAI_GIO> NGOAI_GIO { get; set; }
+        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
     }
 }

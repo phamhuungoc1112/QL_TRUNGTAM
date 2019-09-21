@@ -18,7 +18,14 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/HOC_SINH
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
-            var hOC_SINH = db.HOC_SINH.Include(h => h.TAI_KHOAN);
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9' && id.First() != '8')
+            {
+                return Redirect("/Home/Index");
+            }
+            var hOC_SINH = db.HOC_SINH;
             return View(hOC_SINH.OrderByDescending(m=>m.MA_HS).ToPagedList(page,pageSize));
         }
 
@@ -40,27 +47,8 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/HOC_SINH/Create
         public ActionResult Create()
         {
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU");
             return View();
         }
-
-        // POST: Admin/HOC_SINH/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        db.HOC_SINH.Add(hOC_SINH);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
-        //    return View(hOC_SINH);
-        //}
         //=========================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -85,8 +73,9 @@ namespace TrungTam.Areas.Admin.Controllers
                 hs.PHU_HUYNH = f["phuhuynh"];
                 hs.DIA_CHI = f["diachi"];
                 hs.KHOI = int.Parse(f["khoi"]);
+                hs.SDT_PH = f["sdt_ph"];
                 db.HOC_SINH.Add(hs);
-                bASE.create_TAI_KHOAN(hs.MA_HS);
+                bASE.create_TAI_KHOAN(hs.MA_HS,f["SDT"]);
                 db.SaveChanges();
                 return RedirectToAction("Index", "HOC_SINH", new { area = "Admin" });
             }
@@ -105,7 +94,6 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
             return View(hOC_SINH);
         }
 
@@ -122,36 +110,21 @@ namespace TrungTam.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", hOC_SINH.MA_HS);
+            ViewBag.MA_HS = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU", hOC_SINH.MA_HS);
             return View(hOC_SINH);
         }
 
         // GET: Admin/HOC_SINH/Delete/5
+        [HttpPost]
         public ActionResult Delete(string id)
         {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            HOC_SINH hOC_SINH = db.HOC_SINH.Find(id);
-            if (hOC_SINH == null)
-            {
-                return HttpNotFound();
-            }
-            return View(hOC_SINH);
-        }
-
-        // POST: Admin/HOC_SINH/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
-        {
-            HOC_SINH hOC_SINH = db.HOC_SINH.Find(id);
-            db.HOC_SINH.Remove(hOC_SINH);
+            HOC_SINH hs = db.HOC_SINH.Find(id);
+            db.HOC_SINH.Remove(hs);
+            TAI_KHOAN tAI_KHOAN = db.TAI_KHOAN.Find(id);
+            db.TAI_KHOAN.Remove(tAI_KHOAN);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
         protected override void Dispose(bool disposing)
         {
             if (disposing)

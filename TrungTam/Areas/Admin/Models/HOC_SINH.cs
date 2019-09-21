@@ -19,25 +19,26 @@ namespace TrungTam.Areas.Admin.Models
         {
             this.CONG_NO = new HashSet<CONG_NO>();
             this.CT_BUOIHOC = new HashSet<CT_BUOIHOC>();
-            this.LOP_HOC = new HashSet<LOP_HOC>();
+            this.CT_LOP_HOC = new HashSet<CT_LOP_HOC>();
         }
     
         public string MA_HS { get; set; }
         public string HO_TEN { get; set; }
-        public Nullable<System.DateTime> NG_SINH { get; set; }
+        public System.DateTime NG_SINH { get; set; }
         public string GIOI_TINH { get; set; }
         public Nullable<int> KHOI { get; set; }
         public string TRUONG { get; set; }
         public string SDT { get; set; }
         public string DIA_CHI { get; set; }
         public string PHU_HUYNH { get; set; }
+        public string SDT_PH { get; set; }
+        public Nullable<System.DateTime> NG_VAO_HOC { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONG_NO> CONG_NO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_BUOIHOC> CT_BUOIHOC { get; set; }
-        public virtual TAI_KHOAN TAI_KHOAN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
+        public virtual ICollection<CT_LOP_HOC> CT_LOP_HOC { get; set; }
     }
 }

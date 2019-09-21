@@ -1,0 +1,55 @@
+﻿@model IEnumerable<TrungTam.Areas.Admin.Abstracts.ReportDanhGia>
+@{
+    Layout = "~/Areas/Admin/Views/Shared/_layout_report.cshtml";
+    var lop = @Model.ToList();
+    var solop = Model.Select(i => i.tengv).Distinct().Count();
+}
+
+@if (Model != null)
+{
+    <div>PHIẾU BÁO CÁO KẾT QUẢ HỌC TẬP THÁNG</div>
+    <div>Kính gửi phụ huynh học viên: @lop[1].tenhs</div>
+    <div>A. Tình hình học tập</div>
+    for (int i = 0; i <= solop; i++)
+    {
+        <div>@lop[i].tenlop</div>
+        //foreach (var m in mon)
+        //{
+        <div>@lop[i].tenmon</div>
+        <div>
+            <table class="table table-bordered table-responsive">
+                <thead>
+                    <tr>
+                        <td>
+                            Buổi thứ
+                        </td>
+                        <td>Giáo viên phụ trách</td>
+                        <td>Điểm danh</td>
+                        <td>Bài tập về nhà</td>
+                        <td>Nhận xét</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var ct in Model)
+                    {
+                        if (lop[i].tenlop == ct.tenlop)
+                        {
+                            <tr>
+                                <td>@ct.buoihoc</td>
+                                <td>@ct.tengv</td>
+                                <td>@ct.diemdanh</td>
+                                <td>@ct.btvn</td>
+                                <td>@ct.nhanxet</td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+        //}
+    }
+}
+<div>Học phí tháng 8:</div>
+<div>Giám đốc tổ chức</div>
+
+

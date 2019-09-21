@@ -1,67 +1,223 @@
 ﻿@model TrungTam.Areas.Admin.Models.LOP_HOC
 
 @{
-    ViewBag.Title = "Details";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
-}
+        ViewBag.Title = "Details";
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+        var list_hocsinh = (List<TrungTam.Areas.Admin.Abstracts.Hoc_Sinh>)ViewBag.list_hocsinh;
+        var listTKB = (List<TrungTam.Areas.Admin.Abstracts.ThoiKhoaBieu>)ViewBag.listTKB;
+        string[] mangThu = { "CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7" };
+    }
 
 <h2>Details</h2>
+<script>
+    var mangThu = new Array("CN", "Thứ 2", "Thứ 3", "Thứ 4", "Thứ 5", "Thứ 6", "Thứ 7");
+    var m = document.getElementById("thu");
 
-<div>
-    <h4>LOP_HOC</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.TEN_LOP)
-        </dt>
+    for (var i = 0; i < mangThu.length; i++) {
+        var option = document.createElement("option"), txt = document.createTextNode(mangThu[i]);
+    option.setAttribute("value", i);
+        option.appendChild(txt);
+        m.insertBefore(option, m.lastChild);
+    }
+</script>
+<div class="col-sm-12">
+    <div class="form-group">
+        <div class="ui-widget">
+            <label for="tenhocvien">Học viên</label>
+            <input class="col-sm-2" type="text" name="tenhocvien" id="tenhocvien" value="" />
+            <button type="button" id="timkiem"><i class="fas fa-search"></i></button>
+        </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.TEN_LOP)
-        </dd>
+    </div>
+    <br />
+    @*ẩn hiện kết quả tìm kiếm*@
+    <div style="display:none;" id="ketquatim">
+        <h4>Kết quả tìm kiếm</h4>
+        <table class="table table-bordered table-hover table-responsive" id="ketquatimkiem">
+            <thead class="text-primary">
+                <tr>
+                    <th class="nowrap">
+                        <span class="mr-1">Mã học viên</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Họ tên</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Số điện thoại</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1"></span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="danhsachTimkiem"></tbody>
+        </table>
+    </div>
+    <div>
+        <h4>Danh sách học viên</h4>
+        <table class="table table-bordered table-hover" id="danhsachhocvien">
+            <thead class="text-primary">
+                <tr>
+                    <th class="nowrap">
+                        <span class="mr-1">Mã học viên</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Họ tên</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Ngày sinh</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Giới tính</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Số điện thoại</span>
+                    </th>
+                    <th class="nowrap">
+                        <span class="mr-1">Phụ huynh</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (list_hocsinh != null)
+                {
+                    foreach (var item in list_hocsinh)
+                    {
+                        <tr>
+                            <td>
+                                @item.mahs
 
-        <dt>
-            @Html.DisplayNameFor(model => model.SI_SO)
-        </dt>
+                            </td>
+                            <td>
+                                @item.hoten
+                            </td>
+                            <td>
+                                @item.ngaysinh.ToString("dd/MM/yyyy")
+                            </td>
+                            <td>
+                                @item.gioitinh
+                            </td>
+                            <td>
+                                @item.sdt
+                            </td>
+                            <td>
+                                @item.phuhuynh
+                            </td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
 
-        <dd>
-            @Html.DisplayFor(model => model.SI_SO)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.GIAO_VIEN.HO_TEN)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.GIAO_VIEN.HO_TEN)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.KHOI_LOP.TEN_KHOI)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.KHOI_LOP.TEN_KHOI)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LOAI_LOP.TEN_LOAI)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LOAI_LOP.TEN_LOAI)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MON_HOC.TEN_MON)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MON_HOC.TEN_MON)
-        </dd>
-
-    </dl>
+    </div>
+    <br />
+    <div>
+        <div>
+            <select class="form-control" name="thu" id="thu"></select>
+        </div>
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th>Thứ</th>
+                    <th>Thời gian bắt đầu</th>
+                    <th>Thời gian kết thúc</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var i in listTKB)
+                {
+                    <tr>
+                        <td>@mangThu[i.thu]</td>
+                        <td>@i.tgbt</td>
+                        <td>@i.tgkt</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.MA_LOP }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<section>
+
+    @*trường hợp thêm html vào sau khi load trang lệnh click không ăn*@
+    <script>
+        $("table tbody").on("click", "button.themvaolop" ,function () {
+            var mahs = $('#mahs').val();
+            var malop = $('#malop').val();
+            var tong = mahs + malop;
+            //console.log(sum);
+            $.ajax({
+                url: "/LOP_HOC/Add",
+                type: "POST",
+                dataType: "JSON",
+                traditional: true,
+                data: { tong: tong },
+                //contentType: "application/json; chartset=utf-8",
+                success: function (response) {
+                    bootbox.alert({
+                        message: "Thêm vào lớp thành công",
+                        callback: function () {
+                                location.reload();
+                        }
+                    });
+                },
+                error: function () {
+                    bootbox.alert("Thêm vào lớp không thành công");
+                }
+            });
+        });
+        $("#timkiem").click(function () {
+            var ten = $("#tenhocvien").val();
+            var malop = "@Model.MA_LOP";
+            var search = malop + ten;
+            console.log(search);
+            if (ten != '') {
+                $.ajax({
+                url: "/LOP_HOC/Search",
+                type: "POST",
+                dataType: "JSON",
+                traditional: true,
+                data: { search: search },
+                success: function (response) {
+                    $("#ketquatim").show();
+                    $('table tbody').find('button[id="themvaolop"]').each(function () {
+                        $(this).parents("tr").remove();
+                    });
+                    if (response != null) {
+                        $(response).each(function (i, e) {
+                        var td = "<tr><td><input type='hidden' id='mahs' name='mahs' value='" + e.mahs + "' />" + e.mahs + "</td><td><input type='hidden' id='malop' name='malop' value='@Model.MA_LOP' />" + e.hoten + "</td><td>" + e.sdt + "</td><td><button class='btn btn-primary themvaolop' type='button' id='themvaolop'>Thêm</button></td></tr>";
+                        $("#danhsachTimkiem").append(td);
+                    });
+                    }
+                }
+            })
+            }
+        });
+        $("#tenhocvien").autocomplete({
+            minLength:0,
+            source: function (request, response) {
+                $.ajax({
+                    url: "/LOP_HOC/ListName",
+                    dataType: "json",
+                    data: {
+                        q: request.term
+                    },
+                    success: function (res) {
+                        response(res.data)
+                    }
+                });
+            },
+            focus: function (event, ui) {
+                $("#tenhocvien").val(ui.item.label);
+                return false;
+            },
+            select: function (event, ui) {
+                $("#tenhocvien").val(ui.item.label);
+                return false;
+            }
+        })
+            .autocomplete("instance")._renderItem = function (ul, item) {
+                return $("<li>").append(item.label)
+                    .appendTo(ul);
+            };
+    </script>
+</section>

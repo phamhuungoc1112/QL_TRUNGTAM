@@ -17,57 +17,42 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/BANG_GIA_HOC_PHI
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9' && id.First() != '8')
+            {
+                return Redirect("/Home/Index");
+            }
             var bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Include(b => b.KHOI_LOP).Include(b => b.LOAI_LOP).Include(b => b.MON_HOC);
-            ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m=>m.TEN_KHOI).ToList();
+            ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
             ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
             ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
-            return View(bANG_GIA_HOC_PHI.OrderByDescending(m=>m.DON_GIA).ToPagedList(page, pageSize));
+            return View(bANG_GIA_HOC_PHI.OrderByDescending(m => m.NGAY_AP_DUNG).ToPagedList(page, pageSize));
         }
 
-        // GET: Admin/BANG_GIA_HOC_PHI/Details/5
-        public ActionResult Details(Guid? id)
+
+        [HttpPost]
+        public ActionResult Delete(string ngayap)
         {
-            if (id == null)
+            var ngay = DateTime.Parse(ngayap);
+            var ngay_new = ngay.ToString("dd/MM/yyyy HH:mm:ss");
+            var ngay_sudung = DateTime.Parse(ngay_new);
+            var lOP_HOC = (from l in db.LOP_HOC
+                           where l.NGAY_AP_DUNG == ngay_sudung
+                           select l).Count();
+            string a = "0";
+            if (lOP_HOC == 0)
             {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Find(ngay_sudung);
+                db.BANG_GIA_HOC_PHI.Remove(bANG_GIA_HOC_PHI);
+                db.SaveChanges();
+                a = "1";
+                return Json(a, JsonRequestBehavior.AllowGet);
             }
-            BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Find(id);
-            if (bANG_GIA_HOC_PHI == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bANG_GIA_HOC_PHI);
+            return Json(a, JsonRequestBehavior.AllowGet);
         }
 
-        //// GET: Admin/BANG_GIA_HOC_PHI/Create
-        //public ActionResult Create()
-        //{
-        //    ViewBag.MA_KHOI = new SelectList(db.KHOI_LOP, "MA_KHOI", "TEN_KHOI");
-        //    ViewBag.MA_LOAI = new SelectList(db.LOAI_LOP, "MA_LOAI", "TEN_LOAI");
-        //    ViewBag.MA_MON = new SelectList(db.MON_HOC, "MA_MON", "TEN_MON");
-        //    return View();
-        //}
-
-        // POST: Admin/BANG_GIA_HOC_PHI/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_KHOI,MA_MON,MA_LOAI,DON_GIA,SO_BUOI")] BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        bANG_GIA_HOC_PHI.MA_KHOI = Guid.NewGuid();
-        //        db.BANG_GIA_HOC_PHI.Add(bANG_GIA_HOC_PHI);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    ViewBag.MA_KHOI = new SelectList(db.KHOI_LOP, "MA_KHOI", "TEN_KHOI", bANG_GIA_HOC_PHI.MA_KHOI);
-        //    ViewBag.MA_LOAI = new SelectList(db.LOAI_LOP, "MA_LOAI", "TEN_LOAI", bANG_GIA_HOC_PHI.MA_LOAI);
-        //    ViewBag.MA_MON = new SelectList(db.MON_HOC, "MA_MON", "TEN_MON", bANG_GIA_HOC_PHI.MA_MON);
-        //    return View(bANG_GIA_HOC_PHI);
-        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection f)
@@ -75,6 +60,8 @@ namespace TrungTam.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 BANG_GIA_HOC_PHI bhp = new BANG_GIA_HOC_PHI();
+                var ngayapdung = (DateTime.Now).ToString("yyyy/MM/dd HH:mm:ss");
+                bhp.NGAY_AP_DUNG = DateTime.Parse(ngayapdung);
                 bhp.MA_KHOI = Guid.Parse(f["makhoi"]);
                 bhp.MA_LOAI = Guid.Parse(f["maloai"]);
                 bhp.MA_MON = Guid.Parse(f["mamon"]);
@@ -85,68 +72,6 @@ namespace TrungTam.Areas.Admin.Controllers
                 return RedirectToAction("Index", "BANG_GIA_HOC_PHI", new { area = "Admin" });
             }
             return View();
-        }
-        // GET: Admin/BANG_GIA_HOC_PHI/Edit/5
-        public ActionResult Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Find(id);
-            if (bANG_GIA_HOC_PHI == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.MA_KHOI = new SelectList(db.KHOI_LOP, "MA_KHOI", "TEN_KHOI", bANG_GIA_HOC_PHI.MA_KHOI);
-            ViewBag.MA_LOAI = new SelectList(db.LOAI_LOP, "MA_LOAI", "TEN_LOAI", bANG_GIA_HOC_PHI.MA_LOAI);
-            ViewBag.MA_MON = new SelectList(db.MON_HOC, "MA_MON", "TEN_MON", bANG_GIA_HOC_PHI.MA_MON);
-            return View(bANG_GIA_HOC_PHI);
-        }
-
-        // POST: Admin/BANG_GIA_HOC_PHI/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_KHOI,MA_MON,MA_LOAI,DON_GIA,SO_BUOI")] BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(bANG_GIA_HOC_PHI).State = EntityState.Modified;
-                db.SaveChanges();
-                return RedirectToAction("Index");
-            }
-            ViewBag.MA_KHOI = new SelectList(db.KHOI_LOP, "MA_KHOI", "TEN_KHOI", bANG_GIA_HOC_PHI.MA_KHOI);
-            ViewBag.MA_LOAI = new SelectList(db.LOAI_LOP, "MA_LOAI", "TEN_LOAI", bANG_GIA_HOC_PHI.MA_LOAI);
-            ViewBag.MA_MON = new SelectList(db.MON_HOC, "MA_MON", "TEN_MON", bANG_GIA_HOC_PHI.MA_MON);
-            return View(bANG_GIA_HOC_PHI);
-        }
-
-        // GET: Admin/BANG_GIA_HOC_PHI/Delete/5
-        public ActionResult Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Find(id);
-            if (bANG_GIA_HOC_PHI == null)
-            {
-                return HttpNotFound();
-            }
-            return View(bANG_GIA_HOC_PHI);
-        }
-
-        // POST: Admin/BANG_GIA_HOC_PHI/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            BANG_GIA_HOC_PHI bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Find(id);
-            db.BANG_GIA_HOC_PHI.Remove(bANG_GIA_HOC_PHI);
-            db.SaveChanges();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

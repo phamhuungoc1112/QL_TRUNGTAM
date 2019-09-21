@@ -7,10 +7,10 @@
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
     var listkhoi = (List<TrungTam.Areas.Admin.Models.KHOI_LOP>)ViewBag.listkhoi;
     var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
-    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;    
+    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;
 }
 @*<link href="~/Content/dropdown.css" rel="stylesheet" />*@
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm học phí</button>
 <div class="card-body">
     <div class="row mb-3">
         <div class="col">
@@ -22,11 +22,16 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
+    <table class="table table-bordered table-responsive table-hover myTable">
+        @Html.AntiForgeryToken()
+        <thead class="text-white bg-primary">
             <tr>
+
                 <th class="nowrap">
-                    <span class="mr-1">Tên khối</span>
+                    <span class="mr-1">Ngày áp dụng</span>
+                </th>
+                <th>
+                    Tên khối
                 </th>
                 <th>Loại lớp</th>
                 <th>Tên môn</th>
@@ -40,6 +45,9 @@
             {
                 <tr>
                     <td>
+                        @Html.DisplayFor(modelItem => item.NGAY_AP_DUNG)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
                     </td>
                     <td>
@@ -49,33 +57,29 @@
                         @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DON_GIA)
+                      @string.Format("{0:0,0}" ,item.DON_GIA)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.SO_BUOI)
                     </td>
-                    <td>
-                        @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                        @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-                    </td>
+                    <td><button type="button" name="xoa" class="btn btn-danger xoa" id="xoa" value="@item.NGAY_AP_DUNG">Xoá</button></td>
                 </tr>
             }
-            </tbody>
+        </tbody>
     </table>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Thông Bảng Học Phí</h2>
+                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Bảng Học Phí</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/BANG_GIA_HOC_PHI/Create" method="post" role="form">
+                <form action="/BANG_GIA_HOC_PHI/Create" method="post" role="form" onsubmit="return ">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
@@ -83,15 +87,15 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
-                            
-                                <select class="form-control" name="makhoi">
-                                    Chọn tên khối
-                                    @foreach (var item in listkhoi)
-                                    {
-                                        <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
-                                    }
-                                </select>
-                            </div>             
+
+                            <select class="form-control" name="makhoi">
+                                Chọn tên khối
+                                @foreach (var item in listkhoi)
+                                {
+                                    <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
+                                }
+                            </select>
+                        </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="form-group">
@@ -100,14 +104,14 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            
-                                <select class="form-control" name="maloai">
-                                    @foreach (var item in listloailop)
-                                    {
-                                        <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
-                                    }
-                                </select>
-                            </div>
+
+                            <select class="form-control" name="maloai">
+                                @foreach (var item in listloailop)
+                                {
+                                    <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
+                                }
+                            </select>
+                        </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="form-group">
@@ -116,13 +120,13 @@
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
                             @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            
-                                <select class="form-control" name="mamon">
-                                    @foreach (var item in listmonhoc)
-                                    {
-                                        <option value="@item.MA_MON">@item.TEN_MON</option>
-                                    }
-                                </select>
+
+                            <select class="form-control" name="mamon">
+                                @foreach (var item in listmonhoc)
+                                {
+                                    <option value="@item.MA_MON">@item.TEN_MON</option>
+                                }
+                            </select>
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
@@ -145,7 +149,7 @@
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm học phí</button>
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                     </div>
                 </form>
@@ -155,3 +159,40 @@
         </div>
     </div>
 </div>
+@section ClientScript{
+    <script>
+        $('table tbody').on('click', 'button.xoa', function () {
+            //var token = $("[name='__RequestVerificationToken']").val();
+            bootbox.confirm({
+                message: "Bạn có chắc muốn xoá không?",
+                buttons: {
+                    confirm: {
+                        label: "Có",
+                        className: "btn btn-danger"
+                    },
+                    cancel: {
+                        label: "Không",
+                        className: "btn btn-success"
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        var ngayapdun = $('#xoa').val();
+                        $.ajax({
+                            url: "/BANG_GIA_HOC_PHI/Delete",
+                            data: { ngayap: ngayapdun },
+                            type: "POST",
+                            success: function (response) {
+                                if (response == "1") {
+                                    bootbox.alert({ message: "Xoá thành công", callback: function () { location.reload() } });
+                                } else {
+                                    bootbox.alert("Học phí bạn đang xoá đã có lớp sử dụng! Vui lòng xoá học phí khác");
+                                }
+                            }
+                        })
+                    }
+                }
+            })
+        });
+    </script>
+}

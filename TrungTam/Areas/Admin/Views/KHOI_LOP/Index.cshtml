@@ -18,8 +18,8 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
+    <table class="table table-bordered table-responsive table-hover myTable text-center">
+        <thead class="text-white bg-primary">
             <tr>
                 <th class="nowrap">
                     <span class="mr-1">Mã Khối Lớp</span>
@@ -40,9 +40,11 @@
                     @Html.DisplayFor(modelItem => item.TEN_KHOI)
                 </td>
                 <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.MA_KHOI }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.MA_KHOI }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.MA_KHOI })
+                   
+                    <a href="~/Admin/KHOI_LOP/Edit/@item.MA_KHOI" type="button" class="btn btn-warning"> Sửa @*@Html.ActionLink("Sửa", "Edit", new { id = item.MA_KHOI })*@ </a>
+
+
+                    <a href="~/Admin/KHOI_LOP/Delete/@item.MA_KHOI" type="button" class="btn btn-danger"> Xóa @*@Html.ActionLink("XoaSS", "Delete", new { id = item.MA_KHOI })*@</a>
                 </td>
             </tr>
             }
@@ -60,19 +62,19 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/KHOI_LOP/Create" method="post" role="form">
+                <form action="/KHOI_LOP/Create" method="post" role="form" onsubmit="return themKhoi()">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            <input type="text" name="tenkhoi" id="tenkhoi" class="form-control input-sm" placeholder="Loại Lương ">
+                            <input type="text" name="tenkhoi" id="tenkhoi" class="form-control input-sm" placeholder="Khối lớp ">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbKhoi"></span>
                     </div>                   
                     <div class="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>                        
+                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Khối</button>                        
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                     </div>
                 </form>

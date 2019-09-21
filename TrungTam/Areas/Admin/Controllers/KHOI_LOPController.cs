@@ -17,6 +17,13 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/KHOI_LOP
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9')
+            {
+                return Redirect("/Home/Index");
+            }
             return View(db.KHOI_LOP.OrderByDescending(m=> m.TEN_KHOI).ToPagedList(page, pageSize));
         }
 

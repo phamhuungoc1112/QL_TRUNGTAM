@@ -1,0 +1,306 @@
+﻿@model List<TrungTam.Areas.Admin.Abstracts.HS_CongNo>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var list_lop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.list_lop;
+    var Kiemtra = ViewBag.Kiemtra;
+    var KiemTraChuaHD = ViewBag.kiemtraChuaHD;
+}
+
+<h2 class="Title_Content">Tính học phí</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@Html.AntiForgeryToken();
+<div id="tenlop">
+    @if (KiemTraChuaHD != 0)
+    {
+        if (Model != null && Kiemtra != 0)
+        {
+            var dem = 0;
+            foreach (var i in Model)
+            {
+                if (dem == 0)
+                {
+                    <div class="col-sm-3" id="tenlopvalue" style="color:black;">
+                        <span>Tên lớp: </span>   @i.tenlop
+                    </div>
+                    dem++;
+                }
+            }
+        }
+    }
+</div>
+<div class="col-sm-4">
+    <input class="form-control-sm" type="text" disabled id="datepicker" />
+</div>
+<div id="report" style="text-align:right;">
+    Học sinh đã đóng: @ViewBag.DaThanhToan
+    <div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>
+</div>
+
+<div>
+    <button type="button" class="btn btn-success" id="loc">Lọc</button>
+</div>
+<div id="kiemtra">
+    @if (Kiemtra == 0 || KiemTraChuaHD == 0)
+    {
+        <div>Bạn chưa tạo công nợ tháng mới</div>
+        <button type="button" class="btn btn-danger" id="taocongno">Tạo công nợ</button>
+    }
+</div>
+<div class="col-sm-3">
+    @if (KiemTraChuaHD != 0)
+    {
+        if (Kiemtra != 0)
+        {
+            <select class="custom-select" name="lop" id="lop">
+                @foreach (var i in list_lop)
+                {
+                    <option value="@i.MA_LOP">@i.TEN_LOP</option>
+                }
+            </select>
+        }
+    }
+</div>
+<div>
+    <table class="table table-bordered table-responsive table-hover table-responsive">
+        <thead class="text-primary">
+            <tr>
+                <th>
+                    Mã học viên
+                </th>
+                <th>
+                    Họ tên
+                </th>
+                <th>
+                    Ngày sinh
+                </th>
+                <th>
+                    Giới tính
+                </th>
+                <th>
+                    SDT
+                </th>
+                <th>Đơn giá</th>
+                <th>Trạng thái</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="list">
+            @if (Model != null && Kiemtra != 0)
+            {
+                foreach (var i in Model)
+                {
+                    <tr>
+                        <td><input type="hidden" name="mahs" id="mahs" value="@i.mahs" />@i.mahs</td>
+                        <td><input type="hidden" name="macn" id="macn" value="@i.macongno" />@i.hoten</td>
+                        <td>@i.ngaysinh</td>
+                        <td>@i.gioitinh</td>
+                        <td>@i.sdt</td>
+                        <td>@string.Format("{0:0,0}", i.dongia)</td>
+                        @if (@i.trangthaihd)
+                        {
+                            <td><button class="btn btn-success" disabled>Đã thanh toán</button></td>
+                            <td>
+                                <button type="button" class="btn btn-success inhoadon" id="inhoadon">In hoá đơn</button>
+                            </td>
+                        }
+                        else
+                        {
+                            <td><button class="btn btn-danger" disabled>Chưa thanh toán</button></td>
+                            <td>
+                                <button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>
+                            </td>
+                        }
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
+@section ClientScript{
+    <script>
+        $('#taocongno').click(function () {
+            var token = $("[name='__RequestVerificationToken']").val();
+            $.ajax({
+                url: "/CONG_NO/CreateCongNo",
+                data: {__RequestVerificationToken: token},
+                type: "POST",
+                success: function (res) {
+                    bootbox.alert({
+                        message: "Thành công",
+                        callback: function () {
+                             location.href = '@Url.Action("Index", "CONG_NO")';
+                        }
+                    });
+                },
+                error: function () {
+                    bootbox.alert("Không thành công");
+                }
+            })
+        });
+        $('#datepicker').datepicker({
+            showOn: "button",
+            buttonImage: "/Asset/admin/img/calendar.png",
+            buttonImageOnly: true,
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            buttonText: "Select true"
+        });
+
+        $('#lop').change(function () {
+            function convertDate(inputFormat) {
+              function pad(s) { return (s < 10) ? '0' + s : s; }
+              var d = new Date(inputFormat);
+              return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+            }
+            var temp = $('#datepicker').val();
+            if (temp != '') {
+                var dateloc = convertDate(temp);
+                var malop1 = $('#lop').val() + dateloc;
+                $.ajax({
+                    url: "/CONG_NO/Index1",
+                    data: { lop: malop1 },
+                    dataType: "Json",
+                    type: "GET",
+                    success: function (response) {
+                        $('tbody#list').html("");
+                        $(response).each(function (i, e) { //duyet mang doi tuong
+                            $('#tenlopvalue').remove();
+                            var tenlop1 = '<div class="col-sm-3" id="tenlopvalue" style="color:black;"><span>Tên lớp: </span>' + e.tenlop + '</div>';
+                            $('#tenlop').append(tenlop1);
+                            var tr = $("<tr/>");
+                            $("<td/>").html('<input type = "hidden" name="mahs" id = "mahs" value = "' + e.mahs + '"/>' + e.mahs).appendTo(tr);
+                            $("<td/>").html('<input type="hidden" name="macn" id="macn" value="' + e.macongno + '"/>' + e.hoten).appendTo(tr);
+                            $("<td/>").html(e.ngaysinh).appendTo(tr);
+                            $("<td/>").html(e.gioitinh).appendTo(tr);
+                            $("<td/>").html(e.sdt).appendTo(tr);
+                            $("<td/>").html(e.dongia).appendTo(tr);
+                            //$("<td/>").html(e.trangthaihd).appendTo(tr);
+                            if (e.trangthaihd) {
+                                $("<td/>").html('<td><button class="btn btn-success" disabled>Đã thanh toán</button></td>' +
+                                    '<td>'
+                                    + '<button type="button" class="btn btn-success inhoadon" id="inhoadon">In hoá đơn</button>' +
+                                    '</td>').appendTo(tr);
+                            }
+                            else {
+                                $("<td/>").html('<td><button class="btn btn-danger" disabled>Chưa thanh toán</button></td>' +
+                                    '<td>'
+                                    + ' <button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>' +
+                                    '</td>').appendTo(tr);
+                            }
+                            //$("<td/>").html('<button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>').appendTo(tr);
+                            $('#list').append(tr);
+                             $('#report').html('');
+                            $('<div/>').html("   <div>Tổng tiền cần thu: " + e.dadong + " </div>").appendTo($('#report'));
+                            $('<div/>').html("<div>Học sinh đã đóng: @ViewBag.DaThanhToan").appendTo($('#report'));
+                            $('<div/>').html("<div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>").appendTo($('#report'));
+                        });
+                    }
+                });
+            }
+        });
+        $('table tbody').on('click', 'button.chitiet', function () {
+              var token = $("[name='__RequestVerificationToken']").val();
+            var mahs = $(this).closest('tr').find('input[name="mahs"]').val();
+            var macn = $(this).closest('tr').find('input[name="macn"]').val();
+            location.href = '@Url.Action("Details", "CONG_NO")?id=' + mahs + '&cn='+macn;
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/CONG_NO/Detail',
+                dataType: 'JSON',
+                traditional: true,
+                data: {
+                    ab: mahs,
+                    macn: macn
+                },
+                contentType: "application/json; chartset=utf-8",
+                success: function (response) {
+                }
+            });
+        });
+        $('table tbody').on('click', 'button.inhoadon', function () {
+            var mahs = $(this).closest('tr').find('input[name="mahs"]').val();
+            var macn = $(this).closest('tr').find('input[name="macn"]').val();
+            location.href = '@Url.Action("PrintPayment", "CONG_NO")?id=' + mahs + '&cn='+macn;
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/CONG_NO/PrintPayment',
+                dataType: 'JSON',
+                traditional: true,
+                data: {
+                    id: mahs,
+                    cn: macn
+                },
+                contentType: "application/json; chartset=utf-8",
+                success: function (response) {
+                }
+            });
+        });
+
+        $('#loc').click(function () {
+            function convertDate(inputFormat) {
+              function pad(s) { return (s < 10) ? '0' + s : s; }
+              var d = new Date(inputFormat);
+              return [pad(d.getDate()), pad(d.getMonth()+1), d.getFullYear()].join('/');
+            }
+            var temp = $('#datepicker').val();
+            if (temp != '') {
+                var dateloc = convertDate($('#datepicker').val());
+                var malop1 = $('#lop').val();
+                var vcl = malop1 + dateloc;
+                //console.log(dateloc);
+                $.ajax({
+                    url: "/Admin/CONG_NO/Filter1",
+                    type: "GET",
+                    dataType: 'JSON',
+                    contentType: "application/json; chartset=utf-8",
+                    traditional: true,
+                    data: {
+                        id: vcl
+                    },
+                    success: function (response) {
+                        $('tbody#list').html("");
+                        $(response).each(function (i, e) { //duyet mang doi tuong
+                            $('#tenlopvalue').remove();
+                            var tenlop1 = '<div class="col-sm-3" id="tenlopvalue" style="color:black;"><span>Tên lớp: </span>' + e.tenlop + '</div>';
+                            $('#tenlop').append(tenlop1);
+                            var tr = $("<tr/>");
+                            $("<td/>").html('<input type = "hidden" name="mahs" id = "mahs" value = "' + e.mahs + '"/>' + e.mahs).appendTo(tr);
+                            $("<td/>").html('<input type="hidden" name="macn" id="macn" value="' + e.macongno + '"/>' + e.hoten).appendTo(tr);
+                            $("<td/>").html(e.ngaysinh).appendTo(tr);
+                            $("<td/>").html(e.gioitinh).appendTo(tr);
+                            $("<td/>").html(e.sdt).appendTo(tr);
+                            $("<td/>").html(e.dongia).appendTo(tr);
+                            //$("<td/>").html(e.trangthaihd).appendTo(tr);
+                            if (e.trangthaihd) {
+                                $("<td/>").html('<td><button class="btn btn-success" disabled>Đã thanh toán</button></td>' +
+                                    '<td>'
+                                    + '<button type="button" class="btn btn-success inhoadon" id="inhoadon">In hoá đơn</button>' +
+                                    '</td>').appendTo(tr);
+                            }
+                            else {
+                                $("<td/>").html('<td><button class="btn btn-danger" disabled>Chưa thanh toán</button></td>' +
+                                    '<td>'
+                                    + ' <button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>' +
+                                    '</td>').appendTo(tr);
+                            }
+                            //$("<td/>").html('<button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>').appendTo(tr);
+                            $('#list').append(tr);
+                            $('#report').html('');
+
+                            $('<div/>').html("   <div>Tổng tiền cần thu: " + e.dadong + " </div>").appendTo($('#report'));
+                            $('<div/>').html("<div>Học sinh đã đóng: @ViewBag.DaThanhToan").appendTo($('#report'));
+                            $('<div/>').html("<div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>").appendTo($('#report'));
+                            //$('#report').appendTo()
+                        });
+                    }
+                })
+            }
+        });
+    </script>
+}

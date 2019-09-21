@@ -5,8 +5,11 @@
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var stt = 0;
 }
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
+<h2 class="Title_Content">Danh Sách Bảng Lương</h2>
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Lương Dạy</button>
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ngoaigio">Thêm Lương Ngoài Giờ</button>
 <div class="card-body">
     <div class="row mb-3">
         <div class="col">
@@ -18,47 +21,104 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
-            <tr>
+    <table class="table table-bordered table-responsive table-hover myTable">
+        <thead class="text-white text-center">
+            <tr class="bg-primary">
                 <th class="nowrap">
-                    <span class="mr-1">Mã Loại Lương</span>
-
+                    STT
                 </th>
                 <th>Loại Lương</th>
                 <th>Đơn Giá</th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
-        <tbody id="tableDanhSach">
+        <tbody id="tableDanhSach" class="text-center">
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MA_LOAI_LUONG)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TEN_LOAI)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DON_GIA)
-                    </td>
-                    <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal"> @Html.ActionLink("Cập nhật", "Edit", new { id = item.MA_LOAI_LUONG })</button>
-                        <button id="btnDelete" type="button" class="btn btn-danger">@Html.ActionLink("Xóa", "Delete", new { id = item.MA_LOAI_LUONG })</button>
-                    </td>
-                </tr>
+                stt += 1;
+                    <tr>
+                        <td>
+                            @stt
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TEN_LOAI)
+                        </td>
+                        <td>
+                            @string.Format("{0:0,0}", @item.DON_GIA)
+                        </td>
+                        <td>
+                            <a id="btnCapNhatNV" class="btn btn-warning" href=" ~/Admin/BANG_LUONG/Edit/@item.MA_LOAI_LUONG"> Sửa</a>
+                        </td>
+                    </tr>
             }
         </tbody>
     </table>
-    @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
 </div>
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Lương</h2>
+                <h2 class="modal-title title_TieuDe" id="exampleModalLabel">Thông Tin Lương</h2>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form action="/BANG_LUONG/Create" method="post" role="form" onsubmit="return themLLuong()">
+                    @Html.AntiForgeryToken()
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-funnel-dollar"></i></span>
+                            </div>
+                            <input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-funnel-dollar"></i></span>
+                            </div>
+                            <input type="number" name="soluongmin" id="min" class="form-control input-sm" placeholder="Sỉ số nhỏ">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-funnel-dollar"></i></span>
+                            </div>
+                            <input type="number" name="soluongmax" id="max" class="form-control input-sm" placeholder="Sỉ số lớn">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-donate"></i></span>
+                            </div>
+                            <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemNV" type="submit" class="btn btn-primary">Thêm Bảng Lương</button>
+
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
+            </div>
+            <!-- Modal footer -->
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="ngoaigio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title title_TieuDe" id="exampleModalLabel">Lương ngoài giờ</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -69,7 +129,7 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                <span class="input-group-text"><i class="fa fa-funnel-dollar"></i></span>
                             </div>
                             <input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">
                         </div>
@@ -78,15 +138,15 @@
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                                <span class="input-group-text"><i class="fa fa-donate"></i></span>
                             </div>
                             <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
                         </div>
                         <span class="sp-thongbao" id="tbTen"></span>
                     </div>
                     <div class="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success">Cập nhật</button>
+                        <button id="btnThemNV" type="submit" class="btn btn-primary">Thêm Bảng Lương</button>
+
                         <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
                     </div>
                 </form>
@@ -96,10 +156,3 @@
         </div>
     </div>
 </div>
-<section>
-    @*<script>
-        $.ajax({
-            url: "
-        })
-    </script>*@
-</section>

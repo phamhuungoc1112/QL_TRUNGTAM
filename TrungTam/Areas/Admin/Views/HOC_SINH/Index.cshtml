@@ -1,10 +1,11 @@
-﻿@*@model IEnumerable<TrungTam.Areas.Admin.Models.HOC_SINH>*@
+﻿
 @model PagedList.IPagedList<TrungTam.Areas.Admin.Models.HOC_SINH>
 @using PagedList.Mvc;    
 @{
     ViewBag.Title = "Index";
     Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
 }
+<h2 class="Title_Content">Danh Sách Học Viên</h2>
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm học viên</button>
 <div class="card-body">
     <div class="row mb-3">
@@ -17,8 +18,8 @@
             </div>
         </div>
     </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
+    <table class="table table-bordered table-responsive table-hover myTable">
+        <thead class="text-white bg-primary" >
             <tr>
                 <th>Họ và tên</th>
                 <th>Ngày sinh</th>
@@ -27,14 +28,16 @@
                 <th>Trường</th>
                 <th>Số ĐT</th>
                 <th>Phụ huynh</th>
+                <th>Số ĐT phụ huynh</th>
                 <th>Địa chỉ</th>
-                <th>Tên Đăng Nhập</th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
         <tbody id="tableDanhSach">
             @foreach (var item in Model)
             {
+                using (Html.BeginForm("Delete", "HOC_SINH", new { id = item.MA_HS }))
+                {
             <tr>
                 <td>
                     @Html.DisplayFor(modelItem => item.HO_TEN)
@@ -58,20 +61,17 @@
                     @Html.DisplayFor(modelItem => item.PHU_HUYNH)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => item.SDT_PH)
+                </td>
+                <td>
                     @Html.DisplayFor(modelItem => item.DIA_CHI)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.TAI_KHOAN.TAI_KHOAN1)
-                </td>
-                <td>
-                    <button id="btnCapNhatNV" type="button" class="btn btn-success">
-                        @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_HS })
-                    </button>
-                    <button id="btnDelete" type="button" class="btn btn-danger">
-                        @Html.ActionLink("Xóa", "Delete", new { id = item.MA_HS })
-                    </button>
+                    <a id="btnCapNhatNV" class="btn btn-warning" href="~/Admin/HOC_SINH/Edit/@item.MA_HS">Sửa</a>
+                    <button type="submit" class="btn btn-danger mt-2">Xóa</button>
                 </td>
             </tr>
+                }
             }
         </tbody>
     </table>
@@ -89,7 +89,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form role="form" action="/HOC_SINH/Create" method="post">
+                <form role="form" action="/HOC_SINH/Create" method="post" onsubmit="return themHV()">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
@@ -114,7 +114,6 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                             </div>
-                            @*<input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">*@
                             <select class="form-control" name="Gioitinh">
                                 <option>Nam</option>
                                 <option>Nữ</option>
@@ -167,7 +166,15 @@
                         </div>
                         <span class="sp-thongbao" id="tbdiachi"></span>
                     </div>
-</div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                            </div>
+                            <input type="text" name="sdt_ph" id="name" class="form-control input-sm" placeholder="SDT phụ huynh">
+                        </div>
+                        <span class="sp-thongbao" id="tbTen"></span>
+                    </div>
             <div class="modal-footer" id="modal-footer">
                 <button id="btnThemNV" type="submit" class="btn btn-success">Thêm người dùng</button>
                 <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>

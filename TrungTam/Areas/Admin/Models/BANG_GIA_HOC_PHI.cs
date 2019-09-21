@@ -14,14 +14,23 @@ namespace TrungTam.Areas.Admin.Models
     
     public partial class BANG_GIA_HOC_PHI
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public BANG_GIA_HOC_PHI()
+        {
+            this.LOP_HOC = new HashSet<LOP_HOC>();
+        }
+    
+        public System.DateTime NGAY_AP_DUNG { get; set; }
         public System.Guid MA_KHOI { get; set; }
         public System.Guid MA_MON { get; set; }
         public System.Guid MA_LOAI { get; set; }
-        public Nullable<decimal> DON_GIA { get; set; }
-        public Nullable<double> SO_BUOI { get; set; }
+        public decimal DON_GIA { get; set; }
+        public double SO_BUOI { get; set; }
     
         public virtual KHOI_LOP KHOI_LOP { get; set; }
         public virtual LOAI_LOP LOAI_LOP { get; set; }
         public virtual MON_HOC MON_HOC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
     }
 }

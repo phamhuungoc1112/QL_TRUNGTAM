@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
 using TrungTam.Function_Base;
+using TrungTam.Areas.Admin.Abstracts;
 using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
@@ -18,42 +19,22 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/GIAO_VIEN
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
-
-            var gIAO_VIEN = db.GIAO_VIEN.Include(g => g.TAI_KHOAN);
-            return View(gIAO_VIEN.OrderBy(m=>m.HO_TEN).ToPagedList(page, pageSize));
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9' && id.First() != '8')
+            {
+                return Redirect("/Home/Index");
+            }
+            var gIAO_VIEN = db.GIAO_VIEN;
+            return View(gIAO_VIEN.OrderBy(m => m.HO_TEN).ToPagedList(page, pageSize));
         }
         // GET: Admin/GIAO_VIEN/Create
         public ActionResult Create()
         {
-            ViewBag.MA_GV = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU");
+           
             return View();
         }
-
-        // POST: Admin/GIAO_VIEN/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        ////[HttpPost]
-        ////[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_GV,HO_TEN,SDT,GIOI_TINH,EMAIL,NG_SINH")] GIAO_VIEN gIAO_VIEN)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        var ma_gv = db.GIAO_VIEN.Where(m => m.MA_GV == "1000000001");
-        //        if (ma_gv == null)
-        //            gIAO_VIEN.MA_GV = "1000000001";
-        //        else
-        //        {
-        //            int ma = int.Parse(db.GIAO_VIEN.Select(m => m.MA_GV).ToList().Last()) + 1;
-        //            gIAO_VIEN.MA_GV = ma.ToString();
-        //        }
-        //        db.GIAO_VIEN.Add(gIAO_VIEN);
-        //        bASE.create_TAI_KHOAN(gIAO_VIEN.MA_GV);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(gIAO_VIEN);
-        //}
         //=====================================================
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -76,9 +57,9 @@ namespace TrungTam.Areas.Admin.Controllers
                 gv.GIOI_TINH = f["Gioitinh"];
                 gv.EMAIL = f["email"];
                 db.GIAO_VIEN.Add(gv);
-                bASE.create_TAI_KHOAN(gv.MA_GV);
+                bASE.create_TAI_KHOAN(gv.MA_GV,f["SDT"]);
                 db.SaveChanges();
-                return RedirectToAction("Index", "GIAO_VIEN", new { area = "Admin"});
+                return RedirectToAction("Index", "GIAO_VIEN", new { area = "Admin" });
             }
             return View();
         }
@@ -95,10 +76,10 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MA_GV = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", gIAO_VIEN.MA_GV);
+            ViewBag.MA_GV = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU", gIAO_VIEN.MA_GV);
             return View(gIAO_VIEN);
         }
-
+        //===============================================
         // POST: Admin/GIAO_VIEN/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -112,29 +93,12 @@ namespace TrungTam.Areas.Admin.Controllers
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            ViewBag.MA_GV = new SelectList(db.TAI_KHOAN, "TAI_KHOAN1", "MAT_KHAU", gIAO_VIEN.MA_GV);
+            ViewBag.MA_GV = new SelectList(db.TAI_KHOAN, "TEN", "MAT_KHAU", gIAO_VIEN.MA_GV);
             return View(gIAO_VIEN);
         }
-
-        // GET: Admin/GIAO_VIEN/Delete/5
-        public ActionResult Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            GIAO_VIEN gIAO_VIEN = db.GIAO_VIEN.Find(id);
-            if (gIAO_VIEN == null)
-            {
-                return HttpNotFound();
-            }
-            return View(gIAO_VIEN);
-        }
-
         // POST: Admin/GIAO_VIEN/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(string id)
+        [HttpPost]
+        public ActionResult Delete(string id)
         {
             GIAO_VIEN gIAO_VIEN = db.GIAO_VIEN.Find(id);
             db.GIAO_VIEN.Remove(gIAO_VIEN);

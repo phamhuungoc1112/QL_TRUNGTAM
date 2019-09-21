@@ -17,6 +17,13 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/KHUYEN_MAI
         public ActionResult Index()
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9')
+            {
+                return Redirect("/Home/Index");
+            }
             return View(db.KHUYEN_MAI.ToList());
         }
         // GET: Admin/KHUYEN_MAI/Create

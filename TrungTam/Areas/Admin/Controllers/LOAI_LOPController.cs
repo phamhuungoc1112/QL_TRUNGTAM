@@ -17,6 +17,13 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/LOAI_LOP
         public ActionResult Index()
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9')
+            {
+                return Redirect("/Home/Index");
+            }
             return View(db.LOAI_LOP.ToList());
         }
 

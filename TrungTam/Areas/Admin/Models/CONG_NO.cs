@@ -17,19 +17,21 @@ namespace TrungTam.Areas.Admin.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public CONG_NO()
         {
-            this.LOP_HOC = new HashSet<LOP_HOC>();
+            this.CT_CONG_NO = new HashSet<CT_CONG_NO>();
         }
     
         public System.Guid MA_CONG_NO { get; set; }
         public string TEN_CONG_NO { get; set; }
         public Nullable<decimal> TONG_TIEN { get; set; }
         public Nullable<System.DateTime> NGAY_THANH_TOAN { get; set; }
+        public System.DateTime NGAY_LAP_CONG_NO { get; set; }
         public string MA_HS { get; set; }
         public Nullable<System.Guid> MA_KM { get; set; }
+        public bool TRANG_THAI { get; set; }
     
         public virtual HOC_SINH HOC_SINH { get; set; }
         public virtual KHUYEN_MAI KHUYEN_MAI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<LOP_HOC> LOP_HOC { get; set; }
+        public virtual ICollection<CT_CONG_NO> CT_CONG_NO { get; set; }
     }
 }

@@ -9,6 +9,7 @@ using TrungTam.Areas.Admin.Abstracts;
 using TrungTam.Areas.Admin.Models;
 using Rotativa;
 using System.Collections.Generic;
+using System.Globalization;
 
 namespace TrungTam.Areas.Admin.Controllers
 {
@@ -19,20 +20,23 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/CONG_NO
         public void ReportsClass(string lop, DateTime dat)
         {
-            var tt = (from a in db.CONG_NO
-                      join b in db.CT_CONG_NO
-                      on a.MA_CONG_NO equals b.MA_CONG_NO
-                      where b.MA_LOP.ToString() == lop.ToString()
-                      && a.TRANG_THAI == true
-                     && a.NGAY_LAP_CONG_NO.Month == dat.Month
-                     && a.NGAY_LAP_CONG_NO.Year == dat.Year
-                      select b).ToList();            
-            ViewBag.DaThanhToan = tt.Count();
-            ViewBag.TongTien = tt.Sum(n => n.THANH_TIEN);
-            //if (ViewBag.DaThanhToan == null)
-            //    ViewBag.DaThanhToan = 0;
-            if (ViewBag.TongTien == null)
-                ViewBag.TongTien = 0;
+            if (!string.IsNullOrEmpty(lop))
+            {
+                var tt = (from a in db.CONG_NO
+                          join b in db.CT_CONG_NO
+                          on a.MA_CONG_NO equals b.MA_CONG_NO
+                          where b.MA_LOP.ToString() == lop.ToString()
+                          && a.TRANG_THAI == true
+                         && a.NGAY_LAP_CONG_NO.Month == dat.Month
+                         && a.NGAY_LAP_CONG_NO.Year == dat.Year
+                          select b).ToList();
+                ViewBag.DaThanhToan = tt.Count();
+                ViewBag.TongTien = tt.Sum(n => n.THANH_TIEN);
+                if (ViewBag.DaThanhToan == null)
+                    ViewBag.DaThanhToan = 0;
+                if (ViewBag.TongTien == null)
+                    ViewBag.TongTien = 0;
+            }
         }
         public ActionResult Index()
         {
@@ -45,58 +49,67 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             var listhocsinh = (from a in db.HOC_SINH
                                select a).OrderByDescending(p => p.MA_HS).ToList();
-            var lop = db.LOP_HOC.Where(n => n.TRANG_THAI == 1).Select(n => n.MA_LOP).ToList().Last();
-            var tienhoc = (from a in db.CONG_NO
-                           join b in db.HOC_SINH
-                           on a.MA_HS equals b.MA_HS
-                           join c in db.CT_LOP_HOC
-                           on b.MA_HS equals c.MA_HS
-                           join d in db.LOP_HOC
-                           on c.MA_LOP equals d.MA_LOP
-                           join e in db.BANG_GIA_HOC_PHI
-                           on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
-                           where d.TRANG_THAI == 1 && d.MA_LOP.ToString() == lop.ToString()
-                           && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
-                           select new HS_CongNo
-                           {
-                               macongno = a.MA_CONG_NO.ToString(),
-                               tenlop = d.TEN_LOP,
-                               mahs = b.MA_HS,
-                               hoten = b.HO_TEN,
-                               ngaysinh = b.NG_SINH.ToString(),
-                               gioitinh = b.GIOI_TINH,
-                               sdt = b.SDT,
-                               dongia = e.DON_GIA,
-                               trangthaihd = a.TRANG_THAI
-                           }).Distinct().ToList();
-            //IEnumerable<HS_CongNo> tienhoc = tienhoc1.Distinct();
-            ViewBag.list_lop = (from a in db.LOP_HOC
-                                where a.TRANG_THAI == 1
-                                select a).OrderBy(n => n.TEN_LOP).ToList();
-            ViewBag.Kiemtra = (from a in db.CONG_NO
-                               join b in db.CT_CONG_NO
-                               on a.MA_CONG_NO equals b.MA_CONG_NO
-                               join c in db.LOP_HOC
-                               on b.MA_LOP equals c.MA_LOP
-                               where c.TRANG_THAI == 1 && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
-                               select a).Count();
-            ViewBag.kiemtraChuaHD = (from a in db.CONG_NO
-                                     select a).Count();
-            ReportsClass(lop.ToString(), DateTime.Now);
-            return View(tienhoc);
+            var lop = db.LOP_HOC.Where(n => n.TRANG_THAI == 0).Select(n => n.MA_LOP).ToList();
+            //var lopLast = lop.Last();
+            string lopLast = "";
+            if (lop.Count() != 0 && lop != null)
+            {
+                lopLast = lop.Last().ToString();
+                var tienhoc = (from a in db.CONG_NO
+                               join b in db.HOC_SINH
+                               on a.MA_HS equals b.MA_HS
+                               join c in db.CT_LOP_HOC
+                               on b.MA_HS equals c.MA_HS
+                               join d in db.LOP_HOC
+                               on c.MA_LOP equals d.MA_LOP
+                               join e in db.BANG_GIA_HOC_PHI
+                               on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
+                               where d.TRANG_THAI == 0 && d.MA_LOP.ToString() == lopLast.ToString()
+                               && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                               select new HS_CongNo
+                               {
+                                   macongno = a.MA_CONG_NO.ToString(),
+                                   tenlop = d.TEN_LOP,
+                                   mahs = b.MA_HS,
+                                   hoten = b.HO_TEN,
+                                   ngaysinh = b.NG_SINH.ToString(),
+                                   gioitinh = b.GIOI_TINH,
+                                   sdt = b.SDT,
+                                   dongia = e.DON_GIA,
+                                   trangthaihd = a.TRANG_THAI
+                               }).Distinct().ToList();
+                ViewBag.list_lop = (from a in db.LOP_HOC
+                                    where a.TRANG_THAI == 0
+                                    select a).OrderBy(n => n.TEN_LOP).ToList();
+                ViewBag.Kiemtra = (from a in db.CONG_NO
+                                   join b in db.CT_CONG_NO
+                                   on a.MA_CONG_NO equals b.MA_CONG_NO
+                                   join c in db.LOP_HOC
+                                   on b.MA_LOP equals c.MA_LOP
+                                   where c.TRANG_THAI == 0 
+                                   && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                                   select a).Count();
+                ViewBag.kiemtraChuaHD = (from a in db.CONG_NO
+                                         select a).Count();
+                ReportsClass(lopLast, DateTime.Now);
+                return View(tienhoc);
+            }                     
+            //IEnumerable<HS_CongNo> tienhoc = tienhoc1.Distinct();           
+            return View();
         }
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Index1(string lop)
         {
-
-            var dodai = Guid.NewGuid().ToString().Length;
-            var mal = lop.Substring(0, dodai);
-            DateTime dat = DateTime.Now;
-            if (lop.Length > 36)
-            {
-                dat = DateTime.Parse(lop.Substring(dodai));
-            }
+            string[] str = lop.Split('_');
+            var mal = str[0];
+            CultureInfo current = CultureInfo.CurrentCulture;
+            DateTime dat = Convert.ToDateTime(str[1], System.Globalization.CultureInfo.GetCultureInfo(current.Name).DateTimeFormat);
+            //var dat = DateTime.Parse(sa);
+            //if (lop.Length > 36)
+            //{
+            //    dat = DateTime.Parse(lop.Substring(dodai));
+            //}
             var n = (from a in db.CONG_NO
                      join b in db.HOC_SINH
                      on a.MA_HS equals b.MA_HS
@@ -135,10 +148,12 @@ namespace TrungTam.Areas.Admin.Controllers
         [HttpGet]
         [AllowAnonymous]
         public ActionResult Filter1(string id)
-        {           
-            var dodai = Guid.NewGuid().ToString().Length;
-            var mal = id.Substring(0, dodai);
-            var dat = DateTime.Parse(id.Substring(dodai));
+        {
+            //var dodai = Guid.NewGuid().ToString().Length;
+            string[] str = id.Split('_');
+            var mal = str[0];
+            CultureInfo current = CultureInfo.CurrentCulture;
+            DateTime dat = Convert.ToDateTime(str[1], System.Globalization.CultureInfo.GetCultureInfo(current.Name).DateTimeFormat);
             var fil = (from a in db.CONG_NO.Include(n => n.CT_CONG_NO)
                        join b in db.HOC_SINH
                        on a.MA_HS equals b.MA_HS
@@ -181,7 +196,7 @@ namespace TrungTam.Areas.Admin.Controllers
             var listHS = (from a in db.CT_LOP_HOC
                           join b in db.LOP_HOC
                           on a.MA_LOP equals b.MA_LOP
-                          where b.TRANG_THAI == 1
+                          where b.TRANG_THAI == 0
                           select new
                           {
                               mahs = a.MA_HS
@@ -197,7 +212,7 @@ namespace TrungTam.Areas.Admin.Controllers
                                      b.MA_HS == p.MA_HS &&
                                      c.NGAY_AP_DUNG == l.NGAY_AP_DUNG &&
                                     //c.MA_LOP.ToString() == lon
-                                    c.TRANG_THAI == 1
+                                    c.TRANG_THAI == 0
                            select new
                            {
                                mahs = b.MA_HS,
@@ -274,7 +289,7 @@ namespace TrungTam.Areas.Admin.Controllers
                                  join f in db.KHOI_LOP
                                  on e.MA_KHOI equals f.MA_KHOI
                                  where b.MA_HS == id1 &&
-                                    d.TRANG_THAI == 1 && a.MA_CONG_NO.ToString() == cn
+                                    d.TRANG_THAI == 0 && a.MA_CONG_NO.ToString() == cn
                                  select new ChiTietCongNo
                                  {
                                      macongno = a.MA_CONG_NO.ToString(),
@@ -325,7 +340,7 @@ namespace TrungTam.Areas.Admin.Controllers
                              join f in db.KHOI_LOP
                              on e.MA_KHOI equals f.MA_KHOI
                              where b.MA_HS == id &&
-                                d.TRANG_THAI == 1 && a.MA_CONG_NO.ToString() == cn
+                                d.TRANG_THAI == 0 && a.MA_CONG_NO.ToString() == cn
                              select new ChiTietCongNo
                              {
                                  macongno = a.MA_CONG_NO.ToString(),
@@ -417,9 +432,9 @@ namespace TrungTam.Areas.Admin.Controllers
         public ActionResult Create(FormCollection f)
         {
             if (ModelState.IsValid)
-            {                
+            {
                 return RedirectToAction("Index");
-            }            
+            }
             return View();
         }
 

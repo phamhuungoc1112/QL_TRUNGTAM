@@ -119,7 +119,8 @@ namespace TrungTam.Areas.Admin.Controllers
                                        magv = p.MA_GV,
                                        malop = p.MA_LOP,
                                        tenlop = p.TEN_LOP,
-                                       siso = p.SI_SO
+                                       siso = p.SI_SO,
+                                       tinhtrang = p.GIAO_VIEN.TRANG_THAI,
                                    });
             return Json(model, JsonRequestBehavior.AllowGet);
         }
@@ -142,11 +143,11 @@ namespace TrungTam.Areas.Admin.Controllers
         [HttpGet]
         public ActionResult LoadGV(string id = "")
         {
-            var dsgv = db.GIAO_VIEN.Where(p => p.MA_GV != id)
+            var dsgv = db.GIAO_VIEN.Where(p => p.MA_GV != id && p.TRANG_THAI == true)
                                     .Select(p => new
                                     {
                                         MA_GV = p.MA_GV,
-                                        HO_TEN = p.HO_TEN
+                                        HO_TEN = p.HO_TEN,
                                     });
             return Json(dsgv, JsonRequestBehavior.AllowGet);
         }
@@ -224,7 +225,7 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             return View();
         }
-        //======================================================
+        //=========================thay đổi đây nè=============================
         [HttpGet]
         public JsonResult AllLop(string idd = "")
         {
@@ -235,10 +236,11 @@ namespace TrungTam.Areas.Admin.Controllers
                 {
                     malop = x.LOP_HOC.MA_LOP,
                     tenlop = x.LOP_HOC.TEN_LOP,
+                    trangthai = x.LOP_HOC.TRANG_THAI
                 });
             return Json(chonlop, JsonRequestBehavior.AllowGet);
         }
-        //======================================================
+        //====================kết thúc thay đổi==================================
         protected override void Dispose(bool disposing)
         {
             if (disposing)

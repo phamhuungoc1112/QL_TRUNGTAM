@@ -31,6 +31,7 @@ namespace TrungTam.Areas.Admin.Models
         public Nullable<System.DateTime> NGAY_KET_THUC { get; set; }
         public Nullable<System.DateTime> NGAY_BAT_DAU { get; set; }
         public Nullable<short> TRANG_THAI { get; set; }
+        public Nullable<System.DateTime> NGAY_MO_LOP { get; set; }
     
         public virtual BANG_GIA_HOC_PHI BANG_GIA_HOC_PHI { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

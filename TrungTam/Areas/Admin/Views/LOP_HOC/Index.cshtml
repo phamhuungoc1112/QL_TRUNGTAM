@@ -29,50 +29,61 @@
             Môn
         </th>
         <th>Trạng thái</th>
+        <th>Ngày mở lớp</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
         <th></th>
     </tr>
     <tbody>
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tenlop)
-                    <input type="hidden" id="malop" name="malop" value="@item.malop" />
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.siso)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.hoten)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tenkhoi)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tenloai)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.tenmon)
-                </td>
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenlop)
+                <input type="hidden" id="malop" name="malop" value="@item.malop" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.siso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenkhoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenloai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenmon)
+            </td>
 
-                @if (item.trangthai == 1)
-                {
-                    <td>Đang mở</td>
-                    <td><button class="btn btn-success bd">Bắt đầu học</button></td>
-                }
-                else if (item.trangthai == 0)
-                {
-                    <td>Đang học</td>
-                    <td><button class="btn btn-danger kt">Kết thúc lớp học</button></td>
-                }
-                else
-                {
-                    <td>Đã kết thúc</td>
-                }
-                <td>
-                    @Html.ActionLink("Chi tiết", "Details", new { id = item.malop })
-                </td>
-            </tr>
+            @if (item.trangthai == 1)
+            {
+                <td style="color:green;">Đang mở <button class="btn btn-success bd">Bắt đầu học</button></td>
+                <td>@item.ngaymolop</td>
+                <td></td>
+                <td></td>
+            }
+            else if (item.trangthai == 0)
+            {
+                <td style="color:orange;">Đang học <button class="btn btn-danger kt">Kết thúc lớp học</button></td>
+                <td>@item.ngaymolop</td>
+                <td>@item.ngayhoc</td>
+                <td></td>
+            }
+            else
+            {
+                <td style="color:red;">Đã kết thúc</td>
+                <td>@item.ngaymolop</td>
+                <td>@item.ngayhoc</td>
+                <td>@item.ngayketthuc</td>
+            }
+
+            <td>
+                @Html.ActionLink("Chi tiết", "Details", new { id = item.malop })
+            </td>
+        </tr>
         }
     </tbody>
 </table>

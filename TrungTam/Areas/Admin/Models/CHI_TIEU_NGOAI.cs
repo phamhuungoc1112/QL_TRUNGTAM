@@ -17,6 +17,6 @@ namespace TrungTam.Areas.Admin.Models
         public System.Guid MA_CT { get; set; }
         public string TEN_CT { get; set; }
         public Nullable<System.DateTime> NGAY { get; set; }
-        public Nullable<decimal> THANH_TIEN { get; set; }
+        public Nullable<double> THANH_TIEN { get; set; }
     }
 }

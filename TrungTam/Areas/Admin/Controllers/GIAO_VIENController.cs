@@ -26,7 +26,7 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return Redirect("/Home/Index");
             }
-            var gIAO_VIEN = db.GIAO_VIEN;
+            var gIAO_VIEN = db.GIAO_VIEN.Where(p => p.TRANG_THAI == true);
             return View(gIAO_VIEN.OrderBy(m => m.HO_TEN).ToPagedList(page, pageSize));
         }
         // GET: Admin/GIAO_VIEN/Create
@@ -35,7 +35,7 @@ namespace TrungTam.Areas.Admin.Controllers
            
             return View();
         }
-        //=====================================================
+        //====================thay chỗ này==================
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(FormCollection f)
@@ -56,6 +56,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 gv.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
                 gv.GIOI_TINH = f["Gioitinh"];
                 gv.EMAIL = f["email"];
+                gv.TRANG_THAI = true;
                 db.GIAO_VIEN.Add(gv);
                 bASE.create_TAI_KHOAN(gv.MA_GV,f["SDT"]);
                 db.SaveChanges();
@@ -63,7 +64,7 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             return View();
         }
-        //======================================================
+        //=======================Kết thúc đoạn thay===============================
         // GET: Admin/GIAO_VIEN/Edit/5
         public ActionResult Edit(string id)
         {
@@ -85,8 +86,10 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_GV,HO_TEN,SDT,GIOI_TINH,EMAIL,NG_SINH")] GIAO_VIEN gIAO_VIEN)
+        //====================thay chỗ này==================
+        public ActionResult Edit([Bind(Include = "MA_GV,HO_TEN,SDT,GIOI_TINH,TRANG_THAI,EMAIL,NG_SINH")] GIAO_VIEN gIAO_VIEN)
         {
+            //====================kết thúc chỗ thay==================
             if (ModelState.IsValid)
             {
                 db.Entry(gIAO_VIEN).State = EntityState.Modified;
@@ -100,8 +103,10 @@ namespace TrungTam.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Delete(string id)
         {
+            //====================thay chỗ này==================
             GIAO_VIEN gIAO_VIEN = db.GIAO_VIEN.Find(id);
-            db.GIAO_VIEN.Remove(gIAO_VIEN);
+            gIAO_VIEN.TRANG_THAI = false;
+            //====================kết thúc chỗ thay==================
             TAI_KHOAN tAI_KHOAN = db.TAI_KHOAN.Find(id);
             db.TAI_KHOAN.Remove(tAI_KHOAN);
             db.SaveChanges();

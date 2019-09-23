@@ -38,15 +38,6 @@
           <Property Name="MA_LUONG" Type="uniqueidentifier" />
           <Property Name="MA_LOP" Type="uniqueidentifier" />
         </EntityType>
-        <EntityType Name="CHI_TIEU_NGOAI">
-          <Key>
-            <PropertyRef Name="MA_CT" />
-          </Key>
-          <Property Name="MA_CT" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="TEN_CT" Type="nvarchar" MaxLength="50" />
-          <Property Name="NGAY" Type="datetime" />
-          <Property Name="THANH_TIEN" Type="decimal" Precision="18" Scale="0" />
-        </EntityType>
         <EntityType Name="CONG_NO">
           <Key>
             <PropertyRef Name="MA_CONG_NO" />
@@ -108,6 +99,15 @@
           <Property Name="MA_HS" Type="nchar" MaxLength="10" Nullable="false" />
           <Property Name="NGAY_VAO_HOC" Type="date" />
         </EntityType>
+        <EntityType Name="CHI_TIEU_NGOAI">
+          <Key>
+            <PropertyRef Name="MA_CT" />
+          </Key>
+          <Property Name="MA_CT" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="TEN_CT" Type="nvarchar" MaxLength="50" />
+          <Property Name="NGAY" Type="datetime" />
+          <Property Name="THANH_TIEN" Type="float" />
+        </EntityType>
         <EntityType Name="GHI_DANH">
           <Key>
             <PropertyRef Name="MA_TB" />
@@ -130,7 +130,7 @@
           <Property Name="SDT" Type="nchar" MaxLength="15" Nullable="false" />
           <Property Name="GIOI_TINH" Type="nvarchar" MaxLength="10" />
           <Property Name="EMAIL" Type="varchar(max)" />
-          <Property Name="TRANG_THAI" Type="bit" />
+          <Property Name="TRANG_THAI" Type="bit" Nullable="false" />
           <Property Name="NG_SINH" Type="date" />
         </EntityType>
         <EntityType Name="HOA_DON">
@@ -195,6 +195,7 @@
           <Property Name="NGAY_KET_THUC" Type="date" />
           <Property Name="NGAY_BAT_DAU" Type="date" />
           <Property Name="TRANG_THAI" Type="smallint" />
+          <Property Name="NGAY_MO_LOP" Type="date" />
         </EntityType>
         <EntityType Name="MON_HOC">
           <Key>
@@ -213,16 +214,6 @@
           <Property Name="NGAY_LAM" Type="datetime" Nullable="false" />
           <Property Name="SO_LUONG" Type="int" Nullable="false" />
           <Property Name="TINH_TRANG" Type="bit" />
-        </EntityType>
-        <EntityType Name="sysdiagrams">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="principal_id" Type="int" Nullable="false" />
-          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="version" Type="int" />
-          <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
@@ -544,48 +535,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="fn_diagramobjects" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="true" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" ReturnType="int" />
-        <Function Name="sp_alterdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_creatediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="version" Type="int" Mode="In" />
-          <Parameter Name="definition" Type="varbinary(max)" Mode="In" />
-        </Function>
-        <Function Name="sp_dropdiagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagramdefinition" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_helpdiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-        </Function>
-        <Function Name="sp_renamediagram" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
-          <Parameter Name="diagramname" Type="nvarchar" Mode="In" />
-          <Parameter Name="owner_id" Type="int" Mode="In" />
-          <Parameter Name="new_diagramname" Type="nvarchar" Mode="In" />
-        </Function>
-        <Function Name="sp_upgraddiagrams" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
         <EntityContainer Name="QL_TRUNGTAMModelStoreContainer">
           <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="BUOI_HOC" EntityType="Self.BUOI_HOC" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="CHI_TIEU_NGOAI" EntityType="Self.CHI_TIEU_NGOAI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CONG_NO" EntityType="Self.CONG_NO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_BUOIHOC" EntityType="Self.CT_BUOIHOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_CONG_NO" EntityType="Self.CT_CONG_NO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_HOADON" EntityType="Self.CT_HOADON" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_HOADON_NGOAIGIO" EntityType="Self.CT_HOADON_NGOAIGIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="CT_LOP_HOC" EntityType="Self.CT_LOP_HOC" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CHI_TIEU_NGOAI" EntityType="Self.CHI_TIEU_NGOAI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GHI_DANH" EntityType="Self.GHI_DANH" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="GIAO_VIEN" EntityType="Self.GIAO_VIEN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="HOA_DON" EntityType="Self.HOA_DON" Schema="dbo" store:Type="Tables" />
@@ -596,7 +556,6 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TRANG_CHU" EntityType="Self.TRANG_CHU" Schema="dbo" store:Type="Tables" />
@@ -745,6 +704,15 @@
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_BUOI_HOC" FromRole="BUOI_HOC" ToRole="CT_BUOIHOC" />
           <NavigationProperty Name="CT_HOADON" Relationship="Self.FK_CT_HOADON_BUOI_HOC1" FromRole="BUOI_HOC" ToRole="CT_HOADON" />
         </EntityType>
+        <EntityType Name="CHI_TIEU_NGOAI">
+          <Key>
+            <PropertyRef Name="MA_CT" />
+          </Key>
+          <Property Name="MA_CT" Type="Guid" Nullable="false" />
+          <Property Name="TEN_CT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="NGAY" Type="DateTime" Precision="3" />
+          <Property Name="THANH_TIEN" Type="Double" />
+        </EntityType>
         <EntityType Name="CONG_NO">
           <Key>
             <PropertyRef Name="MA_CONG_NO" />
@@ -753,7 +721,7 @@
           <Property Name="TEN_CONG_NO" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="TONG_TIEN" Type="Decimal" Precision="19" Scale="4" />
           <Property Name="NGAY_THANH_TOAN" Type="DateTime" Precision="3" />
-          <Property Name="NGAY_LAP_CONG_NO" Type="DateTime" Precision="3" Nullable="false" />
+          <Property Name="NGAY_LAP_CONG_NO" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="MA_KM" Type="Guid" />
           <Property Name="TRANG_THAI" Type="Boolean" Nullable="false" />
@@ -841,12 +809,12 @@
           <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" Nullable="false" />
           <Property Name="GIOI_TINH" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
           <Property Name="EMAIL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TRANG_THAI" Type="Boolean" Nullable="false" />
           <Property Name="NG_SINH" Type="DateTime" Precision="0" />
           <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_BUOI_HOC_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="BUOI_HOC" />
           <NavigationProperty Name="HOA_DON" Relationship="Self.FK_HOA_DON_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="HOA_DON" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="LOP_HOC" />
           <NavigationProperty Name="NGOAI_GIO" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="GIAO_VIEN" ToRole="NGOAI_GIO" />
-          <Property Name="TRANG_THAI" Type="Boolean" />
         </EntityType>
         <EntityType Name="HOA_DON">
           <Key>
@@ -873,12 +841,12 @@
           <Property Name="TRUONG" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="SDT" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
           <Property Name="DIA_CHI" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SDT_PH" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
+          <Property Name="NG_VAO_HOC" Type="DateTime" Precision="3" />
           <Property Name="PHU_HUYNH" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="HOC_SINH" ToRole="CONG_NO" />
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_BUOIHOC" />
           <NavigationProperty Name="CT_LOP_HOC" Relationship="Self.FK_CT_LOP_HOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_LOP_HOC" />
-          <Property Name="SDT_PH" Type="String" MaxLength="15" FixedLength="true" Unicode="true" />
-          <Property Name="NG_VAO_HOC" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="KHOI_LOP">
           <Key>
@@ -925,6 +893,7 @@
           <NavigationProperty Name="CT_LOP_HOC" Relationship="Self.FK_CT_LOP_HOC_LOP_HOC" FromRole="LOP_HOC" ToRole="CT_LOP_HOC" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_LOP_HOC_GIAO_VIEN" FromRole="LOP_HOC" ToRole="GIAO_VIEN" />
           <NavigationProperty Name="THOI_KHOA_BIEU" Relationship="Self.FK_THOI_KHOA_BIEU_LOP_HOC" FromRole="LOP_HOC" ToRole="THOI_KHOA_BIEU" />
+          <Property Name="NGAY_MO_LOP" Type="DateTime" Precision="0" />
         </EntityType>
         <EntityType Name="MON_HOC">
           <Key>
@@ -947,16 +916,6 @@
           <NavigationProperty Name="BANG_LUONG" Relationship="Self.FK_NGOAI_GIO_BANG_LUONG1" FromRole="NGOAI_GIO" ToRole="BANG_LUONG" />
           <NavigationProperty Name="CT_HOADON_NGOAIGIO" Relationship="Self.FK_CT_HOADON_NGOAIGIO_NGOAI_GIO" FromRole="NGOAI_GIO" ToRole="CT_HOADON_NGOAIGIO" />
           <NavigationProperty Name="GIAO_VIEN" Relationship="Self.FK_NGOAI_GIO_GIAO_VIEN" FromRole="NGOAI_GIO" ToRole="GIAO_VIEN" />
-        </EntityType>
-        <EntityType Name="sysdiagram">
-          <Key>
-            <PropertyRef Name="diagram_id" />
-          </Key>
-          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="principal_id" Type="Int32" Nullable="false" />
-          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="version" Type="Int32" />
-          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityType Name="TAI_KHOAN">
           <Key>
@@ -1267,30 +1226,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_TAI_KHOAN_GIAO_VIEN">
-          <End Role="GIAO_VIEN" Type="Self.GIAO_VIEN" Multiplicity="1" />
-          <End Role="TAI_KHOAN" Type="Self.TAI_KHOAN" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="GIAO_VIEN">
-              <PropertyRef Name="MA_GV" />
-            </Principal>
-            <Dependent Role="TAI_KHOAN">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_TAI_KHOAN_HOC_SINH">
-          <End Role="HOC_SINH" Type="Self.HOC_SINH" Multiplicity="1" />
-          <End Role="TAI_KHOAN" Type="Self.TAI_KHOAN" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="HOC_SINH">
-              <PropertyRef Name="MA_HS" />
-            </Principal>
-            <Dependent Role="TAI_KHOAN">
-              <PropertyRef Name="ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_THOI_KHOA_BIEU_LOP_HOC">
           <End Role="LOP_HOC" Type="Self.LOP_HOC" Multiplicity="1" />
           <End Role="THOI_KHOA_BIEU" Type="Self.THOI_KHOA_BIEU" Multiplicity="*" />
@@ -1307,6 +1242,7 @@
           <EntitySet Name="BANG_GIA_HOC_PHI" EntityType="Self.BANG_GIA_HOC_PHI" />
           <EntitySet Name="BANG_LUONG" EntityType="Self.BANG_LUONG" />
           <EntitySet Name="BUOI_HOC" EntityType="Self.BUOI_HOC" />
+          <EntitySet Name="CHI_TIEU_NGOAI" EntityType="Self.CHI_TIEU_NGOAI" />
           <EntitySet Name="CONG_NO" EntityType="Self.CONG_NO" />
           <EntitySet Name="CT_BUOIHOC" EntityType="Self.CT_BUOIHOC" />
           <EntitySet Name="CT_CONG_NO" EntityType="Self.CT_CONG_NO" />
@@ -1323,7 +1259,6 @@
           <EntitySet Name="LOP_HOC" EntityType="Self.LOP_HOC" />
           <EntitySet Name="MON_HOC" EntityType="Self.MON_HOC" />
           <EntitySet Name="NGOAI_GIO" EntityType="Self.NGOAI_GIO" />
-          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
           <EntitySet Name="TAI_KHOAN" EntityType="Self.TAI_KHOAN" />
           <EntitySet Name="THOI_KHOA_BIEU" EntityType="Self.THOI_KHOA_BIEU" />
           <EntitySet Name="TRANG_CHU" EntityType="Self.TRANG_CHU" />
@@ -1419,70 +1354,11 @@
             <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
             <End Role="NGOAI_GIO" EntitySet="NGOAI_GIO" />
           </AssociationSet>
-          <AssociationSet Name="FK_TAI_KHOAN_GIAO_VIEN" Association="Self.FK_TAI_KHOAN_GIAO_VIEN">
-            <End Role="GIAO_VIEN" EntitySet="GIAO_VIEN" />
-            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
-          </AssociationSet>
-          <AssociationSet Name="FK_TAI_KHOAN_HOC_SINH" Association="Self.FK_TAI_KHOAN_HOC_SINH">
-            <End Role="HOC_SINH" EntitySet="HOC_SINH" />
-            <End Role="TAI_KHOAN" EntitySet="TAI_KHOAN" />
-          </AssociationSet>
           <AssociationSet Name="FK_THOI_KHOA_BIEU_LOP_HOC" Association="Self.FK_THOI_KHOA_BIEU_LOP_HOC">
             <End Role="LOP_HOC" EntitySet="LOP_HOC" />
             <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
           </AssociationSet>
-          <FunctionImport Name="sp_alterdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_creatediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="version" Mode="In" Type="Int32" />
-            <Parameter Name="definition" Mode="In" Type="Binary" />
-          </FunctionImport>
-          <FunctionImport Name="sp_dropdiagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagramdefinition" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_helpdiagrams" ReturnType="Collection(QL_TRUNGTAMModel.sp_helpdiagrams_Result)">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-          </FunctionImport>
-          <FunctionImport Name="sp_renamediagram">
-            <Parameter Name="diagramname" Mode="In" Type="String" />
-            <Parameter Name="owner_id" Mode="In" Type="Int32" />
-            <Parameter Name="new_diagramname" Mode="In" Type="String" />
-          </FunctionImport>
-          <FunctionImport Name="sp_upgraddiagrams" />
-          <EntitySet Name="CHI_TIEU_NGOAI" EntityType="QL_TRUNGTAMModel.CHI_TIEU_NGOAI" />
         </EntityContainer>
-        <ComplexType Name="sp_helpdiagramdefinition_Result">
-          <Property Type="Int32" Name="version" Nullable="true" />
-          <Property Type="Binary" Name="definition" Nullable="true" />
-        </ComplexType>
-        <ComplexType Name="sp_helpdiagrams_Result">
-          <Property Type="String" Name="Database" Nullable="true" MaxLength="128" />
-          <Property Type="String" Name="Name" Nullable="false" MaxLength="128" />
-          <Property Type="Int32" Name="ID" Nullable="false" />
-          <Property Type="String" Name="Owner" Nullable="true" MaxLength="128" />
-          <Property Type="Int32" Name="OwnerID" Nullable="false" />
-        </ComplexType>
-        <EntityType Name="CHI_TIEU_NGOAI">
-          <Key>
-            <PropertyRef Name="MA_CT" />
-          </Key>
-          <Property Name="MA_CT" Type="Guid" Nullable="false" />
-          <Property Name="TEN_CT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="NGAY" Type="DateTime" Precision="3" />
-          <Property Name="THANH_TIEN" Type="Decimal" Precision="18" Scale="0" />
-        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1522,6 +1398,16 @@
                 <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
                 <ScalarProperty Name="MA_LUONG" ColumnName="MA_LUONG" />
                 <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CHI_TIEU_NGOAI">
+            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.CHI_TIEU_NGOAI">
+              <MappingFragment StoreEntitySet="CHI_TIEU_NGOAI">
+                <ScalarProperty Name="MA_CT" ColumnName="MA_CT" />
+                <ScalarProperty Name="TEN_CT" ColumnName="TEN_CT" />
+                <ScalarProperty Name="NGAY" ColumnName="NGAY" />
+                <ScalarProperty Name="THANH_TIEN" ColumnName="THANH_TIEN" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1604,12 +1490,12 @@
           <EntitySetMapping Name="GIAO_VIEN">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.GIAO_VIEN">
               <MappingFragment StoreEntitySet="GIAO_VIEN">
-                <ScalarProperty Name="TRANG_THAI" ColumnName="TRANG_THAI" />
                 <ScalarProperty Name="MA_GV" ColumnName="MA_GV" />
                 <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
                 <ScalarProperty Name="SDT" ColumnName="SDT" />
                 <ScalarProperty Name="GIOI_TINH" ColumnName="GIOI_TINH" />
                 <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+                <ScalarProperty Name="TRANG_THAI" ColumnName="TRANG_THAI" />
                 <ScalarProperty Name="NG_SINH" ColumnName="NG_SINH" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1628,8 +1514,6 @@
           <EntitySetMapping Name="HOC_SINH">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.HOC_SINH">
               <MappingFragment StoreEntitySet="HOC_SINH">
-                <ScalarProperty Name="NG_VAO_HOC" ColumnName="NG_VAO_HOC" />
-                <ScalarProperty Name="SDT_PH" ColumnName="SDT_PH" />
                 <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
                 <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
                 <ScalarProperty Name="NG_SINH" ColumnName="NG_SINH" />
@@ -1638,6 +1522,8 @@
                 <ScalarProperty Name="TRUONG" ColumnName="TRUONG" />
                 <ScalarProperty Name="SDT" ColumnName="SDT" />
                 <ScalarProperty Name="DIA_CHI" ColumnName="DIA_CHI" />
+                <ScalarProperty Name="SDT_PH" ColumnName="SDT_PH" />
+                <ScalarProperty Name="NG_VAO_HOC" ColumnName="NG_VAO_HOC" />
                 <ScalarProperty Name="PHU_HUYNH" ColumnName="PHU_HUYNH" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1672,6 +1558,7 @@
           <EntitySetMapping Name="LOP_HOC">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.LOP_HOC">
               <MappingFragment StoreEntitySet="LOP_HOC">
+                <ScalarProperty Name="NGAY_MO_LOP" ColumnName="NGAY_MO_LOP" />
                 <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
                 <ScalarProperty Name="TEN_LOP" ColumnName="TEN_LOP" />
                 <ScalarProperty Name="SI_SO" ColumnName="SI_SO" />
@@ -1700,17 +1587,6 @@
                 <ScalarProperty Name="NGAY_LAM" ColumnName="NGAY_LAM" />
                 <ScalarProperty Name="SO_LUONG" ColumnName="SO_LUONG" />
                 <ScalarProperty Name="TINH_TRANG" ColumnName="TINH_TRANG" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="sysdiagrams">
-            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.sysdiagram">
-              <MappingFragment StoreEntitySet="sysdiagrams">
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
-                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1744,40 +1620,6 @@
                 <ScalarProperty Name="SDT1" ColumnName="SDT1" />
                 <ScalarProperty Name="SDT2" ColumnName="SDT2" />
                 <ScalarProperty Name="TIEUDE_MONHOC" ColumnName="TIEUDE_MONHOC" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="sp_alterdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_alterdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_creatediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_creatediagram" />
-          <FunctionImportMapping FunctionImportName="sp_dropdiagram" FunctionName="QL_TRUNGTAMModel.Store.sp_dropdiagram" />
-          <FunctionImportMapping FunctionImportName="sp_helpdiagramdefinition" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagramdefinition">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagramdefinition_Result">
-                <ScalarProperty Name="version" ColumnName="version" />
-                <ScalarProperty Name="definition" ColumnName="definition" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_helpdiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_helpdiagrams">
-            <ResultMapping>
-              <ComplexTypeMapping TypeName="QL_TRUNGTAMModel.sp_helpdiagrams_Result">
-                <ScalarProperty Name="Database" ColumnName="Database" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-                <ScalarProperty Name="Owner" ColumnName="Owner" />
-                <ScalarProperty Name="OwnerID" ColumnName="OwnerID" />
-              </ComplexTypeMapping>
-            </ResultMapping>
-          </FunctionImportMapping>
-          <FunctionImportMapping FunctionImportName="sp_renamediagram" FunctionName="QL_TRUNGTAMModel.Store.sp_renamediagram" />
-          <FunctionImportMapping FunctionImportName="sp_upgraddiagrams" FunctionName="QL_TRUNGTAMModel.Store.sp_upgraddiagrams" />
-          <EntitySetMapping Name="CHI_TIEU_NGOAI">
-            <EntityTypeMapping TypeName="QL_TRUNGTAMModel.CHI_TIEU_NGOAI">
-              <MappingFragment StoreEntitySet="CHI_TIEU_NGOAI">
-                <ScalarProperty Name="THANH_TIEN" ColumnName="THANH_TIEN" />
-                <ScalarProperty Name="NGAY" ColumnName="NGAY" />
-                <ScalarProperty Name="TEN_CT" ColumnName="TEN_CT" />
-                <ScalarProperty Name="MA_CT" ColumnName="MA_CT" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

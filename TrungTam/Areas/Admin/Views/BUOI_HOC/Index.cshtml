@@ -51,10 +51,12 @@
             </div>
         </div>
     </div>
-
+    @*=================Thay đây nha============*@
+    <div id="error"></div>
+    @*=================kết thúc Thay============*@
     @*end Giáo Viên*@
     <hr />
-    <center><h3 class="title_TieuDe">Danh sách học viên</></h3></center>
+    <center><h3 class="title_TieuDe" id="tieude">Danh sách học viên</h3></center>
 
     @*Bảng danh sách học viên*@
     <table class="table table-bordered table-responsive table-hover" id="listHS">
@@ -81,12 +83,12 @@
             $("div#result").html(""); //xoa noi dung
             if (malop != "Chọn lớp") {
                 //$("#save").attr("Style", "display:block");
-                $("#save").show();
                 $("#daythay").html("");
                 $("#diemdanhGV").empty();
                 $("<option value='1' selected/>").html("Có").appendTo("#diemdanhGV");
                 $("<option value='0'/>").html("Vắng").appendTo("#diemdanhGV");
                 $("#diemdanh_daythay").attr("Style", "display:block");
+                $("#error").html("");
                 $.ajax({
                     url: "/BUOI_HOC/LoadLop",
                     data: { id: malop },
@@ -96,11 +98,22 @@
                         $(response).each
                             (
                             function (i, e) { //duyet mang doi tuong
-                                $("<div/>").add("<input type='hidden' name='malop' value='" + e.malop + "'/><input type='hidden' name='siso' value='" + e.siso + "'/>").appendTo("div#result");
-                                $("<div class='col-2'/>").add("<h6 class='text-white text-center bg-primary p-2 mb-3 mt-1'>  Giáo viên :&nbsp;&nbsp; " + e.hoten + "</h5> <input type ='hidden' name ='hoten' value='"
-                                    + e.hoten + "'/><input type='hidden' id='magv' name='magv' value='" + e.magv + "'/>").appendTo("div#result");
-                                $("<div class='col-2'/>").add("<h6 class='text-white text-center bg-primary p-2'> Điện thoại :&nbsp;&nbsp;" + e.dienthoai + "</h5><input type='hidden' name='dienthoai' value= '"
-                                    + e.dienthoai + "'/>").appendTo("div#result");
+                                if (e.tinhtrang == true) {
+                                    $("<div/>").add("<input type='hidden' name='malop' value='" + e.malop + "'/><input type='hidden' name='siso' value='" + e.siso + "'/>").appendTo("div#result");
+                                    $("<div class='col-2'/>").add("<h6 class='text-white text-center bg-primary p-2 mb-3 mt-1'>  Giáo viên :&nbsp;&nbsp; " + e.hoten + "</h5> <input type ='hidden' name ='hoten' value='"
+                                        + e.hoten + "'/><input type='hidden' id='magv' name='magv' value='" + e.magv + "'/>").appendTo("div#result");
+                                    $("<div class='col-2'/>").add("<h6 class='text-white text-center bg-primary p-2'> Điện thoại :&nbsp;&nbsp;" + e.dienthoai + "</h5><input type='hidden' name='dienthoai' value= '"
+                                        + e.dienthoai + "'/>").appendTo("div#result");
+                                    $("tbody#HS").attr("display:none");
+                                    $("#save").show();
+                                }
+                                else {
+                                    $("#diemdanh_daythay").attr("Style", "display:none");
+                                    $("#save").hide();
+                                    $("#diemdanhGV").html("");
+                                    $("<div class='col-2'/>").add("<center><h4>Giáo viên phụ trách lớp đã bị xóa! Phải chọn giáo viên mới!</h4></center>").appendTo("div#error");
+                                    $("<div class='col-6'/>").add("<center><a href='~/LOP_HOC/Edit/" + e.malop + "'class='btn btn-warning'>Đổi giáo viên</a></center>").appendTo("div#error");
+                                }
                             }
                             );
                     }
@@ -198,9 +211,8 @@
                                 (
                                 function (i, e) { //duyet mang doi tuong
                                     console.log(e);
-                                   
-                                    $("<option value='" + e.malop + "'/>").html(e.tenlop).appendTo("#lop");
-                                    
+                                    if (e.trangthai == 0)
+                                        $("<option value='" + e.malop + "'/>").html(e.tenlop).appendTo("#lop");
                                 }
                                 );
                     }

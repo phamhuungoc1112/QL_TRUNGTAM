@@ -30,9 +30,9 @@ namespace TrungTam.Areas.Admin.Models
         public string TRUONG { get; set; }
         public string SDT { get; set; }
         public string DIA_CHI { get; set; }
-        public string PHU_HUYNH { get; set; }
         public string SDT_PH { get; set; }
         public Nullable<System.DateTime> NG_VAO_HOC { get; set; }
+        public string PHU_HUYNH { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONG_NO> CONG_NO { get; set; }

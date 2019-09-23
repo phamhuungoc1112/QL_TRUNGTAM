@@ -24,24 +24,34 @@ namespace TrungTam.Areas.Admin.Controllers
             var year = DateTime.Now.Year;
             var hoadon = db.HOA_DON.Where(p => p.NGAY_THANH_TOAN.Year.Equals(year));
             var thongke_luong = (from p in hoadon
-                             group p by p.NGAY_THANH_TOAN.Month into hdgroup
-                             select new ThongKe_Luong
-                             {
-                                thang = hdgroup.Key,
-                                luong = hdgroup.Sum(item => item.TONG_TIEN)
-                             }).OrderByDescending(p => p.thang);
-            ViewBag.thongke_luong = thongke_luong.ToList();
-            //----------------------------------------------
-            var congno = db.CONG_NO.Where(p => p.NGAY_LAP_CONG_NO.Year.Equals(year));
-            var thongke_hocphi = (from p in congno
-                                 group p by p.NGAY_LAP_CONG_NO.Month into hdgroup
-                                 select new ThongKe_HocPhi
+                                 group p by p.NGAY_THANH_TOAN.Month into hdgroup
+                                 select new ThongKe_Luong
                                  {
                                      thang = hdgroup.Key,
                                      luong = hdgroup.Sum(item => item.TONG_TIEN)
                                  }).OrderByDescending(p => p.thang);
-          
-                ViewBag.thongke_hocphi = thongke_hocphi.ToList();
+            if (thongke_luong.Count() != 0)
+                ViewBag.thongke_luong = thongke_luong.ToList();
+            else
+                ViewBag.thongke_luong = 0;
+            //----------------------------------------------
+            var dem = db.CONG_NO.Count();
+            
+            if (dem != 0)
+            {
+                var congno = db.CONG_NO.Where(p => p.NGAY_LAP_CONG_NO.Year.Equals(year));
+                var thongke_hocphi = (from p in congno
+                                      group p by p.NGAY_LAP_CONG_NO.Month into hdgroup
+                                      select new ThongKe_HocPhi
+                                      {
+                                          thang = hdgroup.Key,
+                                          luong = hdgroup.Sum(item => item.TONG_TIEN)
+                                      }).OrderByDescending(p => p.thang);
+                if (thongke_hocphi.Count() != 0)
+                    ViewBag.thongke_hocphi = thongke_hocphi.ToList();
+                else
+                    ViewBag.thongke_hocphi = 0;
+            }
             //----------------------------------------------
             int hocvien = db.HOC_SINH.Count();
             ViewBag.tonghocvien = hocvien;
@@ -49,7 +59,7 @@ namespace TrungTam.Areas.Admin.Controllers
             //----------------------------------------------
             var ghidanh = db.GHI_DANH;
             int num = 0;
-            foreach(var item in ghidanh)
+            foreach (var item in ghidanh)
             {
                 if (item.TINH_TRANG == false)
                     num += 1;
@@ -65,7 +75,7 @@ namespace TrungTam.Areas.Admin.Controllers
             GHI_DANH ghidanh = db.GHI_DANH.Find(ma);
             db.GHI_DANH.Remove(ghidanh);
             db.SaveChanges();
-            return RedirectToAction("Index","THONG_KE", new { area = "Admin" });
+            return RedirectToAction("Index", "THONG_KE", new { area = "Admin" });
         }
         public ActionResult home()
         {

@@ -326,30 +326,30 @@
 
     </script>
     <script>
-        //$('#thu').change(function () {
-        //    var thu = $('#thu').val();
-        //    $('table tbody').find('input[name="ab"]').each(function () {
-        //        $(this).parents("tr").remove();
-        //    });
-        //    $.ajax({
-        //        url: "/LOP_HOC/KIEM_TRA_TKB",
-        //        type: "POST",
-        //        dataType: "JSON",
-        //        traditional: true,
-        //        data: { thu: thu },
-        //        success: function (response) {
-        //            var tenthu = mangThu[thu];
-        //            var ten = "<h4 id='tieudeDanhSach'>Danh sách lớp " + tenthu + "</h4>";
-        //            $('#tieudeDanhSach').remove();
+        $('#thu').change(function () {
+            var thu = $('#thu').val();
+            $('table tbody').find('input[name="ab"]').each(function () {
+                $(this).parents("tr").remove();
+            });
+            $.ajax({
+                url: "/LOP_HOC/KIEM_TRA_TKB",
+                type: "POST",
+                dataType: "JSON",
+                traditional: true,
+                data: { thu: thu },
+                success: function (response) {
+                    var tenthu = mangThu[thu];
+                    var ten = "<h4 id='tieudeDanhSach'>Danh sách lớp " + tenthu + "</h4>";
+                    $('#tieudeDanhSach').remove();
 
-        //            $(response).each(function (i, e) {
-        //                //var td = "<tr><td>" + e.tenlop + "</td><td>" + e.thoigianbd.Hours + ":" + e.thoigiankt.Minutes + "</td><td>" + e.thoigiankt + "</td><input type='hidden' name='ab'></tr>";
-        //                var td = "<tr><td>" + e.tenlop + "</td><td>" + e.thoigianbd + "</td><td>" + e.thoigiankt + "</td><input type='hidden' name='ab'></tr>";
-        //                $('#danhsachLop').append(td);
-        //            });
-        //            $('#tieudeDS').append(ten);
-        //        }
-        //    });
-        //});
+                    $(response).each(function (i, e) {
+                        //var td = "<tr><td>" + e.tenlop + "</td><td>" + e.thoigianbd.Hours + ":" + e.thoigiankt.Minutes + "</td><td>" + e.thoigiankt + "</td><input type='hidden' name='ab'></tr>";
+                        var td = "<tr><td>" + e.tenlop + "</td><td>" + e.thoigianbd + "</td><td>" + e.thoigiankt + "</td><input type='hidden' name='ab'></tr>";
+                        $('#danhsachLop').append(td);
+                    });
+                    $('#tieudeDS').append(ten);
+                }
+            });
+        });
     </script>
 </section>

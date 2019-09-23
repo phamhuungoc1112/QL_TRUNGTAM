@@ -34,7 +34,7 @@
     }
 </div>
 <div class="col-sm-4">
-    <input class="form-control-sm" type="text" disabled id="datepicker" />
+    <input class="form-control-sm" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled id="datepicker" />
 </div>
 <div id="report" style="text-align:right;">
     Học sinh đã đóng: @ViewBag.DaThanhToan
@@ -149,6 +149,7 @@
             changeMonth: true,
             changeYear: true,
             showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
             buttonText: "Select true"
         });
 
@@ -160,8 +161,8 @@
             }
             var temp = $('#datepicker').val();
             if (temp != '') {
-                var dateloc = convertDate(temp);
-                var malop1 = $('#lop').val() + dateloc;
+                //var dateloc = convertDate(temp);
+                var malop1 = $('#lop').val() + '_' + temp;
                 $.ajax({
                     url: "/CONG_NO/Index1",
                     data: { lop: malop1 },
@@ -198,7 +199,7 @@
                              $('#report').html('');
                             $('<div/>').html("   <div>Tổng tiền cần thu: " + e.dadong + " </div>").appendTo($('#report'));
                             $('<div/>').html("<div>Học sinh đã đóng: @ViewBag.DaThanhToan").appendTo($('#report'));
-                            $('<div/>').html("<div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>").appendTo($('#report'));
+                            $('<div/>').html("<div>Tiền đã thu của lớp:@if (ViewBag.TongTien != 0) { string.Format("{0:0,0}", @ViewBag.TongTien); }</div>").appendTo($('#report'));
                         });
                     }
                 });
@@ -250,9 +251,9 @@
             }
             var temp = $('#datepicker').val();
             if (temp != '') {
-                var dateloc = convertDate($('#datepicker').val());
+                var dateloc = convertDate($('#datepicker').val());                
                 var malop1 = $('#lop').val();
-                var vcl = malop1 + dateloc;
+                var vcl = malop1 + '_' + temp;
                 //console.log(dateloc);
                 $.ajax({
                     url: "/Admin/CONG_NO/Filter1",

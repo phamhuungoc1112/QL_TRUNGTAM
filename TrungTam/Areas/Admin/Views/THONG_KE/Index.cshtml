@@ -60,10 +60,13 @@
                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Thu tháng trước</div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    @foreach (var item in hocphi)
+                                    @if (hocphi != null)
                                     {
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@string.Format("{0:0,0}",item.luong)</div>
-                                        break;
+                                        foreach (var item in hocphi)
+                                        {
+                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
+                                            break;
+                                        }
                                     }
                                 </div>
                                 <div class="col">
@@ -88,10 +91,13 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Chi tháng trước</div>
-                            @foreach (var item in luong)
+                            @if (luong != null)
                             {
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
-                                break;
+                                foreach (var item in luong)
+                                {
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
+                                    break;
+                                }
                             }
                         </div>
                         <div class="col-auto">

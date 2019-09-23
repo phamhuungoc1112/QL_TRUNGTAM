@@ -19,7 +19,7 @@
     }
 </div>
 <div class="col-sm-4">
-    <input class="form-control-sm" type="text" value="@DateTime.Now" disabled id="datepicker" />
+    <input class="form-control-sm" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled id="datepicker" />
 </div>
 
 
@@ -54,6 +54,7 @@
             changeMonth: true,
             changeYear: true,
             showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
             buttonText: "Select true"
         });
         $('#lophoc').change(function () {
@@ -86,10 +87,10 @@
             }
             var temp = $('#datepicker').val();
             if (temp != '') {
-                var dateloc = convertDate($('#datepicker').val());
+                //var dateloc = convertDate($('#datepicker').val());
                 var mahs = $(this).closest('tr').find('input[name="mahs"]').val();
                 //var vcl = mahs + dateloc;
-                var redirectWindow = window.open('@Url.Action("PrintReportMonth", "DANH_GIA_THEO_THANG")?id=' + mahs + '&date='+dateloc, '_blank');
+                var redirectWindow = window.open('@Url.Action("PrintReportMonth", "DANH_GIA_THEO_THANG")?id=' + mahs + '&date='+temp, '_blank');
                 redirectWindow.location;
                 //location.href = ;
                 $.ajax({
@@ -99,7 +100,7 @@
                     traditional: true,
                     data: {
                         id: vcl,
-                        date: dateloc
+                        date: temp
                     },
                     contentType: "application/json; chartset=utf-8",
                     success: function (respose) {

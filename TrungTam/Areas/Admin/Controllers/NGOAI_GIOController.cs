@@ -7,7 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using TrungTam.Areas.Admin.Models;
-
+using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class NGOAI_GIOController : Controller
@@ -15,7 +15,8 @@ namespace TrungTam.Areas.Admin.Controllers
         private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
 
         // GET: Admin/NGOAI_GIO
-        public ActionResult Index()
+        //==================thay chỗ này====================== 
+        public ActionResult Index(int page = 1, int pageSize = 10)
         {
             if (Session["ID"] == null)
                 return Redirect("/Home/Index");
@@ -25,11 +26,11 @@ namespace TrungTam.Areas.Admin.Controllers
                 return Redirect("/Home/Index");
             }
             var nGOAI_GIO = db.NGOAI_GIO.Include(n => n.BANG_LUONG).Include(n => n.GIAO_VIEN);
-            ViewBag.listgv = db.GIAO_VIEN.ToList();
+            ViewBag.listgv = db.GIAO_VIEN.Where(p => p.TRANG_THAI == true).ToList();
             ViewBag.listhd = db.BANG_LUONG.ToList();
-            return View(nGOAI_GIO.ToList());
+            return View(nGOAI_GIO.OrderBy(m => m.NGAY_LAM).ToPagedList(page, pageSize));
         }
-
+        //================== kết thúc đoạn thay====================== 
         // GET: Admin/NGOAI_GIO/Details/5
         public ActionResult Details(Guid? id)
         {

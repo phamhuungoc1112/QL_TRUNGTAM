@@ -28,8 +28,8 @@ namespace TrungTam.Areas.Admin.Models
         public string SDT { get; set; }
         public string GIOI_TINH { get; set; }
         public string EMAIL { get; set; }
+        public bool TRANG_THAI { get; set; }
         public Nullable<System.DateTime> NG_SINH { get; set; }
-        public Nullable<bool> TRANG_THAI { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }

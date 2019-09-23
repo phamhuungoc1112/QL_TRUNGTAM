@@ -5,6 +5,8 @@ using TrungTam.Areas.Admin.Models;
 using TrungTam.Areas.Admin.Abstracts;
 using Rotativa;
 using System.Collections.Generic;
+using System.Globalization;
+
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class DANH_GIA_THEO_THANGController : Controller
@@ -45,13 +47,14 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             string mahs = id.Substring(0, 10);
             //string dateloc = id.Substring(10);
-            var tg = DateTime.ParseExact(date, "dd/MM/yyyy", null);
+            CultureInfo current = CultureInfo.CurrentCulture;
+            DateTime dat = Convert.ToDateTime(date, System.Globalization.CultureInfo.GetCultureInfo(current.Name).DateTimeFormat);
             var chitiet = (from b in db.BUOI_HOC
                            join p in db.CT_BUOIHOC
                            on b.MA_BUOI equals p.MA_BUOI
                            join g in db.GIAO_VIEN
                            on b.MA_GV equals g.MA_GV                         
-                           where p.MA_HS.Equals(mahs) && p.BUOI_HOC.THOI_GIAN.Month.Equals(tg.Month) && p.BUOI_HOC.THOI_GIAN.Year.Equals(tg.Year)
+                           where p.MA_HS.Equals(mahs) && p.BUOI_HOC.THOI_GIAN.Month.Equals(dat.Month) && p.BUOI_HOC.THOI_GIAN.Year.Equals(dat.Year)
                            select new ReportDanhGia
                            {
                                tenlop = p.BUOI_HOC.LOP_HOC.TEN_LOP,
@@ -64,7 +67,9 @@ namespace TrungTam.Areas.Admin.Controllers
                                tenhs = p.HOC_SINH.HO_TEN 
                            }).ToList();
             //var 
-            quanque = chitiet;
+            if (chitiet.Count() != 0)
+                quanque = chitiet;
+            else quanque = null;
             return RedirectToAction("Prints", "DANH_GIA_THEO_THANG");
         }
 
@@ -77,10 +82,15 @@ namespace TrungTam.Areas.Admin.Controllers
         {
             try
             {
-                if (quanque != null)
-                {
-                    return View(quanque);
-                }
+                return View(quanque);
+                //if (quanque != null)
+                //{
+                //    return View(quanque);
+                //}
+                //else
+                //{
+                //    return View();
+                //}
             }
             catch (Exception)
             {

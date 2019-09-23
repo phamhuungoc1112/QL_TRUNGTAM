@@ -15,5 +15,8 @@ namespace TrungTam.Areas.Admin.Abstracts
         public string tenloai { get; set; }
         public string tenmon { get; set; }
         public Nullable<short> trangthai { get; set; }
+        public Nullable<DateTime> ngayketthuc { get; set; }
+        public Nullable<DateTime> ngaymolop { get; set; }
+        public Nullable<DateTime> ngayhoc { get; set; }
     }
 }

@@ -45,7 +45,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 ct.MA_CT = Guid.NewGuid();
                 ct.NGAY = DateTime.Parse(f["ngay"]);
                 ct.TEN_CT = f["name"];
-                ct.THANH_TIEN = Decimal.Parse(f["thanhtien"]);
+                ct.THANH_TIEN = double.Parse(f["thanhtien"]);
                 db.CHI_TIEU_NGOAI.Add(ct);
                 db.SaveChanges();
                 return RedirectToAction("Index", "CHI_TIEU_NGOAI", new { area = "Admin" });

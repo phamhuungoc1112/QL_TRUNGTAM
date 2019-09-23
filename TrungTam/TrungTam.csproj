@@ -253,15 +253,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Areas\Admin\Models\sp_helpdiagramdefinition_Result.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\sp_helpdiagrams_Result.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\sysdiagram.cs">
-      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
-    </Compile>
     <Compile Include="Areas\Admin\Models\TAI_KHOAN.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
@@ -4332,13 +4323,6 @@
     <Content Include="Areas\Admin\Views\NGOAI_GIO\Index.cshtml" />
     <Content Include="Areas\Admin\Views\TRANG_CHU\Index.cshtml" />
     <Content Include="Areas\Admin\Views\THONG_KE\Index.cshtml" />
-    <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
-      <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
-    </Content>
     <Content Include="Asset\admin\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Asset\admin\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Asset\admin\fonts\glyphicons-halflings-regular.woff" />
@@ -4616,6 +4600,13 @@
     <Content Include="Areas\Admin\Views\CHI_TIEU_NGOAI\Create.cshtml" />
     <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\PrintReport.cshtml" />
+    <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
+      <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />

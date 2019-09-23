@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\phamh\Desktop\final_new\final\QL_TRUNGTAM (2)\QL_TRUNGTAM\TrungTam\Areas\Admin\Models\QL_TRUNGTAM.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\THAO\Downloads\final_new (1)\final_new\QL_TRUNGTAM\TrungTam\Areas\Admin\Models\QL_TRUNGTAM.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

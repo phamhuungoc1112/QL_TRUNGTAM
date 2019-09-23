@@ -1,15 +1,14 @@
-﻿using System;
+﻿using PagedList;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
 using System.Linq;
 using System.Net;
-using System.Web;
 using System.Web.Mvc;
-using TrungTam.Areas.Admin.Models;
-using TrungTam.Areas.Admin.Abstracts;
 using System.Web.Script.Serialization;
-using PagedList;
+using TrungTam.Areas.Admin.Abstracts;
+using TrungTam.Areas.Admin.Models;
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class LOP_HOCController : Controller
@@ -43,7 +42,10 @@ namespace TrungTam.Areas.Admin.Controllers
                               tenkhoi = k.TEN_KHOI,
                               tenloai = ll.TEN_LOAI,
                               tenmon = m.TEN_MON,
-                              trangthai = l.TRANG_THAI
+                              trangthai = l.TRANG_THAI,
+                              ngayketthuc = l.NGAY_KET_THUC,
+                              ngaymolop = l.NGAY_MO_LOP,
+                              ngayhoc = l.NGAY_BAT_DAU
                           };
             return View(lOP_HOC.OrderByDescending(l => l.tenlop).ToPagedList(page, pageSize));
         }
@@ -141,36 +143,52 @@ namespace TrungTam.Areas.Admin.Controllers
         [AllowAnonymous]
         public JsonResult Add(string tong)
         {
-        
+
             var mahs = tong.Substring(0, 10);
             var malop = tong.Substring(10, tong.Length - 10);
             //var ktra = (from lh in db.LOP_HOC
             //            where lh.TRANG_THAI == 1
             //            && lh.MA_LOP == Guid.Parse(malop)
             //            select lh).Count();
-            var tinhhp = from lop in db.LOP_HOC
-                         join hp in db.BANG_GIA_HOC_PHI
-                         on lop.NGAY_AP_DUNG equals hp.NGAY_AP_DUNG
-                         where lop.MA_LOP == Guid.Parse(malop)
-                         select hp;
-            CONG_NO cONG_NO = new CONG_NO();
-            cONG_NO.MA_CONG_NO = Guid.NewGuid();
-            cONG_NO.NGAY_LAP_CONG_NO = DateTime.Now;
-            cONG_NO.MA_HS = mahs;
-            cONG_NO.TRANG_THAI = false;
-            CT_CONG_NO cT_CONG_NO = new CT_CONG_NO();
-            cT_CONG_NO.MA_CONG_NO = cONG_NO.MA_CONG_NO;
-            cT_CONG_NO.MA_LOP = Guid.Parse(malop);
-            db.CONG_NO.Add(cONG_NO);
-            db.CT_CONG_NO.Add(cT_CONG_NO);
-            CT_LOP_HOC ct_lop = new CT_LOP_HOC();
-            ct_lop.MA_HS = mahs;
-            ct_lop.MA_LOP = Guid.Parse(malop);
-            LOP_HOC l = db.LOP_HOC.Find(Guid.Parse(malop));
-            
-            //db.LOP_HOC.Add(l);            
-            db.CT_LOP_HOC.Add(ct_lop);
-            db.SaveChanges();
+            //var tinhhp = from lop in db.LOP_HOC
+            //             join hp in db.BANG_GIA_HOC_PHI
+            //             on lop.NGAY_AP_DUNG equals hp.NGAY_AP_DUNG
+            //             where lop.MA_LOP == Guid.Parse(malop)
+            //             select hp;
+            var statusClass = db.LOP_HOC.Find(Guid.Parse(malop)).TRANG_THAI;
+            if (statusClass == 0)
+            {
+                CT_LOP_HOC ct_lop = new CT_LOP_HOC();
+                ct_lop.MA_HS = mahs;
+                ct_lop.MA_LOP = Guid.Parse(malop);
+                db.CT_LOP_HOC.Add(ct_lop);
+               
+                CONG_NO cONG_NO = new CONG_NO();
+                cONG_NO.MA_CONG_NO = Guid.NewGuid();
+                cONG_NO.NGAY_LAP_CONG_NO = DateTime.Now;
+                cONG_NO.MA_HS = mahs;
+                cONG_NO.TRANG_THAI = false;
+                CT_CONG_NO cT_CONG_NO = new CT_CONG_NO();
+                cT_CONG_NO.MA_CONG_NO = cONG_NO.MA_CONG_NO;
+                cT_CONG_NO.MA_LOP = Guid.Parse(malop);
+                cT_CONG_NO.THANH_TIEN = ct_lop.LOP_HOC.BANG_GIA_HOC_PHI.DON_GIA;
+                db.CONG_NO.Add(cONG_NO);
+                db.CT_CONG_NO.Add(cT_CONG_NO);
+                db.SaveChanges();
+            }
+            else if (statusClass == -1)
+            {
+
+            }
+            else
+            {
+                CT_LOP_HOC ct_lop = new CT_LOP_HOC();
+                ct_lop.MA_HS = mahs;
+                ct_lop.MA_LOP = Guid.Parse(malop);
+                db.CT_LOP_HOC.Add(ct_lop);
+                db.SaveChanges();
+            }
+
             return Json(tong, JsonRequestBehavior.AllowGet);
         }
         //POST: Admin/LOP_HOC/Create
@@ -250,8 +268,9 @@ namespace TrungTam.Areas.Admin.Controllers
                 lh.MA_GV = lop.magiaovien;
                 lh.TEN_LOP = lop.tenlop;
                 lh.NGAY_AP_DUNG = DateTime.Parse(dmngayapdung);
-                lh.NGAY_BAT_DAU = DateTime.Now;
-                lh.TRANG_THAI = 1;
+
+                lh.NGAY_MO_LOP = DateTime.Now;
+                //lh.TRANG_THAI = 1;
                 foreach (ThoiKhoaBieu i in listTKB)
                 {
                     THOI_KHOA_BIEU tkb = new THOI_KHOA_BIEU();
@@ -292,7 +311,7 @@ namespace TrungTam.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult StatuClass(string id)
         {
-            if(id==null|| string.IsNullOrEmpty(id))
+            if (id == null || string.IsNullOrEmpty(id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -302,6 +321,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             lOP.TRANG_THAI = 0;//CHUYỂN TRẠNG THÁI THÀNH ĐANG HỌC
+            lOP.NGAY_BAT_DAU = DateTime.Now;
             db.SaveChanges();
             string x = "1";
             return Json(x, JsonRequestBehavior.AllowGet);
@@ -321,6 +341,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 return HttpNotFound();
             }
             lOP.TRANG_THAI = -1;//CHUYỂN TRẠNG THÁI THÀNH KẾT THÚC
+            lOP.NGAY_KET_THUC = DateTime.Now;
             db.SaveChanges();
             string x = "1";
             return Json(x, JsonRequestBehavior.AllowGet);

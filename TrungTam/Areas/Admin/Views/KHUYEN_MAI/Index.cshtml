@@ -1,15 +1,23 @@
 ﻿@model IEnumerable<TrungTam.Areas.Admin.Models.KHUYEN_MAI>
 @{
     ViewBag.Title = "KhuyenMai";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
     Thêm khuyến mãi
 </button>
-<div class="card-body">
-    <table class="table table-bordered table-responsive table-hover myTable text-center">
-        <thead class="text-primary">
+<div class="card-body ">
+    <table class="table  table-bordered table-responsive table-hover myTable text-center">
+        <thead class="text-white bg-primary">
             <tr>
                 <th>Loại Khuyến mãi</th>
                 <th>

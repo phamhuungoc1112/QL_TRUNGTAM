@@ -88,6 +88,24 @@ namespace TrungTam.Areas.Admin.Controllers
             return Json(buoihoc, JsonRequestBehavior.AllowGet);
         }
         //===================================================
+        [HttpGet]
+        public ActionResult LoadBuoi_gv(string id = "")
+        {
+            Guid malop = Guid.Parse(id);
+            var buoihoc = db.BUOI_HOC.Where(p => p.TINH_TRANG == false).Include(q => q.GIAO_VIEN)
+                .Select(p => new
+                {
+                    sttbuoi = p.STT_BUOI,
+                    mabuoi = p.MA_BUOI,
+                    thoigian = p.THOI_GIAN.ToString(),
+                    magv = p.MA_GV,
+                    hoten = p.GIAO_VIEN.HO_TEN,
+                    sdt = p.GIAO_VIEN.SDT,
+                    maluong = p.MA_LUONG,
+                    malop = p.MA_LOP
+                }).OrderByDescending(p => p.sttbuoi);
+            return Json(buoihoc, JsonRequestBehavior.AllowGet);
+        }
         //===================================================
         [HttpGet]
         public ActionResult Load_CTBuoi(string id = "")
@@ -135,7 +153,8 @@ namespace TrungTam.Areas.Admin.Controllers
                                         MA_HS = p.MA_HS,
                                         HO_TEN = p.HOC_SINH.HO_TEN,
                                         SDT = p.HOC_SINH.SDT,
-                                        DIA_CHI = p.HOC_SINH.DIA_CHI
+                                        DIA_CHI = p.HOC_SINH.DIA_CHI,
+                                        TRANG_THAI = p.HOC_SINH.TINH_TRANG
                                     });
             return Json(dsHS, JsonRequestBehavior.AllowGet);
         }
@@ -163,15 +182,27 @@ namespace TrungTam.Areas.Admin.Controllers
                 bh.MA_LOP = Guid.Parse(f["lopp"]);
                 bh.TINH_TRANG = false;
                 Guid malop = Guid.Parse(f["lopp"]);
-                var luong = db.BANG_LUONG.ToList();
+                var luong = db.BANG_LUONG.OrderByDescending(p => p.SO_LUONG_MAX).ToList();
+                //============ Thay đổi ======================
+                var soluongmax = db.BANG_LUONG.Max(p => p.SO_LUONG_MAX);
                 bh.THOI_GIAN = DateTime.Parse(f["ngay"]);
                 Guid ma = new Guid();
+                bool temp = false;
                 //tìm mã lương phù hợp.
                 foreach (var item in luong)
                 {
                     if (int.Parse(f["siso"]) == item.SO_LUONG_MIN || int.Parse(f["siso"]) == item.SO_LUONG_MAX)
+                    {
                         ma = item.MA_LOAI_LUONG;
+                        temp = true;
+                        break;
+                    }
                 }
+                if(!temp)
+                {
+                    ma = luong.First().MA_LOAI_LUONG;
+                }
+                //============== Kết thúc ========================
                 bh.MA_LUONG = ma;
                 if (f["diemdanhGV"] == "1")
                     bh.MA_GV = f["magv"];
@@ -208,8 +239,8 @@ namespace TrungTam.Areas.Admin.Controllers
             if (ModelState.IsValid)
             {
                 Guid buoi = Guid.Parse(f["buoi"]);
-                var bh = db.CT_BUOIHOC.Where(p => p.MA_BUOI.Equals(buoi)).ToList();
-                foreach (var item in bh)
+                var ct_bh = db.CT_BUOIHOC.Where(p => p.MA_BUOI.Equals(buoi)).ToList();
+                foreach (var item in ct_bh)
                 {
                     if (item.MA_HS.Equals(f["mahs" + item.MA_HS]))
                     {
@@ -220,6 +251,8 @@ namespace TrungTam.Areas.Admin.Controllers
                         }
                     }
                 }
+                var bh = db.BUOI_HOC.Find(buoi);
+                bh.TINH_TRANG = true;
                 db.SaveChanges();
                 return RedirectToAction("GV", "BUOI_HOC", new { area = "Admin" });
             }

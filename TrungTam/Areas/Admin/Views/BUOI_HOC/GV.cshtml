@@ -5,35 +5,57 @@
     Layout = "~/Views/Shared/_Layout_gv.cshtml";
     var chonlop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.chonlop;
 }
+<h2 class="Title_Content">Đánh Giá Buổi Học</h2>
 <div class="container pt-5">
     <form action="/BUOI_HOC/nhanxetGV" method="post">
         @*Chọn lớp trong ngày đó*@
         <div class="row">
-            <div class="col-2">
-                Lớp học :
-            </div>
-            <div class="col-2" id="listlop">
-                <select class="dropdown-select" name="lopp" id="lop">
-                    <option>Chọn lớp</option>
+            @*<div class="col-2">
+            Lớp học :
+        </div>
+        <div class="col-2" id="listlop">
+            <select class="dropdown-select" name="lopp" id="lop">
+                <option>Chọn lớp</option>
+                @foreach (var item in chonlop)
+                {
+                    <option value="@item.MA_LOP">@item.TEN_LOP</option>
+                }
+            </select>
+        </div>*@
+            <div class="col-6 input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text text-white bg-primary" for="lop">Chọn lớp</label>
+                </div>
+                <select class="custom-select" name="lopp" id="lop">
+                    <option selected>Chọn...</option>
                     @foreach (var item in chonlop)
                     {
                         <option value="@item.MA_LOP">@item.TEN_LOP</option>
                     }
                 </select>
             </div>
-            <div class="col-2" style="display:none" id="lbl_buoi">
-                Buổi :
-            </div>
-            <div class="col-2" style="display:none" id="select_buoi">
-                <select class="dropdown-select" name="buoi" id="buoi">
+            <div class="col-6 input-group mb-3">
+                <div class="input-group-prepend" id="select_buoi">
+                    <label class="input-group-text text-white bg-primary" for="lop" id="select_buoi">Buổi</label>
+                </div>
+                <select class="custom-select"  name="buoi" id="buoi">
                     @*danh sách các buổi của lớp đó*@
                 </select>
             </div>
+
+            @*<div class="col-2" style="display:none" id="lbl_buoi">
+                Buổi :
+            </div>
+            <div class="col-2" style="display:none" id="select_buoi">
+                <select class="dropdown-select" name="buoi" id="buoi">*@
+                    @*danh sách các buổi của lớp đó*@
+                @*</select>
+            </div>*@
         </div>
         <hr />
         @*Danh sách học viên*@
-        <table class="table table-striped" id="listHS" style="display:none">
-            <thead>
+        <table class="table table-striped table-responsive table-bordered table-hover" id="listHS" style="display:none">
+            <thead class="text-white bg-primary">
                 <tr>
                     <td>Họ và Tên</td>
                     <td>Điện thoại</td>

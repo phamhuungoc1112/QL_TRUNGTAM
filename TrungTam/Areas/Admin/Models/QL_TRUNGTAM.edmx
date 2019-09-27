@@ -158,6 +158,7 @@
           <Property Name="SDT_PH" Type="nchar" MaxLength="15" />
           <Property Name="NG_VAO_HOC" Type="datetime" />
           <Property Name="PHU_HUYNH" Type="nvarchar" MaxLength="50" />
+          <Property Name="TINH_TRANG" Type="bit" />
         </EntityType>
         <EntityType Name="KHOI_LOP">
           <Key>
@@ -847,6 +848,7 @@
           <NavigationProperty Name="CONG_NO" Relationship="Self.FK_CONG_NO_HOC_SINH" FromRole="HOC_SINH" ToRole="CONG_NO" />
           <NavigationProperty Name="CT_BUOIHOC" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_BUOIHOC" />
           <NavigationProperty Name="CT_LOP_HOC" Relationship="Self.FK_CT_LOP_HOC_HOC_SINH" FromRole="HOC_SINH" ToRole="CT_LOP_HOC" />
+          <Property Name="TINH_TRANG" Type="Boolean" />
         </EntityType>
         <EntityType Name="KHOI_LOP">
           <Key>
@@ -1514,6 +1516,7 @@
           <EntitySetMapping Name="HOC_SINH">
             <EntityTypeMapping TypeName="QL_TRUNGTAMModel.HOC_SINH">
               <MappingFragment StoreEntitySet="HOC_SINH">
+                <ScalarProperty Name="TINH_TRANG" ColumnName="TINH_TRANG" />
                 <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
                 <ScalarProperty Name="HO_TEN" ColumnName="HO_TEN" />
                 <ScalarProperty Name="NG_SINH" ColumnName="NG_SINH" />

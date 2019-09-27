@@ -2,14 +2,22 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
 
-<h2>Danh sách các lớp</h2>
+<h2 class="Title_Content">Danh sách các lớp</h2>
 
-<table class="table table-responsive">
+<table class="table table-bordered  table-responsive">
     @Html.AntiForgeryToken();
-    <tr>
+    <tr class="text-white bg-primary text-center">
         <th>
             Tên lớp
         </th>
@@ -32,7 +40,7 @@
         <th>Ngày mở lớp</th>
         <th>Ngày bắt đầu</th>
         <th>Ngày kết thúc</th>
-        <th></th>
+        <th><em class="fa fa-cog"></em></th>
     </tr>
     <tbody>
         @foreach (var item in Model)
@@ -67,7 +75,7 @@
             }
             else if (item.trangthai == 0)
             {
-                <td style="color:orange;">Đang học <button class="btn btn-danger kt">Kết thúc lớp học</button></td>
+                <td style="color:orange; padding-bottom:2px;">Đang học <button class="btn btn-outline-danger kt">Kết thúc lớp học</button></td>
                 <td>@item.ngaymolop</td>
                 <td>@item.ngayhoc</td>
                 <td></td>
@@ -80,9 +88,10 @@
                 <td>@item.ngayketthuc</td>
             }
 
-            <td>
-                @Html.ActionLink("Chi tiết", "Details", new { id = item.malop })
-            </td>
+                <td>
+                    <button type="button" class="btn btn-warning">@Html.ActionLink("Chi tiết", "Details", new { id = item.malop }) </button>
+                    
+                </td>
         </tr>
         }
     </tbody>

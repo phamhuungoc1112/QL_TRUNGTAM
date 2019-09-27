@@ -2,7 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var chonlop = (List<TrungTam.Areas.Admin.Abstracts.THOI_KHOA_BIEU_LOP_HOC>)ViewBag.chonlop;
     var lop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.Lop;
 }
@@ -66,7 +74,7 @@
                 <td>Điện thoại</td>
                 <td>Địa chỉ</td>
                 <td>Điểm danh</td>
-                <td>Lí do vắng (nếu có)</td>
+                <td>Ghi chú</td>
             </tr>
         </thead>
         <tbody id="HS" class="text-center"></tbody> @*tbody rỗng để data từ Ajax học viên chạy vào*@
@@ -144,18 +152,21 @@
                     $(response).each
                         (
                         function (i, e) { //duyet mang doi tuong
-                            var tr = $("<tr class='onRow'/>");
-                            $("<td/>").html(e.HO_TEN).appendTo(tr);//bo sung <td> vao <tr>
-                            $("<td/>").html(e.SDT).appendTo(tr);//bo sung <td> vao <tr>
-                            $("<td/>").html(e.DIA_CHI).appendTo(tr);
-                            var td1 = $("<td/>");
-                            var td2 = $("<td/>");
-                            $("<div/>").add("<select name='diemdanh" + e.MA_HS
-                                + "' id='diemdanh'><option value='1'>Có</option><option value='0'>Vắng</option></select>").appendTo(td1);
-                            td1.appendTo(tr);
-                            $("<div/>").add("<input type ='text' name ='lido" + e.MA_HS + "' id='lido" + e.MA_HS + "'/>").appendTo(td2);
-                            td2.appendTo(tr);
-                            tr.appendTo("tbody#HS");// bo sung <tr> vao <tbody>
+                            if(e.TRANG_THAI == true)
+                            {
+                                var tr = $("<tr class='onRow'/>");
+                                $("<td/>").html(e.HO_TEN).appendTo(tr);//bo sung <td> vao <tr>
+                                $("<td/>").html(e.SDT).appendTo(tr);//bo sung <td> vao <tr>
+                                $("<td/>").html(e.DIA_CHI).appendTo(tr);
+                                var td1 = $("<td/>");
+                                var td2 = $("<td/>");
+                                $("<div/>").add("<select name='diemdanh" + e.MA_HS
+                                    + "' id='diemdanh'><option value='1'>Có</option><option value='0'>Vắng</option></select>").appendTo(td1);
+                                td1.appendTo(tr);
+                                $("<div/>").add("<input type ='text' name ='lido" + e.MA_HS + "' id='lido" + e.MA_HS + "'/>").appendTo(td2);
+                                td2.appendTo(tr);
+                                tr.appendTo("tbody#HS");// bo sung <tr> vao <tbody>
+                            }
                         }
                         );
                 }

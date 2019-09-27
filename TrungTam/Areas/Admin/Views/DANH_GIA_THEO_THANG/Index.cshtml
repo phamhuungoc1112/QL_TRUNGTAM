@@ -1,11 +1,19 @@
 ﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
 
-<h2>Xuất đánh giá theo tháng</h2>
-<div>
+<h2 class="Title_Content">Xuất đánh giá theo tháng</h2>
+<div class="m-3">
     @if (Model != null)
     {
         <select class="form-control" name="lophoc" id="lophoc">
@@ -18,14 +26,14 @@
         </select>
     }
 </div>
-<div class="col-sm-4">
+<div class="col-sm-4 m-0 mb-3">
     <input class="form-control-sm" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled id="datepicker" />
 </div>
 
 
-<div>
+
     <table class="table table-bordered table-hover table-responsive">
-        <thead class="text-primary">
+        <thead class="text-white bg-primary">
             <tr>
                 <th class="nowrap">
                     <span class="mr-1">Mã học viên</span>
@@ -44,7 +52,7 @@
         <tbody id="ds_hocsinh">
         </tbody>
     </table>
-</div>
+
 @section ClientScript{
     <script>
         $('#datepicker').datepicker({

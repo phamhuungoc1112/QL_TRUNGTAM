@@ -20,7 +20,7 @@ namespace TrungTam.Areas.Admin.Controllers
             if (Session["ID"] == null)
                 return Redirect("/Home/Index");
             var id = Session["ID"].ToString();
-            if (id.First() != '9' && id.First() != '8')
+            if (id.First() != '9')
             {
                 return Redirect("/Home/Index");
             }

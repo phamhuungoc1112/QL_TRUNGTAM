@@ -2,21 +2,29 @@
 
 @{
     ViewBag.Title = "Create";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var listkhoi = (List<TrungTam.Areas.Admin.Abstracts.HocPhi_Khoi>)ViewBag.listkhoi;
     var listgiaovien = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgiaovien;
     var listbanghp = (List<TrungTam.Areas.Admin.Abstracts.BangHP_Khoi_Loai_Mon>)ViewBag.listbanghp;
 }
 
-<h2>Mở lớp</h2>
+<h2 class="Title_Content">Mở lớp</h2>
 <div class="container">
 
     @*@Html.AntiForgeryToken()*@
     <div class="well well-sm">
-        <h4>Thông tin lớp</h4>
+        <h4 class="text-primary">Thông tin lớp</h4>
         <hr />
         <table class="table table-bordered table-hover myTable table-responsive">
-            <thead class="text-primary">
+            <thead class="text-white bg-primary text-center">
                 <tr>
                     <th class="nowrap">
                         <span class="mr-1">Tên khối</span>
@@ -87,7 +95,7 @@
     <div class="col-sm-6">
 
         @*======================*@
-        <h4>Thời gian học</h4>
+        <h4 class="text-primary">Thời gian học</h4>
         <br />
         <div class="form-group">
             <div class="input-group">
@@ -116,11 +124,11 @@
             </div>
             <span class="sp-thongbao" id="tbTen"></span>
         </div>
-        <button class="btn btn-success" id="them" type="button">Thêm</button>
-        <button class="btn btn-danger" type="button" id="xoa">Xóa</button>
+        <button class="btn btn-success mb-3" id="them" type="button">Thêm</button>
+        <button class="btn btn-danger mb-3" type="button" id="xoa">Xóa</button>
         @*<button class="btn btn-warning" type="button" id="kiemtra_tkb">Kiểm tra</button>*@
         <table class="table table-bordered table-hover myTable table-responsive" id="tkb">
-            <thead class="text-primary">
+            <thead class="text-white bg-primary text-center">
                 <tr id="abc">
                     <th class="nowrap">
                         <span class="mr-1">Thứ</span>
@@ -142,11 +150,11 @@
     @*=========================*@
     <div class="col-sm-6" id="ds">
         <div id="tieudeDS">
-            <h4 id="tieudeDanhSach">Danh sách lớp Thứ 2</h4>
+            <h4 id="tieudeDanhSach" class="text-primary">Danh sách lớp Thứ 2</h4>
         </div>
 
         <br />
-        <div class="row mb-2">
+        @*<div class="row mb-2">
             <div class="col-sm-3">
                 <select class="form-control" name="khoi">
                     @if (listkhoi != null)
@@ -174,10 +182,10 @@
             <div class="col-sm-3">
                 <button class="btn btn-success" type="button" name="boloc">Bỏ lọc</button>
             </div>
-        </div>
+        </div>*@
         <div style="overflow-y:auto; position:relative;">
             <table class="table table-bordered table-striped mb-0 table-responsive">
-                <thead class="text-primary">
+                <thead class="text-white bg-primary text-center">
                     <tr>
                         <th>Tên lớp</th>
                         <th>Thời gian bắt đầu</th>

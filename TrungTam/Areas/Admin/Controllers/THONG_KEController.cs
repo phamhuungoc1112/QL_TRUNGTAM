@@ -17,7 +17,7 @@ namespace TrungTam.Areas.Admin.Controllers
             if (Session["ID"] == null)
                 return Redirect("/Home/Index");
             var id = Session["ID"].ToString();
-            if (id.First() != '9')
+            if (id.First() != '9' && id.First() != '8')
             {
                 return Redirect("/Home/Index");
             }
@@ -53,7 +53,7 @@ namespace TrungTam.Areas.Admin.Controllers
                     ViewBag.thongke_hocphi = 0;
             }
             //----------------------------------------------
-            int hocvien = db.HOC_SINH.Count();
+            int hocvien = db.HOC_SINH.Where(p => p.TINH_TRANG == true).Count();
             ViewBag.tonghocvien = hocvien;
             //----------------------------------------------
             //----------------------------------------------
@@ -66,6 +66,9 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             ViewBag.ghidanh = ghidanh.ToList();
             ViewBag.num = num;
+            var thang = DateTime.Now.Month;
+            int hocvienmoi = db.HOC_SINH.Where(p => p.NG_VAO_HOC.Value.Month.Equals(thang)).Count();
+            ViewBag.hocvienmoi = hocvienmoi;
             return View();
         }
         [HttpPost]

@@ -2,7 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var chonlop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.chonlop;
 }
 @*Chọn lớp trong ngày đó*@

@@ -25,7 +25,7 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return Redirect("/Home/Index");
             }
-            var hOC_SINH = db.HOC_SINH;
+            var hOC_SINH = db.HOC_SINH.Where(p => p.TINH_TRANG == true);
             return View(hOC_SINH.OrderByDescending(m=>m.MA_HS).ToPagedList(page,pageSize));
         }
 
@@ -74,6 +74,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 hs.DIA_CHI = f["diachi"];
                 hs.KHOI = int.Parse(f["khoi"]);
                 hs.SDT_PH = f["sdt_ph"];
+                hs.TINH_TRANG = true;
                 db.HOC_SINH.Add(hs);
                 bASE.create_TAI_KHOAN(hs.MA_HS,f["SDT"]);
                 db.SaveChanges();
@@ -102,7 +103,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
+        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,TINH_TRANG,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
         {
             if (ModelState.IsValid)
             {
@@ -119,7 +120,7 @@ namespace TrungTam.Areas.Admin.Controllers
         public ActionResult Delete(string id)
         {
             HOC_SINH hs = db.HOC_SINH.Find(id);
-            db.HOC_SINH.Remove(hs);
+            hs.TINH_TRANG = false;
             TAI_KHOAN tAI_KHOAN = db.TAI_KHOAN.Find(id);
             db.TAI_KHOAN.Remove(tAI_KHOAN);
             db.SaveChanges();

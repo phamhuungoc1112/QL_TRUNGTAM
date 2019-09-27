@@ -17,6 +17,13 @@ namespace TrungTam.Areas.Admin.Controllers
         // GET: Admin/CHI_TIEU_NGOAI
         public ActionResult Index(int page = 1, int pageSize = 10)
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9')
+            {
+                return Redirect("/Home/Index");
+            }
             var chitieu = db.CHI_TIEU_NGOAI;
             return View(chitieu.ToList().OrderByDescending(p => p.NGAY).ToPagedList(page, pageSize));
         }

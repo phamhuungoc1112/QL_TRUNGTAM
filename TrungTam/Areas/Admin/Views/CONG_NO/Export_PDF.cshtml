@@ -6,7 +6,13 @@
 }
 
 @*<div>TRUNG TÂM </div>*@
-<div style="text-align:center" class="text-primary">HÓA ĐƠN</div>
+<div class="row">
+    <div class="col-6">
+        <h4> Trung Tâm BDVH <br />KHOA HỌC TRẢI NGHIỆM</h4>
+    </div>
+    @*<div class="col-1 w-50 h-50" ><img src="~/Asset/admin/img/unnamed.png" /></div>*@
+</div>
+<div style="text-align:center" class="text-primary"><h4>HÓA ĐƠN</h4></div>
 <div style="text-align:right">Ngày thanh toán: @DateTime.Now</div>
 @if (Model != null)
 {
@@ -15,7 +21,7 @@
         <div class="text-success"><span>Tên học viên: </span>@Model[0].tenhs</div>
     </div>
 }
-<table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover mt-2">
     <thead class="text-primary">
         <tr>
             <th>Tên lớp</th>

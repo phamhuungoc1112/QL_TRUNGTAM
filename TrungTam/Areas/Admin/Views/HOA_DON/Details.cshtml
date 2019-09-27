@@ -1,7 +1,15 @@
 ﻿
 @{
     ViewBag.Title = "Details";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var chitiet = (List<TrungTam.Areas.Admin.Abstracts.TINH_LUONG>)ViewBag.chitiet;
     var chitiet_ngoaigio = (List<TrungTam.Areas.Admin.Abstracts.TINH_LUONG>)ViewBag.chitiet_ngoaigio;
     var stt = 0;

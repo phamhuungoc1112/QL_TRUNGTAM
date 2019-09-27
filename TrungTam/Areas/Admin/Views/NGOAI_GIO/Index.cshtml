@@ -4,7 +4,15 @@
 @*=====================kết thúc thay===================*@
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var listgv = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgv;
     var listhd = (List<TrungTam.Areas.Admin.Models.BANG_LUONG>)ViewBag.listhd;
 }

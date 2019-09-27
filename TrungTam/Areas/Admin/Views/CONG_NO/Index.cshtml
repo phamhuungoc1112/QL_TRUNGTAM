@@ -2,7 +2,15 @@
 
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
     var list_lop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.list_lop;
     var Kiemtra = ViewBag.Kiemtra;
     var KiemTraChuaHD = ViewBag.kiemtraChuaHD;
@@ -10,40 +18,52 @@
 
 <h2 class="Title_Content">Tính học phí</h2>
 
-<p>
+@*<p>
     @Html.ActionLink("Create New", "Create")
-</p>
-@Html.AntiForgeryToken();
-<div id="tenlop">
-    @if (KiemTraChuaHD != 0)
-    {
-        if (Model != null && Kiemtra != 0)
-        {
-            var dem = 0;
-            foreach (var i in Model)
-            {
-                if (dem == 0)
+</p>*@
+<div class="container">
+    <div class="row">
+        <div class="col-6">
+            <div id="tenlop">
+                @if (KiemTraChuaHD != 0)
                 {
-                    <div class="col-sm-3" id="tenlopvalue" style="color:black;">
-                        <span>Tên lớp: </span>   @i.tenlop
-                    </div>
-                    dem++;
+                    if (Model != null && Kiemtra != 0)
+                    {
+                        var dem = 0;
+                        foreach (var i in Model)
+                        {
+                            if (dem == 0)
+                            {
+                                <div class="" id="tenlopvalue" style="color:black;">
+                                    <span class="text-white bg-primary p-2 mr-2">Tên lớp: </span> <label class="m-2">  @i.tenlop</label>
+                                </div>
+                                dem++;
+                            }
+                        }
+                    }
                 }
-            }
-        }
-    }
-</div>
-<div class="col-sm-4">
-    <input class="form-control-sm" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled id="datepicker" />
-</div>
-<div id="report" style="text-align:right;">
-    Học sinh đã đóng: @ViewBag.DaThanhToan
-    <div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>
+            </div>
+        </div>
+        @*<div class="col-6">@Html.AntiForgeryToken();</div>*@
+        <div class="col-sm-4">
+            <input class="form-control-sm" type="text" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled id="datepicker" />
+        </div>
+    </div>
+
 </div>
 
-<div>
-    <button type="button" class="btn btn-success" id="loc">Lọc</button>
+<div class="container">
+    <div class="mb-3 row" id="report" style="text-align:right; ">
+        <div class="col-lg-10 col-md-5 col-sm-9 "><label class="text-white bg-primary p-2 pl-lg-3 ">Học sinh đã đóng:</label></div>
+        <div class="col-lg-1 col-md-3 col-sm-3" ><lable class="text-danger">@ViewBag.DaThanhToan</lable></div>
+        <div class="col-lg-10 col-md-5  col-sm-9"><label class="text-white bg-primary p-2">Tiền đã thu của lớp:</label></div>
+        <div class="col-lg-1 col-md-3 col-sm-3"><label class="text-danger text-center">@string.Format("{0:0,0}", @ViewBag.TongTien)</label>  </div>
+    </div>
 </div>
+
+
+
+
 <div id="kiemtra">
     @if (Kiemtra == 0 || KiemTraChuaHD == 0)
     {
@@ -51,23 +71,32 @@
         <button type="button" class="btn btn-danger" id="taocongno">Tạo công nợ</button>
     }
 </div>
-<div class="col-sm-3">
-    @if (KiemTraChuaHD != 0)
-    {
-        if (Kiemtra != 0)
-        {
-            <select class="custom-select" name="lop" id="lop">
-                @foreach (var i in list_lop)
+<div class="container">
+    <div class="row">
+        <div class="col-md-6 col-sm-10 mb-3">
+            @if (KiemTraChuaHD != 0)
+            {
+                if (Kiemtra != 0)
                 {
-                    <option value="@i.MA_LOP">@i.TEN_LOP</option>
+                    <select class="custom-select" name="lop" id="lop">
+                        @foreach (var i in list_lop)
+                        {
+                            <option value="@i.MA_LOP">@i.TEN_LOP</option>
+                        }
+                    </select>
                 }
-            </select>
-        }
-    }
+            }
+
+        </div>
+        <div class="col-lg-3 col-sm-6 col-md-6">
+            <button type="button" class="btn btn-info w-50 m-sm-2 m-lg-0 mb-md-3" id="loc">Lọc</button>
+        </div>
+    </div>
 </div>
-<div>
+
+<div class="container table-responsive">
     <table class="table table-bordered table-responsive table-hover table-responsive">
-        <thead class="text-primary">
+        <thead class="text-white bg-primary">
             <tr>
                 <th>
                     Mã học viên
@@ -105,14 +134,14 @@
                         {
                             <td><button class="btn btn-success" disabled>Đã thanh toán</button></td>
                             <td>
-                                <button type="button" class="btn btn-success inhoadon" id="inhoadon">In hoá đơn</button>
+                                <button type="button" class="btn btn-warning inhoadon" id="inhoadon">In hoá đơn</button>
                             </td>
                         }
                         else
                         {
                             <td><button class="btn btn-danger" disabled>Chưa thanh toán</button></td>
                             <td>
-                                <button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>
+                                <button type="button" class="btn btn-outline-danger chitiet" id="chitiet">Chi tiết học phí</button>
                             </td>
                         }
                     </tr>
@@ -121,6 +150,9 @@
         </tbody>
     </table>
 </div>
+
+    
+
 @section ClientScript{
     <script>
         $('#taocongno').click(function () {
@@ -293,10 +325,13 @@
                             //$("<td/>").html('<button type="button" class="btn btn-success chitiet" id="chitiet">Chi tiết học phí</button>').appendTo(tr);
                             $('#list').append(tr);
                             $('#report').html('');
-
-                            $('<div/>').html("   <div>Tổng tiền cần thu: " + e.dadong + " </div>").appendTo($('#report'));
-                            $('<div/>').html("<div>Học sinh đã đóng: @ViewBag.DaThanhToan").appendTo($('#report'));
-                            $('<div/>').html("<div>Tiền đã thu của lớp: @string.Format("{0:0,0}", @ViewBag.TongTien) </div>").appendTo($('#report'));
+                            $('<div/>').html('<div class="container">').appendTo($('#report'));
+                            $('<div/>').html('<div class="mb-3 row" id="report" style="text-align:right; ">').appendTo($('#report'));
+                            $('<div/>').html("<div class='col-lg-10 col-md-5 col-sm-9'>Tổng tiền cần thu: " + e.dadong + " </div>").appendTo($('#report'));
+                            $('<div/>').html('<div class="col-lg-10 col-md-5 col-sm-9"><label class="text-white bg-primary p-2 pl-lg-3 ">Học sinh đã đóng:</label></div>').appendTo($('#report'));
+                            $('<div/>').html("<div class='col-lg-1 col-md-3 col-sm-3'><lable class='text-danger'>@ViewBag.DaThanhToan</label></div>").appendTo($('#report'));
+                            $('<div/>').html('<div class="col-lg-10 col-md-5  col-sm-9"><label class="text-white bg-primary p-2">Tiền đã thu của lớp:</label></div>').appendTo($('#report'));
+                            $('<div/>').html("<div class='col-lg-1 col-md-3 col-sm-3'><label class='text-danger text-center'> @string.Format("{0:0,0}", @ViewBag.TongTien) </label></div>").appendTo($('#report'));
                             //$('#report').appendTo()
                         });
                     }

@@ -45,10 +45,10 @@
                             <a class="nav-link" href="#lienhe">Liên Hệ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="~/Home/Index" data-toggle="modal">Đăng Xuất</a>
+                            <a class="nav-link" href="~/Home/Index">Đăng Xuất</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="~/Admin/THONG_KE/Index" data-toggle="modal">Quay Lại</a>
+                            <a class="nav-link" href="~/Admin/THONG_KE/Index">Quay Lại</a>
                         </li>
                     </ul>
                 </div>
@@ -87,20 +87,23 @@
                             }
                         </div>
                         @*input thay đổi caption*@
-                        <div class=" carousel_caption" id="update_muctieu">
-                            <p>ACTION, ADVENTURE, FANTASY</p>
-                            <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
-                            @foreach (var item in noidung)
-                            {
-                                <p>
-                                    <textarea type="text" name="muctieu">@item.MUC_TIEU</textarea>
-                                    <button id="luu_muctieu" type="submit" class="btn btn-primary">Lưu</button>
-                                    <button id="huy_muctieu" type="button" class="btn btn-warning">Hủy</button>
-                                </p>
-                                break;
-                            }
-
+                    <div class="carousel_caption" id="update_muctieu">
+                        <p>ACTION, ADVENTURE, FANTASY</p>
+                        <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
+                        <div>
+                            <button id="luu_muctieu" type="submit" class="btn btn-primary">Lưu</button>
+                            <button id="huy_muctieu" type="button" class="btn btn-warning">Hủy</button>
                         </div>
+                        @foreach (var item in noidung)
+                        {
+                            <p>
+                                <textarea class="md-textarea form-control" rows="7" name="muctieu">@item.MUC_TIEU</textarea>
+
+                            </p>
+                            break;
+                        }
+                  
+                    </div>
                     </div>
                 </div>
 
@@ -128,7 +131,7 @@
                         @foreach (var item in noidung)
                         {
                             <p>
-                                <textarea name="gioithieu">@item.GIOI_THIEU</textarea>
+                                <textarea class="md-textarea form-control" rows="7" name="gioithieu">@item.GIOI_THIEU</textarea>
                             </p>
                             break;
                         }
@@ -231,7 +234,7 @@
                                         <td>
                                             <p>
                                                 <i class="fa fa-address-book mr-2"></i>
-                                                <textarea name="diachi">@item.DIA_CHI</textarea>
+                                                <textarea class="md-textarea form-control" rows="3" name="diachi">@item.DIA_CHI</textarea>
                                             </p>
 
                                         </td>
@@ -240,7 +243,7 @@
                                         <td>
                                             <p>
                                                 <i class="fa fa-address-book mr-2"></i>
-                                                <textarea type="email" name="email">@item.EMAIL</textarea>
+                                                <textarea class="md-textarea form-control" rows="3" type="email" name="email">@item.EMAIL</textarea>
                                             </p>
 
                                         </td>
@@ -249,7 +252,7 @@
                                         <td>
                                             <p>
                                                 <i class="fa fa-address-book mr-2"></i>
-                                                <textarea type="tel" name="sdt1">@item.SDT1</textarea>
+                                                <textarea class="md-textarea form-control" rows="3" type="tel" name="sdt1">@item.SDT1</textarea>
                                             </p>
 
                                         </td>
@@ -258,7 +261,7 @@
                                         <td>
                                             <p>
                                                 <i class="fa fa-address-book mr-2"></i>
-                                                <textarea type="tel" name="sdt2">@item.SDT2</textarea>
+                                                <textarea class="md-textarea form-control" rows="3" type="tel" name="sdt2">@item.SDT2</textarea>
                                             </p>
                                         </td>
                                     </tr>
@@ -282,7 +285,9 @@
     <script src="~/Asset/admin/js/popper.min.js"></script>
     <script src="~/Asset/admin/js/bootstrap.min.js"></script>
     <script src="~/Asset/admin/js/owl.carousel.min.js"></script>
+    <script src="~/Asset/admin/ckeditor/ckeditor.js"></script>
     <script>
+
         $('.owl-carousel').owlCarousel({
             loop: true,
             margin: 10,

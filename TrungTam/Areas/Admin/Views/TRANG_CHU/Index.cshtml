@@ -13,15 +13,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trung Tâm BDVH -- KHOA HỌC TRẢI NGHIỆM</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="~/Asset/admin/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Asset/admin/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/Asset/admin/css/style.css">
+    @Scripts.Render("~/bundles/jquery")
 </head>
 
 <body>
+    @*@Html.AntiForgeryToken()*@
     <!-- header -->
     <header class="  header">
         <!--navbar-expand-md   giới hạn  khi xuất hiện nút  -->
@@ -87,23 +88,23 @@
                             }
                         </div>
                         @*input thay đổi caption*@
-                    <div class="carousel_caption" id="update_muctieu">
-                        <p>ACTION, ADVENTURE, FANTASY</p>
-                        <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
-                        <div>
-                            <button id="luu_muctieu" type="submit" class="btn btn-primary">Lưu</button>
-                            <button id="huy_muctieu" type="button" class="btn btn-warning">Hủy</button>
-                        </div>
-                        @foreach (var item in noidung)
-                        {
-                            <p>
-                                <textarea class="md-textarea form-control" rows="7" name="muctieu">@item.MUC_TIEU</textarea>
+                        <div class="carousel_caption" id="update_muctieu">
+                            <p>ACTION, ADVENTURE, FANTASY</p>
+                            <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
+                            <div>
+                                <button id="luu_muctieu" type="submit" class="btn btn-primary">Lưu</button>
+                                <button id="huy_muctieu" type="button" class="btn btn-warning">Hủy</button>
+                            </div>
+                            @foreach (var item in noidung)
+                            {
+                                <p>
+                                    <textarea class="md-textarea form-control" rows="7" name="muctieu">@item.MUC_TIEU</textarea>
 
-                            </p>
-                            break;
-                        }
-                  
-                    </div>
+                                </p>
+                                break;
+                            }
+
+                        </div>
                     </div>
                 </div>
 
@@ -141,7 +142,58 @@
                 </div>
             </div>
         </section>
-        <!-- footer -->
+    </form>
+    <form action="/Admin/TRANG_CHU/ChangeImage" enctype="multipart/form-data" method="post">
+        <section class="thuvien mt-5 p-5">
+            <div class="container">
+                <h2 class="tieude m-1 pb-3">Hình Ảnh Lớp Học</h2>
+                <div class="row">
+                    <div class="col-3">
+                        <input name="tv10" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/tv10.jpg" class="w-100 h-100" alt="">
+                    </div>
+                    <div class="col-3">
+                        <input name="tv11" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/tv11.jpg" class="w-100 h-100" alt="">
+                    </div>
+                    <div class="col-6">
+                        <input name="tv12" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/tv12.jpg" class="w-100 h-100">
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <input name="tv8" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/tv8.jpg" class="w-100 h-100" alt="">
+                    </div>
+                    <div class="col-3">
+                        <input name="tv6" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/tv6.jpg" class="w-100 h-100" alt="">
+                    </div>
+                    <div class="col-3">
+                        <input name="that" type="file" class="btn btn-circle btn-success w-100 h-5" placeholder="Thay ảnh">
+                        <img src="~/Asset/admin/img/that.jpg" class="w-100 h-100" alt="">
+                    </div>
+
+                </div>
+
+
+                <div>
+                </div>
+
+            </div>
+            <div class="row m-5 ">
+                <div class="col-12 p-3 text-center">
+                    <button class="btn btn-success pl-3 pr-3" type="submit"><i class="fa fa-save pl-2"></i>Lưu</button>
+                </div>
+            </div>
+
+
+
+        </section>
+    </form>
+    <!-- footer -->
+    <form action="/TRANG_CHU/update" method="post">
         <footer class="footer mt-5 " id="lienhe">
             <div class="container-fluid">
                 <div class="row footer_panel pt-5">
@@ -285,7 +337,6 @@
     <script src="~/Asset/admin/js/popper.min.js"></script>
     <script src="~/Asset/admin/js/bootstrap.min.js"></script>
     <script src="~/Asset/admin/js/owl.carousel.min.js"></script>
-    <script src="~/Asset/admin/ckeditor/ckeditor.js"></script>
     <script>
 
         $('.owl-carousel').owlCarousel({
@@ -370,5 +421,6 @@
             $('div#update_gioithieu').hide();
             $('div#update_muctieu').hide();
         };
+
     </script>
 </section>

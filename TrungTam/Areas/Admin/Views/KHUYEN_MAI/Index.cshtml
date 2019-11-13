@@ -17,7 +17,7 @@
 </button>
 <div class="card-body ">
     <table class="table  table-bordered table-responsive table-hover myTable text-center">
-        <thead class="text-white bg-primary">
+        <thead class="text-white bg-primary text-center">
             <tr>
                 <th>Loại Khuyến mãi</th>
                 <th>
@@ -39,12 +39,13 @@
                         @Html.DisplayFor(modelItem => item.TIEN_GIAM)
                     </td>
                     <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-warning">
-                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_KM })
-                        </button>
-                        <button id="btnDelete" type="button" class="btn btn-danger">
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MA_KM })
-                        </button>
+                       
+                        <a id="btnCapNhatNV"  class="btn btn-warning" href="~/Admin/KHUYEN_MAI/Edit/@item.MA_KM">
+                           Sửa @*@Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_KM })*@
+                        </a>
+                        <a id="btnDelete" class="btn btn-danger" href="~/Admin/KHUYEN_MAI/Delete/@item.MA_KM">
+                          Xóa  @*@Html.ActionLink("Xóa", "Delete", new { id = item.MA_KM })*@
+                        </a>
                     </td>
                 </tr>
             }

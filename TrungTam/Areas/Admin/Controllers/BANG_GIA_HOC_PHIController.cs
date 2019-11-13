@@ -12,7 +12,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class BANG_GIA_HOC_PHIController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
 
         // GET: Admin/BANG_GIA_HOC_PHI
         public ActionResult Index(int page = 1, int pageSize = 10)
@@ -28,7 +28,7 @@ namespace TrungTam.Areas.Admin.Controllers
             ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
             ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
             ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
-            return View(bANG_GIA_HOC_PHI.OrderByDescending(m => m.NGAY_AP_DUNG).ToPagedList(page, pageSize));
+            return View(bANG_GIA_HOC_PHI.OrderByDescending(m => m.MA_KHOI).ToPagedList(page, pageSize));
         }
 
 
@@ -36,7 +36,7 @@ namespace TrungTam.Areas.Admin.Controllers
         public ActionResult Delete(string ngayap)
         {
             var ngay = DateTime.Parse(ngayap);
-            var ngay_new = ngay.ToString("dd/MM/yyyy HH:mm:ss");
+            var ngay_new = ngay.ToString("yyyy/MM/dd HH:mm:ss");
             var ngay_sudung = DateTime.Parse(ngay_new);
             var lOP_HOC = (from l in db.LOP_HOC
                            where l.NGAY_AP_DUNG == ngay_sudung
@@ -66,14 +66,50 @@ namespace TrungTam.Areas.Admin.Controllers
                 bhp.MA_LOAI = Guid.Parse(f["maloai"]);
                 bhp.MA_MON = Guid.Parse(f["mamon"]);
                 bhp.DON_GIA = decimal.Parse(f["dongia"]);
-                bhp.SO_BUOI = float.Parse(f["sobuoi"]);
+                string a = f["sobuoi"].Replace('.', ',');
+                //if(a.Contains("."))
+                //string kq = a[0] + ',' + a[1];
+                bhp.SO_BUOI = float.Parse(a);
                 db.BANG_GIA_HOC_PHI.Add(bhp);
                 db.SaveChanges();
                 return RedirectToAction("Index", "BANG_GIA_HOC_PHI", new { area = "Admin" });
             }
             return View();
         }
-
+        public ActionResult Details()
+        {
+            if (string.IsNullOrEmpty(Request.QueryString["id"]))
+            {
+                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            DateTime a = DateTime.Parse(Request.QueryString["id"]);
+            //ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
+            //ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
+            //ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
+            var bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Include(b => b.KHOI_LOP).Include(b => b.LOAI_LOP).Include(b => b.MON_HOC);
+            ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
+            ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
+            ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
+            return View(bANG_GIA_HOC_PHI.Where(t=>t.NGAY_AP_DUNG.Equals(a)).OrderByDescending(m => m.MA_KHOI).ToList());
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(FormCollection f)
+        {
+            DateTime ax = DateTime.Parse(f["ngayad"]);
+            BANG_GIA_HOC_PHI bhp = db.BANG_GIA_HOC_PHI.Find(ax);
+            bhp.MA_KHOI = Guid.Parse(f["makhoi"]);
+            bhp.MA_LOAI = Guid.Parse(f["maloai"]);
+            bhp.MA_MON = Guid.Parse(f["mamon"]);
+            bhp.DON_GIA = decimal.Parse(f["dongia"]);
+            string a = f["sobuoi"].Replace('.', ',');
+            //if(a.Contains("."))
+            //string kq = a[0] + ',' + a[1];
+            bhp.SO_BUOI = float.Parse(a);
+            //db.BANG_GIA_HOC_PHI.Add(bhp);
+            db.SaveChanges();
+            return RedirectToAction("Index", "BANG_GIA_HOC_PHI");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

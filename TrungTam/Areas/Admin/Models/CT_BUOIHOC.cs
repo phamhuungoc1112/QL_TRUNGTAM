@@ -20,6 +20,7 @@ namespace TrungTam.Areas.Admin.Models
         public string NHAN_XET_GV { get; set; }
         public string BAI_TAP_VN { get; set; }
         public string LI_DO_VANG { get; set; }
+        public Nullable<double> DIEM { get; set; }
     
         public virtual BUOI_HOC BUOI_HOC { get; set; }
         public virtual HOC_SINH HOC_SINH { get; set; }

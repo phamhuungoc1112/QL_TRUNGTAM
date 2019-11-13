@@ -32,7 +32,7 @@
         </div>
     </div>
     <hr />
-    <div class="row mb-3">
+    @*<div class="row mb-3">
         <div class="col">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Tên nhân viên" id="hoten">
@@ -41,13 +41,13 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <table class="table table-bordered table-responsive table-hover" id="luong">
         <thead class="text-center bg-primary text-white">
             <tr>
                 <td>STT</td>
                 <td>Họ và Tên</td>
-                <td>Loại hoạt động</td>
+                <td>Lương tháng</td>
                 <td>Ngày thanh toán</td>
                 <td>Tổng lương</td>
                 <th><em class="fa fa-cog"></em></th>
@@ -56,8 +56,7 @@
         <tbody id="list">
             @foreach (var item in Model)
             {
-                if (item.NGAY_THANH_TOAN.Month >= DateTime.Now.Month - 1)
-                {
+               
                     stt++;
                     <tr>
                         <td>
@@ -79,7 +78,7 @@
                             <a id="btn_details" class="btn btn-success" href=" ~/Admin/HOA_DON/Details/@item.MA_HD"> Chi tiết</a>
                         </td>
                     </tr>
-                }
+                
             }
         </tbody>
 
@@ -108,7 +107,7 @@
                             $("<td/>").html(e.tenhd).appendTo(tr);
                             $("<td/>").html(e.ngay).appendTo(tr);
                             $("<td/>").html(e.tongtien).appendTo(tr);
-                            $("<td/>").html("<a href='~/HOA_DON/Details/" + e.mahd + "'>Chi tiết</a> ").appendTo(tr);
+                            $("<td/>").html("<a href='/Admin/HOA_DON/Details/" + e.mahd + "'>Chi tiết</a> ").appendTo(tr);
                             tr.appendTo('tbody#list');
                         });
                 }

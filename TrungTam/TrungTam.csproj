@@ -149,7 +149,10 @@
     <Compile Include="Areas\Admin\Abstracts\LopHoc_New.cs" />
     <Compile Include="Areas\Admin\Abstracts\Lop_Hoc.cs" />
     <Compile Include="Areas\Admin\Abstracts\NGOAI_GIO_NEW.cs" />
+    <Compile Include="Areas\Admin\Abstracts\ReportCuoiThang.cs" />
     <Compile Include="Areas\Admin\Abstracts\ReportDanhGia.cs" />
+    <Compile Include="Areas\Admin\Abstracts\tailieu.cs" />
+    <Compile Include="Areas\Admin\Abstracts\ThoiKhoaBieu.cs" />
     <Compile Include="Areas\Admin\Abstracts\THOI_KHOA_BIEU_LOP_HOC.cs" />
     <Compile Include="Areas\Admin\Abstracts\ThongKe_HocPhi.cs" />
     <Compile Include="Areas\Admin\Abstracts\ThongKe_Luong.cs" />
@@ -163,8 +166,10 @@
     <Compile Include="Areas\Admin\Controllers\BUOI_HOCController.cs" />
     <Compile Include="Areas\Admin\Controllers\CHI_TIEU_NGOAIController.cs" />
     <Compile Include="Areas\Admin\Controllers\CONG_NOController.cs" />
+    <Compile Include="Areas\Admin\Controllers\DANH_GIA_CUOI_THANGController.cs" />
     <Compile Include="Areas\Admin\Controllers\DANH_GIA_THEO_THANGController.cs" />
     <Compile Include="Areas\Admin\Controllers\GIAO_VIENController.cs" />
+    <Compile Include="Areas\Admin\Controllers\GIA_SUController.cs" />
     <Compile Include="Areas\Admin\Controllers\HOA_DONController.cs" />
     <Compile Include="Areas\Admin\Controllers\HOC_SINHController.cs" />
     <Compile Include="Areas\Admin\Controllers\KHOI_LOPController.cs" />
@@ -173,9 +178,9 @@
     <Compile Include="Areas\Admin\Controllers\LOP_HOCController.cs" />
     <Compile Include="Areas\Admin\Controllers\MON_HOCController.cs" />
     <Compile Include="Areas\Admin\Controllers\NGOAI_GIOController.cs" />
+    <Compile Include="Areas\Admin\Controllers\TAILIEUxController.cs" />
     <Compile Include="Areas\Admin\Controllers\THONG_KEController.cs" />
     <Compile Include="Areas\Admin\Controllers\TRANG_CHUController.cs" />
-    <Compile Include="Areas\Admin\Abstracts\ThoiKhoaBieu.cs" />
     <Compile Include="Areas\Admin\FuntionBase\BASE.cs" />
     <Compile Include="Areas\Admin\FuntionBase\Encryptor.cs" />
     <Compile Include="Areas\Admin\Models\BANG_GIA_HOC_PHI.cs">
@@ -208,10 +213,16 @@
     <Compile Include="Areas\Admin\Models\CT_LOP_HOC.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
+    <Compile Include="Areas\Admin\Models\DANH_GIA_CUOI_THANG.cs">
+      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
+    </Compile>
     <Compile Include="Areas\Admin\Models\GHI_DANH.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\GIAO_VIEN.cs">
+      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\GIA_SU.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\HOA_DON.cs">
@@ -252,6 +263,9 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Areas\Admin\Models\TAILIEU.cs">
+      <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
     </Compile>
     <Compile Include="Areas\Admin\Models\TAI_KHOAN.cs">
       <DependentUpon>QL_TRUNGTAM.tt</DependentUpon>
@@ -946,12 +960,12 @@
     <Content Include="Asset\admin\img\2.jpg" />
     <Content Include="Asset\admin\img\35d71f1d50b2b4eceda3.jpg" />
     <Content Include="Asset\admin\img\4.jpg" />
-    <Content Include="Asset\admin\img\407a78b0371fd3418a0e.jpg" />
+    <Content Include="Asset\admin\img\tv12.jpg" />
     <Content Include="Asset\admin\img\567f15b55a1abe44e70b.jpg" />
     <Content Include="Asset\admin\img\5792695826f7c2a99be6.jpg" />
     <Content Include="Asset\admin\img\625c05964a39ae67f728.jpg" />
     <Content Include="Asset\admin\img\6c3a06f0495fad01f44e.jpg" />
-    <Content Include="Asset\admin\img\71e7112d5e82badce393.jpg" />
+    <Content Include="Asset\admin\img\tv11.jpg" />
     <Content Include="Asset\admin\img\782c36e679499d17c458.jpg" />
     <Content Include="Asset\admin\img\8151d39b9c34786a2125.jpg" />
     <Content Include="Asset\admin\img\95bbd97196de72802bcf.jpg" />
@@ -963,7 +977,7 @@
     <Content Include="Asset\admin\img\ca13.jpg" />
     <Content Include="Asset\admin\img\calendar.png" />
     <Content Include="Asset\admin\img\cb0bf6c1b96e5d30047f.jpg" />
-    <Content Include="Asset\admin\img\db898743c8ec2cb275fd.jpg" />
+    <Content Include="Asset\admin\img\tv10.jpg" />
     <Content Include="Asset\admin\img\ec84cc4e83e167bf3ef0.jpg" />
     <Content Include="Asset\admin\img\f76091aade053a5b6314.jpg" />
     <Content Include="Asset\admin\img\f89ddf5790f874a62de9.jpg" />
@@ -990,7 +1004,7 @@
     <Content Include="Asset\admin\img\tv1.jpg" />
     <Content Include="Asset\admin\img\tv2 %282%29.jpg" />
     <Content Include="Asset\admin\img\tv2.jpg" />
-    <Content Include="Asset\admin\img\tv3 %282%29.jpg" />
+    <Content Include="Asset\admin\img\tv8.jpg" />
     <Content Include="Asset\admin\img\tv3.jpg" />
     <Content Include="Asset\admin\img\tv4.jpg" />
     <Content Include="Asset\admin\img\tv5 %282%29.jpg" />
@@ -4584,6 +4598,14 @@
     <Content Include="Areas\Admin\Views\CHI_TIEU_NGOAI\Create.cshtml" />
     <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\Index.cshtml" />
     <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\PrintReport.cshtml" />
+    <Content Include="Areas\Admin\Views\THONG_KE\home.cshtml" />
+    <Content Include="Areas\Admin\Views\TAILIEUx\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\TAILIEUx\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\header_gv.cshtml" />
+    <Content Include="Areas\Admin\Views\DANH_GIA_CUOI_THANG\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\DANH_GIA_CUOI_THANG\IndexAdmin.cshtml" />
+    <Content Include="Areas\Admin\Views\DANH_GIA_CUOI_THANG\PrintAllReport.cshtml" />
+    <Content Include="Areas\Admin\Views\LOP_HOC\Edit.cshtml" />
     <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
@@ -4591,7 +4613,12 @@
     <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\THONG_KE\home.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\tuyengiasu.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Layout_G_S.cshtml" />
+    <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\KetQuaHocTap.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Details.cshtml" />
     <None Include="Properties\PublishProfiles\qlTrungTam.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -4641,6 +4668,7 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Shared\header_gv.cshtml" />
     <Content Include="Views\Shared\_Layout_gv.cshtml" />
+    <Content Include="Views\Shared\header_g_su.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

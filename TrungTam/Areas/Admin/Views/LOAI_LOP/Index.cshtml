@@ -19,18 +19,9 @@
     Thêm Loại Lớp
 </button>
 <div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <table class="table table-bordered table-responsive table-hover myTable">
-        <thead class="text-white bg-primary" >
+        <thead class="text-white bg-primary text-center" >
             <tr>
                 
                 <th>Loại Lớp</th>
@@ -45,7 +36,8 @@
                         @Html.DisplayFor(modelItem => item.TEN_LOAI)
                     </td>
                     <td>
-                        <button type="button" class="btn btn-warning">@Html.ActionLink("Sửa", "Edit", new { id = item.MA_LOAI }) </button>
+                        @*<button type="button" class="btn btn-warning">@Html.ActionLink("Sửa", "Edit", new { id = item.MA_LOAI }) </button>*@
+                        <a  class="btn btn-warning" href="~/Admin/LOAI_LOP/Edit/@item.MA_LOAI"> Sửa</a>
                         <input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />
                     </td>
                 </tr>

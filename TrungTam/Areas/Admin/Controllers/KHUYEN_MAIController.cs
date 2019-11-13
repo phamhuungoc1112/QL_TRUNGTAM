@@ -12,7 +12,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class KHUYEN_MAIController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
 
         // GET: Admin/KHUYEN_MAI
         public ActionResult Index()

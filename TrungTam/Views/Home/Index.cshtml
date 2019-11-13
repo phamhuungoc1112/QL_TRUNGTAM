@@ -1,12 +1,17 @@
-﻿@model TrungTam.Areas.Admin.Abstracts.LoginModel
+﻿@model List<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>
 @{
+    //var id = Session["ID"];
+    //if (id.ToString().First().Equals('9'))
+    //{
+    //    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    //}
     Layout = null;
     var khuyenmai = (List<TrungTam.Areas.Admin.Models.KHUYEN_MAI>)ViewBag.khuyenmai;
     var noidung = (List<TrungTam.Areas.Admin.Models.TRANG_CHU>)ViewBag.noidung;
 }
 
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 
 <head>
 
@@ -14,12 +19,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Trung Tâm BDVH -- KHOA HỌC TRẢI NGHIỆM</title>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
     <link rel="stylesheet" href="~/Asset/admin/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/Asset/admin/css/owl.carousel.min.css">
     <link rel="stylesheet" href="~/Asset/admin/css/style.css">
+    @Scripts.Render("~/bundles/jquery")
+    @Styles.Render("~/Content/css")
 </head>
 
 <body>
@@ -41,6 +47,9 @@
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#hocphi">Học Phí</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="~/Admin/GIA_SU/tuyengiasu">Gia Sư</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#lienhe">Liên Hệ</a>
@@ -65,11 +74,7 @@
             <div class="modal-dialog modal-dialog-scrollable" role="document">
                 <div class="modal-content ">
                     <div class="modal-header mymodal pb-0">
-
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                        <h4 class="modal-title pb-3" id="exampleModalScrollableTitle">Đăng Nhập</h4>
+                        <h4 class="modal-title pb-3 text-center" id="exampleModalScrollableTitle">Đăng Nhập</h4>
                     </div>
                     <div class="modal-body">
                         <div class="input-group mb-3">
@@ -80,8 +85,12 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button id="dangnhap" type="submit" class="btn btn-primary  btnXT w-100">Đăng Nhập</button>
+                        <div class="col-12 p-3 text-center">
+                            <button id="dangnhap" type="submit" class="btn btn-primary">Đăng Nhập</button>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Hủy</button>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </div>
@@ -89,7 +98,7 @@
 
     <!-- carousel -->
     <section class=" myCarousel">
-        <div id="demo" class="carousel carousel-fade slide " data-ride="carousel" data-interval="2000">
+        <div id="demo" class="carousel carousel-fade " data-ride="carousel" data-interval="2000">
 
             <!-- Indicatorsô vuông nhỏ -->
             <ul class="carousel-indicators">
@@ -103,9 +112,11 @@
                 <div class="carousel-item active">
                     <img src="~/Asset/admin/img/ca11.jpg" class="img-fluid w-100" alt="Los Angeles">
                     <div class="carousel_overlay"></div>
-                    <div class=" carousel_caption">
+                    <div class=" carousel_caption container">
                         <p>ACTION, ADVENTURE, FANTASY</p>
-                        <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
+                        <div class="row ">
+                            <h2 class="display-5 col-lg-12 col-md-6 col-sm-12 text-white">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h2>
+                        </div>
                         @foreach (var item in noidung)
                         {
                             <p>
@@ -121,7 +132,10 @@
                     <div class="carousel_overlay"></div>
                     <div class=" carousel_caption">
                         <p>ACTION, ADVENTURE, FANTASY</p>
-                        <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
+                        <div class="row">
+                            <div class="col-12"> <h2 class="text-white display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h2></div>
+                        </div>
+
                         @foreach (var item in noidung)
                         {
                             <p>
@@ -136,7 +150,9 @@
                     <div class="carousel_overlay"></div>
                     <div class=" carousel_caption">
                         <p>ACTION, ADVENTURE, FANTASY</p>
-                        <h1 class="display-5">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h1>
+                        <div class="row">
+                            <div class="col-12"> <h2 class="display-5 text-white">TRUNG TÂM BDVH - KHOA HỌC TRẢI NGHIỆM</h2></div>
+                        </div>
                         @foreach (var item in noidung)
                         {
                             <p>
@@ -222,14 +238,17 @@
                 <div class="col ">
                     <img src="~/Asset/admin/img/tvm1.jpg" class="w-100 h-100 pb-2">
                     <h4>10 Học Sinh</h4>
+                    <p>Mô hình học tập theo nhóm 10 học sinh.</p>
                 </div>
                 <div class="col ">
                     <img src="~/Asset/admin/img/tvm2.jpg" class="w-100 h-100 pb-2" alt="">
                     <h4>2 Học Sinh</h4>
+                    <p>Mô hình học tập theo nhóm 2 học sinh.</p>
                 </div>
                 <div class="col ">
-                    <img src="~/Asset/admin/img/tvm4.jpg" class="w-100 h-100 pb-2" alt="">
+                    <img src="~/Asset/admin/img/tvm1.jpg" class="w-100 h-100 pb-2" alt="">
                     <h4>4 Học Sinh</h4>
+                    <p>Mô hình học tập theo nhóm 4 học sinh.</p>
 
                 </div>
                 <div class="col ">
@@ -239,7 +258,7 @@
 
                 </div>
                 <div class="col ">
-                    <img src="~/Asset/admin/img/tuhoc.jpg" class="w-100 h-100 pb-2" alt="">
+                    <img src="~/Asset/admin/img/tvm5.jpg" class="w-100 h-100 pb-2" alt="">
                     <h4>Hỗ Trợ Học Sinh</h4>
                     <p>
                         Chương trình học tập thiết kế riêng cho cá nhân, phù hợp với mục tiêu cá nhân hiện tại.
@@ -255,144 +274,42 @@
     @*Học phí*@
     <section class=" Hocphi">
         <div class="container  table-responsive" id="hocphi">
-            <h2 class="tieud pt-5">Học Phí Ưu Đãi</h2>
+            <h2 class="gt_detitle pt-5 text-center">Học Phí Ưu Đãi</h2>
 
             <table class="table MoHinh  table-bordered text-white text-center">
 
                 <thead>
+
                     <tr class="bg-info">
                         <th rowspan="2" colspan="2">Môn học</th>
                         <th colspan="3">Học phí hàng tháng(ngàn đồng)</th>
                     </tr>
                     <tr class="bg-info">
-
-                        <th>Lớp 10 HS</th>
-                        <th>Lớp 4 HS</th>
-                        <th>Lớp 2 HS</th>
+                        @foreach (var l in Model.OrderBy(x => x.LOAI_LOP.TEN_LOAI).Select(t => t.LOAI_LOP.TEN_LOAI).Distinct())
+                        {
+                            <th>@l</th>
+                        }
                     </tr>
                 </thead>
                 <tbody class=" ">
                     <!-- THPT -->
-                    <tr>
-                        <th rowspan="4">
-                            Khối THPT
-
-                        </th>
-                        <th>
-                            Toán(3 Buổi/Tuần)
-                        </th>
-                        <td>
-                            400
-
-                        </td>
-                        <td>
-                            1.000
-
-                        </td>
-                        <td>
-                            2.000
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Lý(3 Buổi/Tuần)
-                        </th>
-                        <td>
-                            400
-
-                        </td>
-                        <td>
-                            1.000
-
-                        </td>
-                        <td>
-                            2.000
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Hóa(3 Buổi/Tuần)
-                        </th>
-                        <td>
-                            400
-
-                        </td>
-                        <td>
-                            1.000
-
-                        </td>
-                        <td>
-                            2.000
-
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            Anh(3 Buổi/Tuần)
-                        </th>
-                        <td>
-                            400
-
-                        </td>
-                        <td>
-                            1.000
-
-                        </td>
-                        <td>
-                            2.000
-
-                        </td>
-                    </tr>
-                    <!-- THCS -->
-                    <tr class="">
-                        <th rowspan="4">
-                            Khối THCS
-                        </th>
-                        <th>
-                            Toán(3 Buổi/Tuần)
-                        </th>
-                        <td>400</td>
-
-                        <td>1.000</td>
-                        <td>2.000</td>
-                    </tr>
-                    <tr class="">
-                        <th>
-                            Anh(3 Buổi/Tuần)
-                        </th>
-                        <td>400</td>
-                        <td>1.000</td>
-                        <td>2.000</td>
-                    </tr>
-                    <tr class="">
-                        <th>
-                            Hóa(1.5 Buổi/Tuần)
-                        </th>
-                        <td>200</td>
-
-                        <td>500</td>
-
-                        <td>1.000</td>
-                    </tr>
-                    <tr class="">
-                        <th>
-                            Lý(1.5 Buổi/Tuần)
-                        </th>
-                        <td>200</td>
-                        <td>500</td>
-                        <td>1.000</td>
-                    </tr>
-                    <!-- Thiếu nhi -->
-                    <tr class="">
-                        <th colspan="2">
-                            Anh văn thiếu nhi(2 Buổi/Tuần)
-                        </th>
-                        <td>400</td>
-                        <td>1.000</td>
-                        <td>2.000</td>
-                    </tr>
+                    @foreach (var k in Model.OrderBy(x => x.LOAI_LOP.TEN_LOAI).Select(t => new { tenkhoi = t.KHOI_LOP.TEN_KHOI, makhoi = t.MA_KHOI }).Distinct())
+                    {
+                        <tr>
+                            @{ var col = Model.Where(t => t.MA_KHOI == k.makhoi).Select(t => t.MA_MON).Distinct().Count() + 1;}
+                            <th rowspan="@col">@k.tenkhoi</th>
+                            @foreach (var m in Model.OrderBy(x => x.LOAI_LOP.TEN_LOAI).Where(t => t.MA_KHOI == k.makhoi).Select(t => new { mamon = t.MA_MON, tenmon = t.MON_HOC.TEN_MON, buoi = t.SO_BUOI }).Distinct())
+                            {
+                            <tr>
+                                <th>@m.tenmon (@m.buoi Buổi/Tuần)</th>
+                                @foreach (var g in Model.OrderBy(x => x.LOAI_LOP.TEN_LOAI).Where(t => t.MA_MON == m.mamon && t.MA_KHOI == k.makhoi).Select(t => t).Distinct())
+                                {
+                                    <td>@string.Format("{0:0,0}", g.DON_GIA)</td>
+                                }
+                            </tr>
+                        }
+                            </tr>
+                        }
 
 
                 </tbody>
@@ -439,18 +356,18 @@
             <h2 class="tieude m-1 pb-3">Hình Ảnh Lớp Học</h2>
             <div class="row">
                 <div class="col-3">
-                    <img src="~/Asset/admin/img/db898743c8ec2cb275fd.jpg" class="w-100 h-100" alt="">
+                    <img src="~/Asset/admin/img/tv10.jpg" class="w-100 h-100" alt="">
                 </div>
                 <div class="col-3">
-                    <img src="~/Asset/admin/img/71e7112d5e82badce393.jpg" class="w-100 h-100" alt="">
+                    <img src="~/Asset/admin/img/tv11.jpg" class="w-100 h-100" alt="">
                 </div>
                 <div class="col-6">
-                    <img src="~/Asset/admin/img/407a78b0371fd3418a0e.jpg" class="w-100 h-100">
+                    <img src="~/Asset/admin/img/tv12.jpg" class="w-100 h-100">
                 </div>
             </div>
             <div class="row mt-3">
                 <div class="col-6">
-                    <img src="~/Asset/admin/img/tv3 (2).jpg" class="w-100 h-100" alt="">
+                    <img src="~/Asset/admin/img/tv8.jpg" class="w-100 h-100" alt="">
                 </div>
                 <div class="col-3">
                     <img src="~/Asset/admin/img/tv6.jpg" class="w-100 h-100" alt="">
@@ -465,7 +382,7 @@
     </section>
     <!-- endthuvien -->
     <!-- bản đồ -->
-    <form action="~/Home/ghidanh" method="post" onSubmit="return confirmAction()">
+    <form action="~/Home/ghidanh" method="post" onSubmit="return dangKi()">
         <section class="diachi mt-0 pt-5 pb-5" id="DangKi">
             <div class="container">
                 <div class="row">
@@ -480,8 +397,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                                                 </div>
-                                                <input type="text" name="txt_hoten" class="form-control" placeholder="Họ tên học viên" aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="text" name="txt_hoten" id="txt_hoten" class="form-control" placeholder="Họ tên học viên" aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
+                                            <span class="sp-thongbao" id="tbTen"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -490,17 +408,29 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-calendar"></i></span>
                                                 </div>
-                                                <input type="date" name="txt_ngaysinh" class="form-control" placeholder="Ngày sinh" aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="date" name="txt_ngaysinh" id="txt_ngaysinh" class="form-control" placeholder="Ngày sinh" aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
+                                            <span class="sp-thongbao" id="tbNgay"></span>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
+                                            @*<div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-transgender-alt"></i></span>
+                                                    </div>
+                                                    <input type="text" name="txt_gioitinh" class="form-control" placeholder="Giới tính" aria-label="Username" aria-describedby="basic-addon1">
+                                                </div>*@
                                             <div class="input-group mb-3">
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-transgender-alt"></i></span>
                                                 </div>
-                                                <input type="text" name="txt_gioitinh" class="form-control" placeholder="Giới tính" aria-label="Username" aria-describedby="basic-addon1">
+                                                <select name="txt_gioitinh" class="custom-select" id="inputGroupSelect01">
+                                                    <option selected>Chọn giới tính...</option>
+                                                    <option value="Nam">Nam</option>
+                                                    <option value="Nữ">Nữ</option>
+
+                                                </select>
                                             </div>
                                         </td>
                                     </tr>
@@ -510,8 +440,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-phone"></i></span>
                                                 </div>
-                                                <input type="text" name="txt_sdt" class="form-control" placeholder="Số điện thoại" aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="text" name="txt_sdt" id="txt_sdt" class="form-control" placeholder="Số điện thoại" aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
+                                            <span class="sp-thongbao" id="tbSDT"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -520,8 +451,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-address-book"></i></span>
                                                 </div>
-                                                <input type="text" name="txt_diachi" class="form-control" placeholder="Địa chỉ" aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="text" name="txt_diachi" id="txt_diachi" class="form-control" placeholder="Địa chỉ" aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
+                                            <span class="sp-thongbao" id="tbDC"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -530,8 +462,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-home"></i></span>
                                                 </div>
-                                                <input type="text" name="txt_truong" class="form-control" placeholder="Trường học" aria-label="Username" aria-describedby="basic-addon1">
+                                                <input type="text" name="txt_truong" id="txt_truong" class="form-control" placeholder="Trường học" aria-label="Username" aria-describedby="basic-addon1">
                                             </div>
+                                            <span class="sp-thongbao" id="tbTruongHoc"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -540,8 +473,9 @@
                                                 <div class="input-group-prepend">
                                                     <span class="input-group-text"><i class="fa fa-edit"></i></span>
                                                 </div>
-                                                <textarea class="form-control" name="txt_noidung" placeholder="Thông tin về nhu cầu học" aria-label="With textarea"></textarea>
+                                                <textarea class="form-control" name="txt_noidung" id="txt_noidung" placeholder="Thông tin về nhu cầu học" aria-label="With textarea"></textarea>
                                             </div>
+                                            <span class="sp-thongbao" id="tbNhuCauHoc"></span>
                                         </td>
                                     </tr>
                                     <tr>
@@ -665,6 +599,11 @@
     <script src="~/Asset/admin/js/bootstrap.min.js"></script>
     <script src="~/Asset/admin/js/owl.carousel.min.js"></script>
     <script>
+        $('.carousel').carousel({
+            interval: 9000
+        })
+    </script>
+    <script>
         $('.owl-carousel').owlCarousel({
             loop: true,
             margin: 10,
@@ -712,5 +651,31 @@
             //}
         </script>
     </section>
+    <!-- Load Facebook SDK for JavaScript -->
+    <div id="fb-root"></div>
+    <script>
+        window.fbAsyncInit = function () {
+            FB.init({
+                xfbml: true,
+                version: 'v4.0'
+            });
+        };
+
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = 'https://connect.facebook.net/vi_VN/sdk/xfbml.customerchat.js';
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));</script>
+
+    <!-- Your customer chat code -->
+    <div class="fb-customerchat"
+         attribution=setup_tool
+         page_id="361850014656925"
+         theme_color="#fa3c4c"
+         logged_in_greeting="Tư vấn đăng ký khoá học tại Trung Tâm BDVH Khoa Học Trải Nghiệm"
+         logged_out_greeting="Tư vấn đăng ký khoá học tại Trung Tâm BDVH Khoa Học Trải Nghiệm">
+    </div>
 </body>
 </html>

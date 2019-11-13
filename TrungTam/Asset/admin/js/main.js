@@ -22,6 +22,56 @@ function hienThiModal(status) {
         default: return 0;
     }
 }
+//Kiểm tra đăng kí
+function dangKi() {
+    var isValid = true;
+    // kiểm tra testbox mã
+
+    if (kiemTraText('txt_hoten', 'tbTen', 'vui lòng nhập lại họ tên phải là chữ ') == false
+        || kiemTraNhap('txt_hoten', 'tbTen', 'vui lòng nhập tên ') == false) {
+        isValid = false
+    }
+
+    if (kiemTraNhap('txt_ngaysinh', 'tbNgay', 'vui lòng nhập ngày sinh') == false) {
+        isValid = false;
+    }
+
+    //if (kiemTraNhap('khoi', 'tbkhoi', 'vui lòng nhập khối') == false) {
+    //    isValid = false;
+    //}
+    //if (kiemTraNhap('truong', 'tbtruong', 'vui lòng nhập Đầy đủ họ tên trường') == false
+    //    || (kiemTraText('truong', 'tbtruong', 'vui lòng nhập lại  tên trường phải là chữ ') == false) {
+    //    isValid = false;
+    //}
+    if (kiemTraText('txt_truong', 'tbTruongHoc', 'vui lòng nhập lại  tên trường phải là chữ ') == false
+        || kiemTraNhap('txt_truong', 'tbTruongHoc', 'vui lòng nhập Đầy đủ họ tên trường') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('txt_noidung', 'tbNhuCauHoc', 'vui lòng nhập nội dung') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('txt_sdt', 'tbSDT', 'vui lòng nhập số điện thoại') == false || kiemTraDoDai('txt_sdt', 'tbSDT', 'vui lòng nhập số điện thoại',10,11) == false || kiemTraSo('txt_sdt', 'tbSDT', 'vui lòng nhập số điện thoại phải là số') == false) {
+        isValid = false;
+    }
+
+    //if (kiemTraText('phuhuynh', 'tbphuhuynh', 'vui lòng nhập lại họ tên phải là chữ ') == false
+    //    || kiemTraNhap('phuhuynh', 'tbphuhuynh', 'vui lòng nhập tên ') == false) {
+    //    isValid = false;
+    //}
+    if (kiemTraNhap('txt_diachi', 'tbDC', 'vui lòng nhập địa chỉ') == false) {
+        isValid = false;
+    }
+    ////if (kiemTraDoDai('txt_diachi', 'tbDC', 'vui lòng nhập địa chỉ',5,7) == false) {
+    ////    isValid = false;
+    ////}
+
+    //if (kiemTraDoDai('txt_diachi','tbdiachi','vui lòng nhập địa chỉ',5,6) == false)
+    //     {
+    //    isValid = false;
+    //}
+
+    return isValid;
+}
 //hàm thêm học sinh
 function themHV() {
     var isValid = true;
@@ -49,11 +99,13 @@ function themHV() {
         || kiemTraNhap('truong', 'tbtruong', 'vui lòng nhập Đầy đủ họ tên trường') == false) {
         isValid = false;
     }
-    if (kiemTraNhap('sdt', 'tbSDT', 'vui lòng nhập khối') == false)
-         {
+    //if (kiemTraNhap('sdt', 'tbSDT', 'vui lòng nhập điện thoại') == false|| kiemTraDoDai('sdt', 'tbsdt', 'vui lòng nhập số điện thoại phải có', 10, 11) == false)
+    //     {
+    //    isValid = false;
+    //}
+    if (kiemTraNhap('sdt', 'tbSDT', 'vui lòng nhập số điện thoại') == false || kiemTraDoDai('sdt', 'tbSDT', 'vui lòng nhập số điện thoại', 10, 11) == false || kiemTraSo('sdt', 'tbSDT', 'vui lòng nhập số điện thoại phải là số') == false) {
         isValid = false;
     }
-
     
     if (kiemTraText('phuhuynh', 'tbphuhuynh', 'vui lòng nhập lại họ tên phải là chữ ') == false
         || kiemTraNhap('phuhuynh', 'tbphuhuynh', 'vui lòng nhập tên ') == false) {
@@ -102,10 +154,16 @@ function themMonHoc() {
 function themLLuong() {
     var isValid = true;
     // kiểm tra testbox mã  
-    if (kiemTraNhap('tenloai', 'tbTenLoai', 'vui lòng nhập tên loại lương') == false) {
+    if (kiemTraNhap('tenloai', 'tbTen', 'vui lòng nhập tên loại lương') == false) {
         isValid = false;
     }
-    if (kiemTraNhap('dongia', 'tbdongia', 'vui lòng nhập đơn giá') == false) {
+    if (kiemTraNhap('min', 'tbMin', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('max', 'tbMax', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('dongia', 'tbDG', 'vui lòng nhập đơn giá') == false) {
         isValid = false;
     }
     return isValid;
@@ -125,6 +183,58 @@ function themKM() {
     }
     return isValid;
 }
+function GiaSu() {
+    var isValid = true;
+    if (kiemTraNhap('tenlop', 'tbTen', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('monhoc', 'tbMonHoc', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('monhoc', 'tbMonHoc', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('thoigian', 'tbTG', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('dongia', 'tbDG', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('diachi', 'tbDC', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('yeucau', 'tbYC', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('lienhe', 'tbLH', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    return isValid;
+
+}
+function LuongNG() {
+    var isValid = true;
+    if (kiemTraNhap('tenloai', 'tbTenLoai', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    if (kiemTraNhap('dongia', 'tbTendg', 'vui lòng nhập không được bỏ trống') == false) {
+        isValid = false;
+    }
+    return isValid;
+}
+    function CTNgoai() {
+        var isValid = true;
+        if (kiemTraNhap('name', 'tbTen', 'vui lòng nhập không được bỏ trống') == false) {
+            isValid = false;
+        }
+        if (kiemTraNhap('datepicker', 'tbNgay', 'vui lòng nhập không được bỏ trống') == false) {
+            isValid = false;
+        }
+        if (kiemTraNhap('tien', 'tbTT', 'vui lòng nhập không được bỏ trống') == false) {
+            isValid = false;
+        }
+        return isValid;
+    }
 //hàm thêm chấm công ngoài giờ.
 function themgio() {
     var isValid = true;
@@ -152,13 +262,17 @@ function themGV() {
         isValid = false;
     }
 
-    if (kiemTraNhap('sdt', 'tbsdt', 'vui lòng nhập số điện thoại') == false) {
+    //if (kiemTraNhap('sdt', 'tbsdt', 'vui lòng nhập số điện thoại') == false
+    //    || kiemTraDoDai('sdt', 'tbsdt', 'vui lòng nhập số điện thoại phải có', 10, 11) == false) {
+    //    isValid = false;
+    //}
+    if (kiemTraNhap('sdt', 'tbsdt', 'vui lòng nhập số điện thoại') == false || kiemTraDoDai('sdt', 'tbsdt', 'vui lòng nhập số điện thoại', 10, 11) == false || kiemTraSo('sdt', 'tbsdt', 'vui lòng nhập số điện thoại phải là số') == false) {
         isValid = false;
     }
-    if (kiemTraNhap('gioitinh', 'tbgioitinh', 'vui lòng nhập giới tính') == false) {
-        isValid = false;
-    }
-    if (kiemTraNhap('datepicker', 'tbNgaySinh', 'vui lòng nhập ngày sinh') == false) {
+    //if (kiemTraNhap('gioitinh', 'tbgioitinh', 'vui lòng nhập giới tính') == false) {
+    //    isValid = false;
+    //}
+    if (kiemTraNhap('datepicker', 'tbNgay', 'vui lòng nhập ngày sinh') == false) {
         isValid = false;
     }
     
@@ -240,9 +354,22 @@ function kiemTraNhap(idInput,idspan,content ){
     }
    
 }
+function kiemTraSo(idInput, idSpan, content) {
+    var value = getEle(idInput).value;
+    if (isNaN(value)) {
+        getEle(idSpan).style.display = "block"
+        getEle(idSpan).innerHTML = `${content}`;
+        return false;
+    }
+    else {
+        getEle(idSpan).style.display = "none"
+        return true;
+    }
+
+}
 function kiemTraDoDai(idInput, idSpan, content, min, max){
     var value = getEle(idInput).value;
-    if(value.length < min || value.length > max){
+    if (value.length > max || value.length < min) {
         getEle(idSpan).style.display = "block"
         getEle(idSpan).innerHTML = `${content} từ ${min} đến ${max} kí tự`;
         return false;

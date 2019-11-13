@@ -1,0 +1,63 @@
+﻿@model List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang>
+@{
+    ViewBag.Title = "PrintReportMonth";
+    //List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang> lop = new List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang>();
+    //  var id = Session["ID"];
+    //if (id.ToString().First().Equals('9'))
+    //{
+    //    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    //}
+    //else
+    //{
+    //    Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    //}
+    int solop = 0;
+    Array lop = null;
+    if (Model != null)
+    {
+        solop = Model.Select(i => i.tengv).Distinct().Count();
+        lop = @Model.ToArray();
+    }
+
+
+}
+@if (lop != null)
+{
+    <h2 style="text-align:center;">PHIẾU BÁO CÁO KẾT QUẢ HỌC TẬP THÁNG </h2>
+    <div>Kính gửi phụ huynh học viên: @Model[0].tenhs</div>
+    @*<div>A. Chuyên cần: @Model[0].chuyencan/ @Model[0].tongbuoi sô buổi</div>*@
+    <div>A. Tình hình học tập: </div>
+    <table class="table table-striped table-responsive table-bordered table-hover">
+        <thead class="text-white bg-primary">
+            <tr>
+                <th>Môn</th>
+                <th>Giáo viên</th>
+                <th>Nhận xét</th>
+                <th>Điểm trung bình</th>
+                <th>Chuyên cần</th>
+            </tr>
+        </thead>
+        <tbody>
+            @*@foreach(var ia in Model)*@
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>@Model[i].tenmon</td>
+                    <td>@Model[i].tengv</td>
+                    <td><textarea class="md-textarea form-control" rows="2" col="7">@Model[i].nhanxet</textarea></td>
+                    <td>@Model[i].diemtb
+                    </td>
+                    <td>@Model[i].chuyencan / @Model[i].tongbuoi</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*<div>Học phí tháng mới: @string.Format("{0:0,0}", Model[0].hocphi)</div>*@
+    <div style="text-align:right">Giám đốc tổ chức</div>
+}
+else
+{ <h2 style="text-align:center;color:red;">CHƯA CÓ ĐÁNH GIÁ </h2>}
+
+
+

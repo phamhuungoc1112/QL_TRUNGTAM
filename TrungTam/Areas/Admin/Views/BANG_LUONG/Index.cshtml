@@ -19,7 +19,7 @@
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Lương Dạy</button>
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ngoaigio">Thêm Lương Ngoài Giờ</button>
 <div class="card-body">
-    <div class="row mb-3">
+    @*<div class="row mb-3">
         <div class="col">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Tên nhân viên" id="searchName">
@@ -28,7 +28,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
     <table class="table table-bordered table-responsive table-hover myTable">
         <thead class="text-white text-center">
             <tr class="bg-primary">
@@ -92,6 +92,7 @@
                             </div>
                             <input type="number" name="soluongmin" id="min" class="form-control input-sm" placeholder="Sỉ số nhỏ">
                         </div>
+                        <span class="sp-thongbao" id="tbMin"></span>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -100,6 +101,7 @@
                             </div>
                             <input type="number" name="soluongmax" id="max" class="form-control input-sm" placeholder="Sỉ số lớn">
                         </div>
+                        <span class="sp-thongbao" id="tbMax"></span>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -108,7 +110,7 @@
                             </div>
                             <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbDG"></span>
                     </div>
                     <div class="modal-footer" id="modal-footer">
                         <button id="btnThemNV" type="submit" class="btn btn-primary">Thêm Bảng Lương</button>
@@ -132,7 +134,7 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/BANG_LUONG/Create" method="post" role="form">
+                <form action="/BANG_LUONG/Create" method="post" role="form" onsubmit="return LuongNG()">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
@@ -141,7 +143,7 @@
                             </div>
                             <input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbTenLoai"></span>
                     </div>
                     <div class="form-group">
                         <div class="input-group">
@@ -150,7 +152,7 @@
                             </div>
                             <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbTendg"></span>
                     </div>
                     <div class="modal-footer" id="modal-footer">
                         <button id="btnThemNV" type="submit" class="btn btn-primary">Thêm Bảng Lương</button>

@@ -15,9 +15,10 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class CONG_NOController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         public static List<ChiTietCongNo> quanque;
         // GET: Admin/CONG_NO
+        //public static List<int> report = null;
         public void ReportsClass(string lop, DateTime dat)
         {
             if (!string.IsNullOrEmpty(lop))
@@ -31,15 +32,27 @@ namespace TrungTam.Areas.Admin.Controllers
                          && a.NGAY_LAP_CONG_NO.Year == dat.Year
                           select b).ToList();
                 ViewBag.DaThanhToan = tt.Count();
-                ViewBag.TongTien = tt.Sum(n => n.THANH_TIEN);
+                ViewBag.TongTien = tt.Sum(n => n.CONG_NO.TONG_TIEN);
+                //report.Add(ViewBag.DaThanhToan);
+                //report.Add(ViewBag.TongTien);
                 if (ViewBag.DaThanhToan == null)
+                {
                     ViewBag.DaThanhToan = 0;
+                    //report.Add(0);
+                }
                 if (ViewBag.TongTien == null)
+                {
                     ViewBag.TongTien = 0;
+                    //report.Add(0);
+                }
             }
         }
         public ActionResult Index()
         {
+            ViewBag.TongTien = 0;
+            ViewBag.DaThanhToan = 0;
+            ViewBag.Kiemtra = -1;
+            ViewBag.kiemtraChuaHD = -1;
             if (Session["ID"] == null)
                 return Redirect("/Home/Index");
             var id = Session["ID"].ToString();
@@ -47,53 +60,45 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return Redirect("/Home/Index");
             }
-            var listhocsinh = (from a in db.HOC_SINH
-                               select a).OrderByDescending(p => p.MA_HS).ToList();
-            var lop = db.LOP_HOC.Where(n => n.TRANG_THAI == 0).Select(n => n.MA_LOP).ToList();
-            //var lopLast = lop.Last();
+            ViewBag.list_lop = new List<LOP_HOC>();
+            var lop = db.LOP_HOC.Where(n => n.TRANG_THAI != -1).Select(n => n.MA_LOP).ToList();
             string lopLast = "";
             if (lop.Count() != 0 && lop != null)
             {
                 lopLast = lop.Last().ToString();
-                var tienhoc = (from a in db.CONG_NO
-                               join b in db.HOC_SINH
-                               on a.MA_HS equals b.MA_HS
-                               join c in db.CT_LOP_HOC
-                               on b.MA_HS equals c.MA_HS
-                               join d in db.LOP_HOC
-                               on c.MA_LOP equals d.MA_LOP
-                               join e in db.BANG_GIA_HOC_PHI
-                               on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
-                               where d.TRANG_THAI == 0 && d.MA_LOP.ToString() == lopLast.ToString()
-                               && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                var tienhoc = (from a in db.CT_CONG_NO
+                               where a.LOP_HOC.TRANG_THAI != -1 && a.LOP_HOC.MA_LOP.ToString() == lopLast.ToString()
+                               && a.CONG_NO.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                               && a.CONG_NO.NGAY_LAP_CONG_NO.Year == DateTime.Now.Year
                                select new HS_CongNo
                                {
                                    macongno = a.MA_CONG_NO.ToString(),
-                                   tenlop = d.TEN_LOP,
-                                   mahs = b.MA_HS,
-                                   hoten = b.HO_TEN,
-                                   ngaysinh = b.NG_SINH.ToString(),
-                                   gioitinh = b.GIOI_TINH,
-                                   sdt = b.SDT,
-                                   dongia = e.DON_GIA,
-                                   trangthaihd = a.TRANG_THAI
+                                   tenlop = a.LOP_HOC.TEN_LOP,
+                                   mahs = a.CONG_NO.MA_HS,
+                                   hoten = a.CONG_NO.HOC_SINH.HO_TEN,
+                                   ngaysinh = a.CONG_NO.HOC_SINH.NG_SINH.ToString(),
+                                   gioitinh = a.CONG_NO.HOC_SINH.GIOI_TINH,
+                                   sdt = a.CONG_NO.HOC_SINH.SDT,
+                                   dongia = a.THANH_TIEN,
+                                   trangthaihd = a.CONG_NO.TRANG_THAI
                                }).Distinct().ToList();
                 ViewBag.list_lop = (from a in db.LOP_HOC
-                                    where a.TRANG_THAI == 0
+                                    where a.TRANG_THAI != -1
                                     select a).OrderBy(n => n.TEN_LOP).ToList();
+
                 ViewBag.Kiemtra = (from a in db.CONG_NO
                                    join b in db.CT_CONG_NO
                                    on a.MA_CONG_NO equals b.MA_CONG_NO
                                    join c in db.LOP_HOC
                                    on b.MA_LOP equals c.MA_LOP
-                                   where c.TRANG_THAI == 0 
+                                   where c.TRANG_THAI != -1
                                    && a.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
                                    select a).Count();
                 ViewBag.kiemtraChuaHD = (from a in db.CONG_NO
                                          select a).Count();
                 ReportsClass(lopLast, DateTime.Now);
                 return View(tienhoc);
-            }                     
+            }
             //IEnumerable<HS_CongNo> tienhoc = tienhoc1.Distinct();           
             return View();
         }
@@ -110,39 +115,52 @@ namespace TrungTam.Areas.Admin.Controllers
             //{
             //    dat = DateTime.Parse(lop.Substring(dodai));
             //}
-            var n = (from a in db.CONG_NO
-                     join b in db.HOC_SINH
-                     on a.MA_HS equals b.MA_HS
-                     join c in db.CT_LOP_HOC
-                     on b.MA_HS equals c.MA_HS
-                     join d in db.LOP_HOC
-                     on c.MA_LOP equals d.MA_LOP
-                     join e in db.BANG_GIA_HOC_PHI
-                     on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
-                     where d.MA_LOP.ToString() == mal
-                     && a.NGAY_LAP_CONG_NO.Month == dat.Month
-                     && a.NGAY_LAP_CONG_NO.Year == dat.Year
+
+            var n = (from a in db.CT_CONG_NO
+                     where a.LOP_HOC.TRANG_THAI != -1 && a.LOP_HOC.MA_LOP.ToString() == mal
+                     && a.CONG_NO.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                     && a.CONG_NO.NGAY_LAP_CONG_NO.Year == DateTime.Now.Year
                      select new
                      {
                          macongno = a.MA_CONG_NO.ToString(),
-                         tenlop = d.TEN_LOP,
-                         mahs = b.MA_HS,
-                         hoten = b.HO_TEN,
-                         ngaysinh = b.NG_SINH.ToString(),
-                         gioitinh = b.GIOI_TINH,
-                         sdt = b.SDT,
-                         dongia = e.DON_GIA,
-                         trangthaihd = a.TRANG_THAI,
-                         dadong = (from ctcn in db.CT_CONG_NO
+                         tenlop = a.LOP_HOC.TEN_LOP,
+                         mahs = a.CONG_NO.MA_HS,
+                         hoten = a.CONG_NO.HOC_SINH.HO_TEN,
+                         ngaysinh = a.CONG_NO.HOC_SINH.NG_SINH.ToString(),
+                         gioitinh = a.CONG_NO.HOC_SINH.GIOI_TINH,
+                         sdt = a.CONG_NO.HOC_SINH.SDT,
+                         dongia = a.THANH_TIEN,
+                         trangthaihd = a.CONG_NO.TRANG_THAI,
+                         dadong = (from ctcn in db.CT_CONG_NO  ///tổng tiền cần đóng
                                    join cn in db.CONG_NO
                                    on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
                                    where
                                     ctcn.MA_LOP.ToString() == mal
                                    && cn.NGAY_LAP_CONG_NO.Month == dat.Month
                                    && cn.NGAY_LAP_CONG_NO.Year == dat.Year
-                                   select ctcn).Sum(cl => cl.THANH_TIEN)
+                                   select ctcn).Sum(cl => cl.THANH_TIEN),
+
+                         hsdong = (from ctcn in db.CT_CONG_NO  ///hocsinh đã đóng
+                                   join cn in db.CONG_NO
+                                   on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                   where
+                                    ctcn.MA_LOP.ToString() == mal
+                                   && cn.NGAY_LAP_CONG_NO.Month == dat.Month
+                                   && cn.NGAY_LAP_CONG_NO.Year == dat.Year
+                                   && cn.TRANG_THAI == true
+                                   select ctcn).Count(),
+                         tiendathu = (from ctcn in db.CT_CONG_NO  ///hocsinh đã đóng
+                                      join cn in db.CONG_NO
+                                      on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                      where
+                                       ctcn.MA_LOP.ToString() == mal
+                                      && cn.NGAY_LAP_CONG_NO.Month == dat.Month
+                                      && cn.NGAY_LAP_CONG_NO.Year == dat.Year
+                                      && cn.TRANG_THAI == true
+                                      select ctcn).Sum(c => c.THANH_TIEN)
                      }).Distinct().ToList();
-            ReportsClass(mal, dat);
+
+            //ReportsClass(mal, dat);
             return Json(n, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]
@@ -154,39 +172,58 @@ namespace TrungTam.Areas.Admin.Controllers
             var mal = str[0];
             CultureInfo current = CultureInfo.CurrentCulture;
             DateTime dat = Convert.ToDateTime(str[1], System.Globalization.CultureInfo.GetCultureInfo(current.Name).DateTimeFormat);
-            var fil = (from a in db.CONG_NO.Include(n => n.CT_CONG_NO)
-                       join b in db.HOC_SINH
-                       on a.MA_HS equals b.MA_HS
-                       join c in db.CT_LOP_HOC
-                       on b.MA_HS equals c.MA_HS
-                       join d in db.LOP_HOC
-                       on c.MA_LOP equals d.MA_LOP
-                       join e in db.BANG_GIA_HOC_PHI
-                       on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
-                       where d.MA_LOP.ToString() == mal
-                        && a.NGAY_LAP_CONG_NO.Month == dat.Month
-                        && a.NGAY_LAP_CONG_NO.Year == dat.Year
+            var fil = (from a in db.CT_CONG_NO
+                       where a.LOP_HOC.TRANG_THAI != -1 && a.LOP_HOC.MA_LOP.ToString() == mal
+                       && a.CONG_NO.NGAY_LAP_CONG_NO.Month == DateTime.Now.Month
+                       && a.CONG_NO.NGAY_LAP_CONG_NO.Year == DateTime.Now.Year
                        select new
                        {
                            macongno = a.MA_CONG_NO.ToString(),
-                           tenlop = d.TEN_LOP,
-                           mahs = b.MA_HS,
-                           hoten = b.HO_TEN,
-                           ngaysinh = b.NG_SINH.ToString(),
-                           gioitinh = b.GIOI_TINH,
-                           sdt = b.SDT,
-                           dongia = e.DON_GIA,
-                           trangthaihd = a.TRANG_THAI,
-                           dadong = (from ctcn in db.CT_CONG_NO
+                           tenlop = a.LOP_HOC.TEN_LOP,
+                           mahs = a.CONG_NO.MA_HS,
+                           hoten = a.CONG_NO.HOC_SINH.HO_TEN,
+                           ngaysinh = a.CONG_NO.HOC_SINH.NG_SINH.ToString(),
+                           gioitinh = a.CONG_NO.HOC_SINH.GIOI_TINH,
+                           sdt = a.CONG_NO.HOC_SINH.SDT,
+                           dongia = a.THANH_TIEN,
+                           trangthaihd = a.CONG_NO.TRANG_THAI,
+                           //dadong = (from ctcn in db.CT_CONG_NO
+                           //          join cn in db.CONG_NO
+                           //          on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                           //          where
+                           //           ctcn.MA_LOP.ToString() == mal
+                           //          && cn.NGAY_LAP_CONG_NO.Month == dat.Month
+                           //          && cn.NGAY_LAP_CONG_NO.Year == dat.Year
+                           //          select ctcn).Sum(cl => cl.THANH_TIEN),
+                           dadong = (from ctcn in db.CT_CONG_NO  ///tổng tiền cần đóng
                                      join cn in db.CONG_NO
                                      on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
                                      where
                                       ctcn.MA_LOP.ToString() == mal
                                      && cn.NGAY_LAP_CONG_NO.Month == dat.Month
                                      && cn.NGAY_LAP_CONG_NO.Year == dat.Year
-                                     select ctcn).Sum(n => n.THANH_TIEN)
+                                     select ctcn).Sum(cl => cl.THANH_TIEN),
+
+                           hsdong = (from ctcn in db.CT_CONG_NO  ///hocsinh đã đóng
+                                     join cn in db.CONG_NO
+                                     on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                     where
+                                      ctcn.MA_LOP.ToString() == mal
+                                     && cn.NGAY_LAP_CONG_NO.Month == dat.Month
+                                     && cn.NGAY_LAP_CONG_NO.Year == dat.Year
+                                     && cn.TRANG_THAI == true
+                                     select ctcn).Count(),
+                           tiendathu = (from ctcn in db.CT_CONG_NO  ///hocsinh đã đóng
+                                        join cn in db.CONG_NO
+                                        on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                        where
+                                         ctcn.MA_LOP.ToString() == mal
+                                        && cn.NGAY_LAP_CONG_NO.Month == dat.Month
+                                        && cn.NGAY_LAP_CONG_NO.Year == dat.Year
+                                        && cn.TRANG_THAI == true
+                                        select ctcn).Sum(c => c.THANH_TIEN)
                        }).Distinct().ToList();
-            ReportsClass(mal, dat);
+            //ReportsClass(mal, dat);
             return Json(fil, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -196,7 +233,7 @@ namespace TrungTam.Areas.Admin.Controllers
             var listHS = (from a in db.CT_LOP_HOC
                           join b in db.LOP_HOC
                           on a.MA_LOP equals b.MA_LOP
-                          where b.TRANG_THAI == 0
+                          where b.TRANG_THAI != -1
                           select new
                           {
                               mahs = a.MA_HS
@@ -212,7 +249,7 @@ namespace TrungTam.Areas.Admin.Controllers
                                      b.MA_HS == p.MA_HS &&
                                      c.NGAY_AP_DUNG == l.NGAY_AP_DUNG &&
                                     //c.MA_LOP.ToString() == lon
-                                    c.TRANG_THAI == 0
+                                    c.TRANG_THAI != -1
                            select new
                            {
                                mahs = b.MA_HS,
@@ -220,7 +257,7 @@ namespace TrungTam.Areas.Admin.Controllers
                                dongia = l.DON_GIA
                            }).Distinct().ToList();
             var slHocSinh = tienhoc.Count;
-            if (tienhoc != null && listHS != null)
+            if (tienhoc != null && listHS != null && slHocSinh != 0 && soluong != 0)
             {
                 for (int i = 0; i < soluong; i++)
                 {
@@ -274,34 +311,30 @@ namespace TrungTam.Areas.Admin.Controllers
                 }
 
                 var CT_CongNo = (from a in db.CONG_NO
-                                 join b in db.HOC_SINH
-                                 on a.MA_HS equals b.MA_HS
-                                 join c in db.CT_LOP_HOC
-                                 on b.MA_HS equals c.MA_HS
-                                 join d in db.LOP_HOC
-                                 on c.MA_LOP equals d.MA_LOP
-                                 join e in db.BANG_GIA_HOC_PHI
-                                 on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
-                                 join m in db.MON_HOC
-                                 on e.MA_MON equals m.MA_MON
-                                 join l in db.LOAI_LOP
-                                 on e.MA_LOAI equals l.MA_LOAI
-                                 join f in db.KHOI_LOP
-                                 on e.MA_KHOI equals f.MA_KHOI
-                                 where b.MA_HS == id1 &&
-                                    d.TRANG_THAI == 0 && a.MA_CONG_NO.ToString() == cn
+                                     //join b in db.HOC_SINH
+                                     //on a.MA_HS equals b.MA_HS
+                                     //join c in db.CT_LOP_HOC
+                                     //on b.MA_HS equals c.MA_HS
+                                     //join d in db.LOP_HOC
+                                     //on c.MA_LOP equals d.MA_LOP
+                                 join ctcn in db.CT_CONG_NO
+                                 on a.MA_CONG_NO equals ctcn.MA_CONG_NO
+                                 //join e in db.BANG_GIA_HOC_PHI
+                                 //on d.NGAY_AP_DUNG equals e.NGAY_AP_DUNG
+                                 where a.MA_HS == id1 &&
+                                  ctcn.LOP_HOC.TRANG_THAI != -1 && a.MA_CONG_NO.ToString() == cn
                                  select new ChiTietCongNo
                                  {
                                      macongno = a.MA_CONG_NO.ToString(),
-                                     malop = d.MA_LOP,
-                                     mahs = b.MA_HS,
-                                     tenhs = b.HO_TEN,
-                                     tenlop = d.TEN_LOP,
-                                     tenmon = m.TEN_MON,
-                                     tenloai = l.TEN_LOAI,
-                                     tenkhoi = f.TEN_KHOI,
-                                     giatien = e.DON_GIA
-                                 }).ToList();
+                                     malop = ctcn.MA_LOP,
+                                     mahs = a.MA_HS,
+                                     tenhs = ctcn.CONG_NO.HOC_SINH.HO_TEN,
+                                     tenlop = ctcn.LOP_HOC.TEN_LOP,
+                                     tenmon = ctcn.LOP_HOC.BANG_GIA_HOC_PHI.MON_HOC.TEN_MON,
+                                     tenloai = ctcn.LOP_HOC.BANG_GIA_HOC_PHI.LOAI_LOP.TEN_LOAI,
+                                     tenkhoi = ctcn.LOP_HOC.BANG_GIA_HOC_PHI.KHOI_LOP.TEN_KHOI,
+                                     giatien = ctcn.THANH_TIEN
+                                 }).Distinct().ToList();
                 if (CT_CongNo == null)
                 {
                     return HttpNotFound();
@@ -339,8 +372,10 @@ namespace TrungTam.Areas.Admin.Controllers
                              on e.MA_LOAI equals l.MA_LOAI
                              join f in db.KHOI_LOP
                              on e.MA_KHOI equals f.MA_KHOI
+                             join ct in db.CT_CONG_NO
+                             on a.MA_CONG_NO equals ct.MA_CONG_NO
                              where b.MA_HS == id &&
-                                d.TRANG_THAI == 0 && a.MA_CONG_NO.ToString() == cn
+                                d.TRANG_THAI != -1 && a.MA_CONG_NO.ToString() == cn
                              select new ChiTietCongNo
                              {
                                  macongno = a.MA_CONG_NO.ToString(),
@@ -351,9 +386,9 @@ namespace TrungTam.Areas.Admin.Controllers
                                  tenmon = m.TEN_MON,
                                  tenloai = l.TEN_LOAI,
                                  tenkhoi = f.TEN_KHOI,
-                                 giatien = e.DON_GIA,
+                                 giatien = ct.THANH_TIEN,
                                  tiengiam = a.KHUYEN_MAI.TIEN_GIAM
-                             }).ToList();
+                             }).Distinct().ToList();
             quanque = CT_CongNo;
             return RedirectToAction("Prints");
         }
@@ -410,22 +445,6 @@ namespace TrungTam.Areas.Admin.Controllers
             //return new ActionAsPdf("Export_PDF");
             return Json(new { macn }, JsonRequestBehavior.AllowGet);
         }
-
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public ActionResult Payments()
-        //{
-        //    string a = "";
-        //    try
-        //    {
-        //        a = Request.QueryString["id"].ToString();                
-        //    }
-        //    catch (Exception)
-        //    {
-        //        return HttpNotFound();
-        //    }
-        //    return new ActionAsPdf("Details", new { id = a }, new { });
-        //}        
 
         [HttpPost]
         [ValidateAntiForgeryToken]

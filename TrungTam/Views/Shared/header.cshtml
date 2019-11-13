@@ -1,7 +1,32 @@
 ﻿@{
     var noidung = (List<TrungTam.Areas.Admin.Models.TRANG_CHU>)ViewBag.noidung;
 }
-<header class="  header">
+<script>
+      function DM(){
+        //event.preventDefault();
+
+        var token = $("[name='__RequestVerificationToken']").val();
+        var mahs = $('#mahs').val() + '_' + 'not';
+          var dat = '@DateTime.Now.ToString("dd/MM/yyyy")';
+          @*location.href = '@Url.Action("KetQuaHocTap1", "DANH_GIA_THEO_THANG")';*@
+             var redirectwindow = window.open('@Url.Action("KetQuaHocTap","DANH_GIA_THEO_THANG")');
+            redirectwindow.location;
+        $.ajax({
+            url: '/Admin/DANH_GIA_THEO_THANG/KetQuaHocTap1',
+            type: 'POST',
+            dataType: 'Json',
+            data: {
+                __RequestVerificationToken: token,
+                mahs: mahs,
+                date: dat
+            },
+            success: function (res) {
+                
+            }
+        })
+    };
+</script>
+<header class="header">
 
     <!--navbar-expand-md   giới hạn  khi xuất hiện nút  -->
     <!-- bg-dark màu -->
@@ -12,13 +37,15 @@
             <button class="navbar-toggler btn_menu p-2" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 Menu
             </button>
+            @Html.AntiForgeryToken()
+            <input type="hidden" id="mahs" value="@Session["ID"]" />
             <div class="col-6 ml-5 collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Thời Khóa Biểu</a>
                     </li>
-                    <li class="nav-item" id="hs">
-                        <a class='nav-link' href=''>Kết Quả Học Tập</a>
+                    <li class="nav-item hs" id="hs">
+                        <a class='nav-link kqhs' id="kqhs" onclick="DM()" href='#'>Kết Quả Học Tập</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Thông báo</a>
@@ -28,6 +55,7 @@
                     </li>
                 </ul>
             </div>
+
             <div class="col-6 col-md-3 col-sm-4 col-lg-2  ">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello @Session["name"]</span>
@@ -144,3 +172,9 @@
         }
     </script>
 </section>
+<script>
+    $('.carousel').carousel({
+        interval: 9000
+    });
+
+</script>

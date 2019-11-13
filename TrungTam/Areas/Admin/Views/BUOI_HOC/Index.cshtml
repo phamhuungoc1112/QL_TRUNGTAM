@@ -15,7 +15,7 @@
     var lop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.Lop;
 }
 <h2 class="Title_Content">Điểm Danh</h2>
-<form action="/BUOI_HOC/Create" method="post">
+<form action="/Admin/BUOI_HOC/Create" method="post">
     @*Chọn lớp trong ngày đó*@
     <div class="input-group mb-3">
         <div class="input-group-prepend">
@@ -120,7 +120,7 @@
                                     $("#save").hide();
                                     $("#diemdanhGV").html("");
                                     $("<div class='col-2'/>").add("<center><h4>Giáo viên phụ trách lớp đã bị xóa! Phải chọn giáo viên mới!</h4></center>").appendTo("div#error");
-                                    $("<div class='col-6'/>").add("<center><a href='~/LOP_HOC/Edit/" + e.malop + "'class='btn btn-warning'>Đổi giáo viên</a></center>").appendTo("div#error");
+                                    $("<div class='col-6'/>").add("<center><a href='/Admin/LOP_HOC/Edit/" + e.malop + "'class='btn btn-warning'>Đổi giáo viên</a></center>").appendTo("div#error");
                                 }
                             }
                             );

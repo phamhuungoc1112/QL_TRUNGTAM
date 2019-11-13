@@ -20,18 +20,9 @@
     Thêm Môn Học
 </button>
 <div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên Môn Học" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <table class="table table-responsive table-bordered table-hover myTable">
-        <thead class="text-white bg-primary" >
+        <thead class="text-white bg-primary text-center" >
             <tr>
                 
                 <th>Tên Môn Học</th>
@@ -45,7 +36,7 @@
             @Html.DisplayFor(modelItem => item.TEN_MON)
         </td>
         <td>
-            <a type="button" class="btn btn-warning" href="~/Admin/MON_HOC/Edit/@item.MA_MON">Sửa</a>
+            <a  class="btn btn-warning" href="~/Admin/MON_HOC/Edit/@item.MA_MON">Sửa</a>
             @*@Html.ActionLink("Sửa", "Edit", new { id = item.MA_MON })*@
 
             <input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />

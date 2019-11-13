@@ -11,12 +11,12 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class DANH_GIA_THEO_THANGController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         public static IEnumerable<ReportDanhGia> quanque;
         // GET: Admin/DANH_GIA_THEO_THANG
         public ActionResult Index()
         {
-            var lop = db.LOP_HOC;
+            var lop = db.LOP_HOC.Where(p => p.TRANG_THAI == 0).ToList();
             return View(lop);
         }
         [HttpGet]
@@ -28,7 +28,7 @@ namespace TrungTam.Areas.Admin.Controllers
                          on l.MA_LOP equals ctl.MA_LOP
                          join hs in db.HOC_SINH
                          on ctl.MA_HS equals hs.MA_HS
-                         where l.MA_LOP == ma
+                         where l.MA_LOP == ma && l.TRANG_THAI == 0
                          select new
                          {
                              mahs = hs.MA_HS,
@@ -37,7 +37,55 @@ namespace TrungTam.Areas.Admin.Controllers
                          };
             return Json(ct_lop, JsonRequestBehavior.AllowGet);
         }
+        public List<ReportDanhGia> reportDanhGia(string mahs, DateTime dat)
+        {
+            return (from b in db.BUOI_HOC
+                    join p in db.CT_BUOIHOC
+                    on b.MA_BUOI equals p.MA_BUOI
+                    join g in db.GIAO_VIEN
+                    on b.MA_GV equals g.MA_GV
+                    where p.MA_HS.Equals(mahs) && p.BUOI_HOC.THOI_GIAN.Month.Equals(dat.Month) && p.BUOI_HOC.THOI_GIAN.Year.Equals(dat.Year)
+                    && p.BUOI_HOC.LOP_HOC.TRANG_THAI == 0
+                    select new ReportDanhGia
+                    {
+                        tenlop = p.BUOI_HOC.LOP_HOC.TEN_LOP,
+                        buoihoc = p.BUOI_HOC.STT_BUOI,
+                        tengv = g.HO_TEN,
+                        tenmon = p.BUOI_HOC.LOP_HOC.BANG_GIA_HOC_PHI.MON_HOC.TEN_MON,
+                        diemdanh = p.DIEM_DANH_HS.ToString(),
+                        btvn = p.BAI_TAP_VN,
+                        nhanxet = p.NHAN_XET_GV,
+                        tenhs = p.HOC_SINH.HO_TEN
+                    }).OrderBy(p => p.buoihoc).ToList();
 
+        }
+        public static List<ReportDanhGia> rpDanhGia = null;
+        public static string cl = "";
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult KetQuaHocTap1(string mahs, DateTime date)
+        {
+            string[] ma = mahs.Split('_');
+            var mhs = ma[0];
+            rpDanhGia = reportDanhGia(mhs, date);
+            cl = ma[1];
+            //if (ma[1] == "json")
+            //    return Json(kq, JsonRequestBehavior.AllowGet);
+            //return View(kq);
+            return RedirectToAction("KetQuaHocTap", "DANH_GIA_THEO_THANG");
+        }
+        public ActionResult KetQuaHocTap()
+        {
+            if(string.IsNullOrEmpty(cl) || rpDanhGia == null)
+            {
+                return new HttpStatusCodeResult(System.Net.HttpStatusCode.BadRequest);
+            }
+            else if(cl == "json")
+            {
+                return Json(rpDanhGia, JsonRequestBehavior.AllowGet);
+            }
+            return View(rpDanhGia);
+        }
         public ActionResult PrintReportMonth(string id, string date)
         {
             //string[] str = id.Split('_');
@@ -49,24 +97,14 @@ namespace TrungTam.Areas.Admin.Controllers
             //string dateloc = id.Substring(10);
             CultureInfo current = CultureInfo.CurrentCulture;
             DateTime dat = Convert.ToDateTime(date, System.Globalization.CultureInfo.GetCultureInfo(current.Name).DateTimeFormat);
-            var chitiet = (from b in db.BUOI_HOC
-                           join p in db.CT_BUOIHOC
-                           on b.MA_BUOI equals p.MA_BUOI
-                           join g in db.GIAO_VIEN
-                           on b.MA_GV equals g.MA_GV                         
-                           where p.MA_HS.Equals(mahs) && p.BUOI_HOC.THOI_GIAN.Month.Equals(dat.Month) && p.BUOI_HOC.THOI_GIAN.Year.Equals(dat.Year)
-                           select new ReportDanhGia
-                           {
-                               tenlop = p.BUOI_HOC.LOP_HOC.TEN_LOP,
-                               buoihoc = p.BUOI_HOC.STT_BUOI,
-                               tengv = g.HO_TEN,
-                               tenmon = p.BUOI_HOC.LOP_HOC.BANG_GIA_HOC_PHI.MON_HOC.TEN_MON,
-                               diemdanh = p.DIEM_DANH_HS,
-                               btvn = p.BAI_TAP_VN,
-                               nhanxet = p.NHAN_XET_GV,
-                               tenhs = p.HOC_SINH.HO_TEN 
-                           }).ToList();
-            //var 
+            var chitiet = reportDanhGia(mahs, dat);
+            foreach (var a in chitiet)
+            {
+                if (a.diemdanh == "True")
+                    a.diemdanh = "Có";
+                else
+                    a.diemdanh = "Vắng";
+            }
             if (chitiet.Count() != 0)
                 quanque = chitiet;
             else quanque = null;
@@ -96,7 +134,7 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return RedirectToAction("Index", "DANH_GIA_THEO_THANG");
             }
-            return RedirectToAction("Index", "DANH_GIA_THEO_THANG");
+            //return RedirectToAction("Index", "DANH_GIA_THEO_THANG");
         }
     }
 }

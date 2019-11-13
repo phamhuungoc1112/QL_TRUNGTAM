@@ -1,0 +1,119 @@
+﻿@model List<TrungTam.Areas.Admin.Models.BANG_GIA_HOC_PHI>
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var listkhoi = (List<TrungTam.Areas.Admin.Models.KHOI_LOP>)ViewBag.listkhoi;
+    var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
+    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;
+}
+
+
+@*<h2>Details</h2>*@
+
+<div>
+    <h4>Sửa bảng giá học phí</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <form action="/BANG_GIA_HOC_PHI/Edit" method="post" role="form" onsubmit="return ">
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                    </div>
+                    @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
+                    <input type="hidden" name="ngayad" value="@Model[0].NGAY_AP_DUNG" />
+                    <select class="form-control" name="makhoi">
+                        Chọn tên khối
+                        @foreach (var item in listkhoi)
+                        {
+                            if (Model[0].MA_KHOI == item.MA_KHOI)
+                            {
+                                <option selected value="@item.MA_KHOI">@item.TEN_KHOI</option>
+                            }
+                            else
+                            {
+                                <option selected value="@item.MA_KHOI">@item.TEN_KHOI</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <span class="sp-thongbao" id="tbTen"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                    </div>
+                    @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+
+                    <select class="form-control" name="maloai">
+                        @foreach (var item in listloailop)
+                        {
+                            if (Model[0].MA_LOAI == item.MA_LOAI)
+                            {
+                                <option selected value="@item.MA_LOAI">@item.TEN_LOAI</option>
+                            }
+                            else
+                            {
+                                <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <span class="sp-thongbao" id="tbTen"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                    </div>
+                    @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
+
+                    <select class="form-control" name="mamon">
+                        @foreach (var item in listmonhoc)
+                        {
+                            if (Model[0].MA_MON == item.MA_MON)
+                            {
+                                <option selected value="@item.MA_MON">@item.TEN_MON</option>
+                            }
+                            else
+                            {
+                                <option value="@item.MA_MON">@item.TEN_MON</option>
+                            }
+
+                        }
+                    </select>
+                </div>
+                <span class="sp-thongbao" id="tbTen"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                    </div>
+                    <input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn giá" value="@string.Format("{0:0}",Model[0].DON_GIA)" />
+                </div>
+                <span class="sp-thongbao" id="tbTen"></span>
+            </div>
+            <div class="form-group">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-address-book"></i></span>
+                    </div>
+                    <input required type="number" name="sobuoi" id="sobuoi" step="any" pattern="[-+]?[0-9]*[.,]?[0-9]+" min="1" max="10" class="form-control input-sm" placeholder="Số buổi" value="@Model[0].SO_BUOI" />
+                </div>
+                <span class="sp-thongbao" id="tbTen"></span>
+            </div>
+            <button type="submit" class="btn btn-primary">Lưu</button>
+        </form>
+    </dl>
+</div>
+<p>
+    @*@Html.ActionLink("Edit", "Edit", new { id = Model.NGAY_AP_DUNG }) |*@
+    @Html.ActionLink("Back to List", "Index")
+</p>
+

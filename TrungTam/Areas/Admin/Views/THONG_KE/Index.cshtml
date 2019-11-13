@@ -11,120 +11,44 @@
         Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
     }
     var luong = (List<TrungTam.Areas.Admin.Abstracts.ThongKe_Luong>)ViewBag.thongke_luong;
+    var chitiet = (List<TrungTam.Areas.Admin.Abstracts.TINH_LUONG>)ViewBag.chitiet;
+    var chitieungoai = (List<TrungTam.Areas.Admin.Abstracts.ThongKe_Luong>)ViewBag.thongke_chitieungoai;
     var hocphi = (List<TrungTam.Areas.Admin.Abstracts.ThongKe_HocPhi>)ViewBag.thongke_hocphi;
+    var hocvienmoi = (List<TrungTam.Areas.Admin.Abstracts.ThongKe_HocPhi>)ViewBag.hocvienmoi;
     var Listghidanh = (List<TrungTam.Areas.Admin.Models.GHI_DANH>)ViewBag.ghidanh;
     int tonghv = ViewBag.tonghocvien;
     int num = ViewBag.num;
+    if (luong != null)
+    {
+        foreach (var item in luong)
+        {
+            foreach (var meti in chitieungoai)
+            {
+                if (item.thang == meti.thang)
+                {
+                    item.luong += meti.luong;
+                }
+            }
+        }
+    }
 }
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <!-- Page Heading -->
-        <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">THỐNG KÊ</h1>
-        </div>
-        <!-- Content Row -->
-        <div class="row">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">THỐNG KÊ</h1>
+    </div>
+    <!-- Content Row -->
+    <div class="row">
 
-            <!-- Tổng số học viên -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-success shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng số học viên</div>
-                                <div class="h5 mb-0 font-weight-bold text-gray-800">@tonghv</div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!--Số ghi danh mới trong tháng -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-primary shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Học viên ghi danh</div>
-                                <button id="btn_ghidanh" class="btn btn-info"><div class="h5 mb-0 font-weight-bold text-gray-800"><font color="red">@num</font></div></button>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-calendar fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Học phí tháng trước -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-info shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Thu tháng trước</div>
-                                <div class="row no-gutters align-items-center">
-                                    <div class="col-auto">
-                                        @if (hocphi != null)
-                                        {
-                                            foreach (var item in hocphi)
-                                            {
-                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
-                                                break;
-                                            }
-                                        }
-                                    </div>
-                                    <div class="col">
-                                        <div class="progress progress-sm mr-2">
-                                            <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Lương tháng trước -->
-            <div class="col-xl-3 col-md-6 mb-4">
-                <div class="card border-left-warning shadow h-100 py-2">
-                    <div class="card-body">
-                        <div class="row no-gutters align-items-center">
-                            <div class="col mr-2">
-                                <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Chi tháng trước</div>
-                                @if (luong != null)
-                                {
-                                    foreach (var item in luong)
-                                    {
-                                        <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
-                                        break;
-                                    }
-                                }
-                            </div>
-                            <div class="col-auto">
-                                <i class="fas fa-comments fa-2x text-gray-300"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Số học viên mới -->
+        <!-- Tổng số học viên -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
-                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Số học viên mới</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">@ViewBag.hocvienmoi</div>
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng số học viên</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">@tonghv</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -134,89 +58,181 @@
             </div>
         </div>
 
-        <table class="table table-bordered table-hover myTable" style="display:none" id="list_gd">
-            <thead class="text-white text-center">
-                <tr class="bg-primary">
-                    <th>Họ và tên</th>
-                    <th>Ngày sinh</th>
-                    <th>Địa chỉ</th>
-                    <th>Số ĐT</th>
-                    <th>Trường</th>
-                    <th>Nội dung</th>
-                    <th><em class="fa fa-cog"></em></th>
-                </tr>
-            </thead>
-            <tbody id="tableDanhSach" class="text-center">
-                @foreach (var item in Listghidanh)
-                {
-                    if (item.TINH_TRANG == false)
-                    {
-                        using (Html.BeginForm("Delete", "THONG_KE", new { id = item.MA_TB }))
-                        {
-                            <tr class="alert">
-                                <td>
-                                    @item.HO_TEN
-                                </td>
-                                <td>
-                                    @item.NG_SINH
-                                </td>
-                                <td>
-                                    @item.DIA_CHI
-                                </td>
-                                <td>
-                                    @item.SDT
-                                </td>
-                                <td>
-                                    @item.TRUONG
-                                </td>
-                                <td>
-                                    @item.NOI_DUNG
-                                </td>
-                                <td>
-                                    <input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        using (Html.BeginForm("Delete", "THONG_KE", new { id = item.MA_TB }))
-                        {
-                            <tr>
-                                <td>
-                                    @item.HO_TEN
-                                </td>
-                                <td>
-                                    @item.NG_SINH
-                                </td>
-                                <td>
-                                    @item.DIA_CHI
-                                </td>
-                                <td>
-                                    @item.SDT
-                                </td>
-                                <td>
-                                    @item.TRUONG
-                                </td>
-                                <td>
-                                    @item.NOI_DUNG
-                                </td>
-                                <td>
-                                    < input type = "submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />
-                                </td>
-                            </tr>
-                        }
-                    }
-                }
+        <!--Số ghi danh mới trong tháng -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Học viên ghi danh</div>
+                            <button id="btn_ghidanh" class="btn btn-info"><div class="h5 mb-0 font-weight-bold text-gray-800"><font color="red">@num</font></div></button>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-            </tbody>
-            <tr><td colspan="7"><button class="btn btn-light" id="back" type="button">Quay lại</button></td></tr>
-        </table>
+        <!-- Học phí tháng trước -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Thu tháng này</div>
+                            <div class="row no-gutters align-items-center">
+                                <div class="col-auto">
+                                    @if (hocphi != null)
+                                    {
+                                        foreach (var item in hocphi)
+                                        {
+                                            if (item.thang.Equals(DateTime.Now.Month))
+                                            {
+                                                <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">@string.Format("{0:0,0}", item.luong)</div>
+                                                break;
+                                            }
+                                        }
+                                    }
+                                </div>
+                                <div class="col">
+                                    <div class="progress progress-sm mr-2">
+                                        <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <!-- Content Row -->
-
-
+        <!-- Lương tháng trước -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Chi tháng này</div>
+                            @if (chitiet != null)
+                            {
+                                double? tongchi = ViewBag.chitieungoai_now;
+                                foreach (var item in chitiet)
+                                {
+                                    tongchi += item.LUONG * item.SO_BUOI;
+                                }
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}", @tongchi)</div>
+                            }
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <!-- Số học viên mới -->
+    <table class="table table-bordered table-hover myTable  table-responsive" id="listThuChi">
+        <thead class="text-white text-center">
+
+            <tr class="bg-primary">
+                <th>Tháng</th>
+                @for (int i = 1; i < DateTime.Now.Month; i++)
+                {
+                    <th>@i</th>
+                }
+            </tr>
+        </thead>
+        <tbody id="list_luong" class="text-center">
+            <tr>
+                <th class="bg-primary text-white">Thu<br /><hr />Chi<br /><hr />SLHS</th>
+                @for (int i = 1; i < DateTime.Now.Month; i++)
+                {
+                    double? temp1 = 0;
+                    if (luong != null)
+                    {
+                        foreach (var item in luong)
+                        {
+                            if (item.thang == i)
+                            {
+                                temp1 = item.luong;
+                                break;
+                            }
+                        }
+                    }
+                    decimal? temp2 = 0;
+                    if (hocphi != null)
+                    {
+                        foreach (var item in hocphi)
+                        {
+                            if (item.thang == i)
+                            {
+                                temp2 = item.luong;
+                                break;
+                            }
+                        }
+                        <td id="@i">@string.Format("{0:0,0}", temp2) <hr /> @string.Format("{0:0,0}", temp1) <hr /></td>
+                    }
+
+                }
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-hover myTable" style="display:none" id="list_gd">
+        <thead class="text-white text-center">
+            <tr class="bg-primary">
+                <th>Họ và tên</th>
+                <th>Ngày sinh</th>
+                <th>Địa chỉ</th>
+                <th>Số ĐT</th>
+                <th>Trường</th>
+                <th>Nội dung</th>
+                <th><em class="fa fa-cog"></em></th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach" class="text-center">
+            @foreach (var item in Listghidanh)
+            {
+                using (Html.BeginForm("Delete", "THONG_KE", new { id = item.MA_TB }))
+                {
+                    <tr class="alert">
+                        <td>
+                            @item.HO_TEN
+                        </td>
+                        <td>
+                            @item.NG_SINH
+                        </td>
+                        <td>
+                            @item.DIA_CHI
+                        </td>
+                        <td>
+                            @item.SDT
+                        </td>
+                        <td>
+                            @item.TRUONG
+                        </td>
+                        <td>
+                            @item.NOI_DUNG
+                        </td>
+                        <td>
+                            <input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+        <tr><td colspan="7"><button class="btn btn-light" id="back" type="button">Quay lại</button></td></tr>
+    </table>
+
+    <!-- Content Row -->
+
+
+</div>
 <section>
     <script>
         $("#btn_ghidanh").click(function () {
@@ -229,6 +245,22 @@
             $("#chart").show();
             $("#list_gd").attr("Style", "display: none");
         });
+    </script>
+    <script>
+        window.onload = function () {
+            $.ajax({
+                url: "/THONG_KE/Load_hocvienmoi",
+                dataType: "Json",
+                type: "GET",
+                success: function (response) {
+                    $(response).each(
+                        function (i, e) {
+                            $("<p/>").html(e.luong).appendTo("#" + e.thang);
+                        }
+                    );
+                }
+            });
+        }
     </script>
 </section>
 

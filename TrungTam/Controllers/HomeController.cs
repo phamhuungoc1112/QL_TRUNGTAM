@@ -13,14 +13,18 @@ namespace TrungTam.Controllers
 {
     public class HomeController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         public ActionResult Index()
         {
             var noidung = db.TRANG_CHU.OrderBy(p => p.NGAY_AP_DUNG);
             ViewBag.noidung = noidung.ToList();
             var khuyenmai = db.KHUYEN_MAI.OrderBy(p => p.SO_MON_DK);
             ViewBag.khuyenmai = khuyenmai.ToList();
-            return View();
+           //var khoi = db.KHOI_LOP.OrderBy(p => p.TEN_KHOI);
+           // ViewBag.khoi = khoi.ToList();
+            var hocphi = (from b in db.BANG_GIA_HOC_PHI                   
+                          select b).ToList();                         
+            return View(hocphi);
         }
         //[HttpPost]
         //[ValidateAntiForgeryToken]

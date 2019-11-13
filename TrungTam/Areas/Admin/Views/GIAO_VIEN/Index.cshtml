@@ -13,11 +13,34 @@
         Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
     }
 }
+<style>
+    /*.my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }*/
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+</style>
 <h2 class="Title_Content">Danh Sách Giáo Viên</h2>
 <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus-square mr-2"></i>Thêm giáo viên</button>
 
 <div class="card-body">
-    <div class="row mb-3">
+    @*<div class="row mb-3">
         <div class="col">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Tên giáo viên" id="searchName">
@@ -26,9 +49,9 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div>*@
 
-    <table class="table table-bordered table-responsive table-hover myTable">
+    <table id="dtVerticalScrollExample" class="table table-bordered table-responsive table-hover myTable">
         <thead class="text-white text-center">
             <tr class="bg-primary">
                 <th>Họ và tên giáo viên</th>
@@ -46,8 +69,7 @@
         <tbody id="tableDanhSach" class="text-center">
             @foreach (var item in Model)
             {
-                using (Html.BeginForm("Delete", "GIAO_VIEN", new { id = item.MA_GV }))
-                {
+            
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.HO_TEN)
@@ -68,10 +90,13 @@
                         <a id="btnCapNhatNV" class="btn btn-warning text-white" href="~/Admin/GIAO_VIEN/Edit/@item.MA_GV">
                             Sửa
                         </a>
-                        <input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />
+                        @*<input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />*@
+                        <a class="btn btn-danger text-white" href="~/Admin/GIAO_VIEN/Delete/@item.MA_GV" onclick="return confirm('Bạn chắc chắn muốn xóa giáo viên này ?');">
+                            Xoá
+                        </a>
                     </td>
                 </tr>
-                }
+             
             }
         </tbody>
     </table>
@@ -120,15 +145,21 @@
                         </div>
                         <span class="sp-thongbao" id="tbsdt"></span>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            <input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">
+                  
+
+                    <div class="input-group form-group mb-3">
+                        <div class="input-group-prepend" for="gioitinh">
+                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                         </div>
+                        <select class="custom-select" name="gioitinh">
+                            <option selected>Chọn giới tính...</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+
+                        </select>
                         <span class="sp-thongbao" id="tbgioitinh"></span>
                     </div>
+
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -150,3 +181,12 @@
 
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#dtVerticalScrollExample').DataTable({
+            //"scrollY": "200px",
+            //"scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

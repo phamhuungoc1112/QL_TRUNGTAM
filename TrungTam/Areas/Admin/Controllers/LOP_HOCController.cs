@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class LOP_HOCController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
 
         // GET: Admin/LOP_HOC
 
@@ -47,7 +47,7 @@ namespace TrungTam.Areas.Admin.Controllers
                               ngaymolop = l.NGAY_MO_LOP,
                               ngayhoc = l.NGAY_BAT_DAU
                           };
-            return View(lOP_HOC.OrderByDescending(l => l.tenlop).ToPagedList(page, pageSize));
+            return View(lOP_HOC.OrderByDescending(l => l.trangthai).ToPagedList(page, pageSize));
         }
         //Chi ti?t h?c sinh trong l?p c?a View Details
         // GET: Admin/LOP_HOC/Details/5
@@ -88,10 +88,12 @@ namespace TrungTam.Areas.Admin.Controllers
                                     where tkb.MA_LOP == lOP_HOC.MA_LOP
                                     select new ThoiKhoaBieu
                                     {
+                                        matkb = tkb.MA_TKB,
                                         thu = tkb.THU,
-                                        tgbt = tkb.THOI_GIAN_BD.ToString(),
-                                        tgkt = tkb.THOI_GIAN_KT.ToString()
+                                        tgbt = tkb.THOI_GIAN_BD,
+                                        tgkt = tkb.THOI_GIAN_KT
                                     }).ToList();
+
                 ViewBag.listTKB = thoikhoabieu;
             }
             return View(lOP_HOC);
@@ -136,7 +138,25 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             return Json(null);
         }
-
+        //Edit thời khoá biểu
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditThoiKhoaBieu(FormCollection f)
+        {
+            string malop = f["malop"];
+            List<THOI_KHOA_BIEU> tkb = db.THOI_KHOA_BIEU.Where(m => m.MA_LOP.ToString() == malop).ToList();
+            foreach (var a in tkb)
+            {
+                string thu = a.THU.ToString();
+                string tgbd = a.THOI_GIAN_BD.ToString();
+                //string tgkt =a.THOI_GIAN_KT
+                a.THU = int.Parse(f["thu_" + thu + tgbd + a.MA_TKB.ToString()]);
+                a.THOI_GIAN_BD = TimeSpan.Parse(f["tgbd_" + thu + tgbd + a.MA_TKB].ToString());
+                a.THOI_GIAN_KT = TimeSpan.Parse(f["tgkt_" + thu + tgbd + a.MA_TKB]);
+            }
+            db.SaveChanges();
+            return RedirectToAction("Details/" + malop, "LOP_HOC");
+        }
         //Thêm h?c sinh vào trong table chi ti?t
         //GET: LOP_HOC/Add     
         [HttpPost]
@@ -145,49 +165,74 @@ namespace TrungTam.Areas.Admin.Controllers
         {
 
             var mahs = tong.Substring(0, 10);
-            var malop = tong.Substring(10, tong.Length - 10);
-            //var ktra = (from lh in db.LOP_HOC
-            //            where lh.TRANG_THAI == 1
-            //            && lh.MA_LOP == Guid.Parse(malop)
-            //            select lh).Count();
-            //var tinhhp = from lop in db.LOP_HOC
-            //             join hp in db.BANG_GIA_HOC_PHI
-            //             on lop.NGAY_AP_DUNG equals hp.NGAY_AP_DUNG
-            //             where lop.MA_LOP == Guid.Parse(malop)
-            //             select hp;
-            var statusClass = db.LOP_HOC.Find(Guid.Parse(malop)).TRANG_THAI;
-            if (statusClass == 0)
+            var malop = Guid.Parse(tong.Substring(10, tong.Length - 10));
+            DateTime currDay = DateTime.Now;
+            //int kiemtracongno = db.CONG_NO.Where(p=>p.NGAY_LAP_CONG_NO.Month.Equals(currDay.Month) && p.NGAY_LAP_CONG_NO.Year.Equals(currDay.Year)).Include(p=>p.CT_CONG_NO.Where(x=>x.MA_LOP.Equals(malop))).Count();
+            //int kiemtrano = db.CT_CONG_NO.Where(p => p.CONG_NO.NGAY_LAP_CONG_NO.Month.Equals(currDay.Month) && p.CONG_NO.NGAY_LAP_CONG_NO.Year.Equals(currDay.Year) && p.MA_LOP.Equals(malop)).Count();
+            var statusClass = db.LOP_HOC.Find(malop).TRANG_THAI;
+            //if (kiemtrano > 0)
+            //{
+            if (statusClass == 0 || statusClass == 1)
             {
+                var ngay = DateTime.Now;
+                var tongbuoi1 = db.LOP_HOC.Find(malop).BANG_GIA_HOC_PHI.SO_BUOI * 4; //tổng số buổi học lấy sobuoihoc * 4tuan
+                                                                                     /*lớp học được bao nhiêu buổi*/
+                                                                                     //var sobuoihientai = db.BUOI_HOC.Where(p => p.MA_LOP.Equals(malop) && p.THOI_GIAN.Month.Equals(ngay.Month) && p.THOI_GIAN.Year.Equals(ngay.Year)).Count();
+                var sobuoihientai1 = db.LOP_HOC.Find(malop).BUOI_HOC.Where(p => p.THOI_GIAN.Month.Equals(ngay.Month) && p.THOI_GIAN.Year.Equals(ngay.Year)).Count();
+                var dongia = db.LOP_HOC.Find(malop).BANG_GIA_HOC_PHI.DON_GIA;
+                /*  (dongia / tongbuoi) * (tongbuoi - sobuoihientai)  */
+                var tiendong = Math.Ceiling((double.Parse(dongia.ToString()) / tongbuoi1) * (tongbuoi1 - sobuoihientai1));
+
+                var congno = db.CT_CONG_NO.Where(p => p.CONG_NO.NGAY_LAP_CONG_NO.Month.Equals(currDay.Month) && p.CONG_NO.NGAY_LAP_CONG_NO.Year.Equals(currDay.Year) && p.CONG_NO.MA_HS.Equals(mahs) && p.CONG_NO.TRANG_THAI == false).ToList();
+                CONG_NO cONG_NO = null;
+                if (congno.Count() > 0)
+                {
+                    cONG_NO = db.CONG_NO.Find(congno[0].MA_CONG_NO);
+                }
+                else
+                {
+                    cONG_NO = new CONG_NO();
+                    cONG_NO.MA_CONG_NO = Guid.NewGuid();
+                    cONG_NO.NGAY_LAP_CONG_NO = DateTime.Now;
+                    cONG_NO.MA_HS = mahs;
+                    cONG_NO.TRANG_THAI = false;
+                    db.CONG_NO.Add(cONG_NO);
+                }
+
                 CT_LOP_HOC ct_lop = new CT_LOP_HOC();
                 ct_lop.MA_HS = mahs;
-                ct_lop.MA_LOP = Guid.Parse(malop);
+                ct_lop.MA_LOP = malop;
                 db.CT_LOP_HOC.Add(ct_lop);
-               
-                CONG_NO cONG_NO = new CONG_NO();
-                cONG_NO.MA_CONG_NO = Guid.NewGuid();
-                cONG_NO.NGAY_LAP_CONG_NO = DateTime.Now;
-                cONG_NO.MA_HS = mahs;
-                cONG_NO.TRANG_THAI = false;
                 CT_CONG_NO cT_CONG_NO = new CT_CONG_NO();
                 cT_CONG_NO.MA_CONG_NO = cONG_NO.MA_CONG_NO;
-                cT_CONG_NO.MA_LOP = Guid.Parse(malop);
-                cT_CONG_NO.THANH_TIEN = ct_lop.LOP_HOC.BANG_GIA_HOC_PHI.DON_GIA;
-                db.CONG_NO.Add(cONG_NO);
+                cT_CONG_NO.MA_LOP = malop;
+                cT_CONG_NO.THANH_TIEN = decimal.Parse(tiendong.ToString());
+
                 db.CT_CONG_NO.Add(cT_CONG_NO);
                 db.SaveChanges();
+
             }
             else if (statusClass == -1)
             {
-
+                tong = "Lớp học đã kết thúc";
             }
-            else
-            {
-                CT_LOP_HOC ct_lop = new CT_LOP_HOC();
-                ct_lop.MA_HS = mahs;
-                ct_lop.MA_LOP = Guid.Parse(malop);
-                db.CT_LOP_HOC.Add(ct_lop);
-                db.SaveChanges();
-            }
+            //else
+            //{
+            //    CT_LOP_HOC ct_lop = new CT_LOP_HOC();
+            //    ct_lop.MA_HS = mahs;
+            //    ct_lop.MA_LOP = malop;
+            //    db.CT_LOP_HOC.Add(ct_lop);
+            //    db.SaveChanges();
+            //}
+            //}
+            //else
+            //{
+            //    CT_LOP_HOC ct_lop = new CT_LOP_HOC();
+            //    ct_lop.MA_HS = mahs;
+            //    ct_lop.MA_LOP = malop;
+            //    db.CT_LOP_HOC.Add(ct_lop);
+            //    db.SaveChanges();
+            //}
 
             return Json(tong, JsonRequestBehavior.AllowGet);
         }
@@ -229,7 +274,7 @@ namespace TrungTam.Areas.Admin.Controllers
                               SO_BUOI = a.SO_BUOI
                           }).ToList();
             //ViewBag.listmonhoc = monhoc.ToList();
-            var listgiaovien = db.GIAO_VIEN.OrderBy(m => m.HO_TEN).ToList();
+            var listgiaovien = db.GIAO_VIEN.Where(p => p.TRANG_THAI.Equals(true)).OrderBy(m => m.HO_TEN).ToList();
             if (listgiaovien.Count() > 0)
                 ViewBag.listgiaovien = listgiaovien;
             else
@@ -274,10 +319,11 @@ namespace TrungTam.Areas.Admin.Controllers
                 foreach (ThoiKhoaBieu i in listTKB)
                 {
                     THOI_KHOA_BIEU tkb = new THOI_KHOA_BIEU();
+                    tkb.MA_TKB = Guid.NewGuid();
                     tkb.MA_LOP = lh.MA_LOP;
                     tkb.THU = i.thu;
-                    tkb.THOI_GIAN_BD = TimeSpan.Parse(i.tgbt);
-                    tkb.THOI_GIAN_KT = TimeSpan.Parse(i.tgkt);
+                    tkb.THOI_GIAN_BD = i.tgbt;
+                    tkb.THOI_GIAN_KT = i.tgkt;
                     db.THOI_KHOA_BIEU.Add(tkb);
                 }
                 db.LOP_HOC.Add(lh);
@@ -287,6 +333,12 @@ namespace TrungTam.Areas.Admin.Controllers
             return Json(l);
         }
         //Ki?m tra th?i khóa bi?u có trùng không
+        public class KtraTKB
+        {
+            public string tenlop { get; set; }
+            public string thoigianbd { get; set; }
+            public string thoigiankt { get; set; }
+        }
         [HttpPost]
         [AllowAnonymous]
         public JsonResult KIEM_TRA_TKB(int thu)
@@ -297,14 +349,21 @@ namespace TrungTam.Areas.Admin.Controllers
             var a = (from lh in db.LOP_HOC
                      join tkb in db.THOI_KHOA_BIEU
                      on lh.MA_LOP equals tkb.MA_LOP
-                     where tkb.THU == thu
-                     select new
+                     where tkb.THU == thu && lh.TRANG_THAI != -1
+                     select new KtraTKB
                      {
                          tenlop = lh.TEN_LOP,
                          //thoigianbd = (tkb.THOI_GIAN_BD).ToString(@"hh\:mm"),
-                         thoigianbd = (tkb.THOI_GIAN_BD).ToString(),
-                         thoigiankt = (tkb.THOI_GIAN_KT).ToString()
+                         thoigianbd = tkb.THOI_GIAN_BD.ToString(),
+                         thoigiankt = tkb.THOI_GIAN_KT.ToString()
                      }).ToList();
+            foreach (KtraTKB x in a)
+            {
+                TimeSpan time = TimeSpan.Parse(x.thoigianbd);
+                x.thoigianbd = time.ToString(@"hh\:mm");
+                TimeSpan time1 = TimeSpan.Parse(x.thoigianbd);
+                x.thoigiankt = time1.ToString(@"hh\:mm");
+            }
             return Json(a, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
@@ -358,7 +417,7 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return HttpNotFound();
             }
-            ViewBag.MA_GV = new SelectList(db.GIAO_VIEN, "MA_GV", "HO_TEN", lOP_HOC.MA_GV);
+            ViewBag.MA_GV = new SelectList(db.GIAO_VIEN.Where(p => p.TRANG_THAI.Equals(true)), "MA_GV", "HO_TEN", lOP_HOC.MA_GV);
             //ViewBag.MA_KHOI = new SelectList(db.KHOI_LOP, "MA_KHOI", "TEN_KHOI", lOP_HOC.MA_KHOI);
             //ViewBag.MA_LOAI = new SelectList(db.LOAI_LOP, "MA_LOAI", "TEN_LOAI", lOP_HOC.MA_LOAI);
             //ViewBag.MA_MON = new SelectList(db.MON_HOC, "MA_MON", "TEN_MON", lOP_HOC.MA_MON);
@@ -370,7 +429,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_LOP,TEN_LOP,SI_SO,MA_LOAI,MA_MON,MA_KHOI,MA_GV")] LOP_HOC lOP_HOC)
+        public ActionResult Edit([Bind(Include = "MA_LOP,TEN_LOP,SI_SO,MA_LOAI,MA_MON,MA_KHOI,NGAY_MO_LOP,NGAY_BAT_DAU, NGAY_KET_THUC,TRANG_THAI,NGAY_AP_DUNG,MA_GV")] LOP_HOC lOP_HOC)
         {
             if (ModelState.IsValid)
             {
@@ -383,29 +442,57 @@ namespace TrungTam.Areas.Admin.Controllers
         }
 
         // GET: Admin/LOP_HOC/Delete/5
-        public ActionResult Delete(Guid? id)
+        public ActionResult Delete(string tong)
         {
-            if (id == null)
+            string[] a = tong.Split('_');
+            if (a[0] == null || a[1] == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LOP_HOC lOP_HOC = db.LOP_HOC.Find(id);
-            if (lOP_HOC == null)
+            var malop = Guid.Parse(a[1]);
+            var mahs = a[0];
+            //LOP_HOC lOP_HOC = db.LOP_HOC.Find(id);
+            List<CT_LOP_HOC> ct = db.CT_LOP_HOC.Where(t => t.MA_HS == mahs && t.MA_LOP == malop).Select(t => t).ToList();
+            List<CT_CONG_NO> cT_CONG_NOs = (from ctcn in db.CT_CONG_NO
+                                            join cn in db.CONG_NO
+                                            on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                            where cn.MA_HS == mahs && ctcn.MA_LOP == malop
+                                            && cn.TRANG_THAI == false
+                                            select ctcn).ToList();
+
+            if (ct == null || cT_CONG_NOs == null)
             {
                 return HttpNotFound();
             }
-            return View(lOP_HOC);
-        }
+            else
+            {
+                //List<CT_CONG_NO> cT_CONG_KiemTra = from ctcn in db.CT_CONG_NO
+                //                                   join cn in db.CONG_NO
+                //                                   on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                //                                   where cn.MA_HS == mahs
+                CONG_NO cn = null;
+                if (cT_CONG_NOs.Count() == 1)
+                {
+                    var macn = cT_CONG_NOs.Select(t => t.MA_CONG_NO).ToList();
+                    db.CT_CONG_NO.Remove(cT_CONG_NOs[0]);
+                    cn = db.CONG_NO.Find(macn[0]);
+                    var vcl = macn[0];
+                    var soctcn = (from ctcn in db.CT_CONG_NO
+                                  join cnnew in db.CONG_NO
+                                  on ctcn.MA_CONG_NO equals cn.MA_CONG_NO
+                                  where cnnew.MA_CONG_NO == vcl
+                                  select ctcn).ToList();
+                    if (soctcn.Count() == 1)
+                    {
+                        if (cn != null)
+                            db.CONG_NO.Remove(cn);
+                    }
+                }
+                db.CT_LOP_HOC.Remove(ct[0]);
+                db.SaveChanges();
+            }
 
-        // POST: Admin/LOP_HOC/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(Guid id)
-        {
-            LOP_HOC lOP_HOC = db.LOP_HOC.Find(id);
-            db.LOP_HOC.Remove(lOP_HOC);
-            db.SaveChanges();
-            return RedirectToAction("Index");
+            return Json('x', JsonRequestBehavior.AllowGet);
         }
 
         protected override void Dispose(bool disposing)

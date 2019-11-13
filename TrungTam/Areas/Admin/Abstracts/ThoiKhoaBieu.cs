@@ -7,8 +7,10 @@ namespace TrungTam.Areas.Admin.Abstracts
 {
     public class ThoiKhoaBieu
     {
+     
+        public Guid matkb { get; set; }
         public int thu { get; set; }
-        public string tgbt { get; set; }
-        public string tgkt { get; set; }
+        public TimeSpan tgbt { get; set; }
+        public TimeSpan tgkt { get; set; }
     }
 }

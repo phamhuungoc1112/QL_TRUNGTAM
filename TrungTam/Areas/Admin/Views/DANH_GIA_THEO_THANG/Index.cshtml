@@ -1,4 +1,4 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
+﻿@model List<TrungTam.Areas.Admin.Models.LOP_HOC>
 @{
     ViewBag.Title = "Index";
     var id = Session["ID"];
@@ -6,17 +6,23 @@
     {
         Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
     }
-    else
+    else if (id.ToString().First().Equals('8'))
     {
         Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
     }
+    // Array lop = null;
+    //if (Model != null)
+    //{
+    //    lop = @Model.ToArray();
+    //}
 }
 
 <h2 class="Title_Content">Xuất đánh giá theo tháng</h2>
 <div class="m-3">
-    @if (Model != null)
+    @if(Model.Count != 0)
     {
         <select class="form-control" name="lophoc" id="lophoc">
+            <option value="@Model[0].MA_LOP">Chọn lớp</option>
             @foreach (var i in Model)
             {
                 <option value="@i.MA_LOP">
@@ -32,26 +38,26 @@
 
 
 
-    <table class="table table-bordered table-hover table-responsive">
-        <thead class="text-white bg-primary">
-            <tr>
-                <th class="nowrap">
-                    <span class="mr-1">Mã học viên</span>
-                </th>
-                <th class="nowrap">
-                    <span class="mr-1">Họ tên</span>
-                </th>
-                <th class="nowrap">
-                    <span class="mr-1">Ngày sinh</span>
-                </th>
-                <th class="nowrap">
+<table class="table table-bordered table-hover table-responsive">
+    <thead class="text-white bg-primary">
+        <tr>
+            <th class="nowrap">
+                <span class="mr-1">Mã học viên</span>
+            </th>
+            <th class="nowrap">
+                <span class="mr-1">Họ tên</span>
+            </th>
+            <th class="nowrap">
+                <span class="mr-1">Ngày sinh</span>
+            </th>
+            <th class="nowrap">
 
-                </th>
-            </tr>
-        </thead>
-        <tbody id="ds_hocsinh">
-        </tbody>
-    </table>
+            </th>
+        </tr>
+    </thead>
+    <tbody id="ds_hocsinh">
+    </tbody>
+</table>
 
 @section ClientScript{
     <script>
@@ -101,20 +107,20 @@
                 var redirectWindow = window.open('@Url.Action("PrintReportMonth", "DANH_GIA_THEO_THANG")?id=' + mahs + '&date='+temp, '_blank');
                 redirectWindow.location;
                 //location.href = ;
-                $.ajax({
-                    type: 'GET',
-                    url: '/DANH_GIA_THEO_THANG/PrintReport',
-                    dataType: 'JSON',
-                    traditional: true,
-                    data: {
-                        id: vcl,
-                        date: temp
-                    },
-                    contentType: "application/json; chartset=utf-8",
-                    success: function (respose) {
+                //$.ajax({
+                //    type: 'GET',
+                //    url: '/DANH_GIA_THEO_THANG/PrintReport',
+                //    dataType: 'JSON',
+                //    traditional: true,
+                //    data: {
+                //        id: vcl,
+                //        date: temp
+                //    },
+                //    contentType: "application/json; chartset=utf-8",
+                //    success: function (respose) {
 
-                    }
-                });
+                //    }
+                //});
             }
         });
     </script>

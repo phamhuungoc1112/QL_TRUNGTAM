@@ -14,7 +14,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class GIAO_VIENController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         private BASE bASE = new BASE();
         // GET: Admin/GIAO_VIEN
         public ActionResult Index(int page = 1, int pageSize = 10)
@@ -54,7 +54,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 gv.HO_TEN = f["name"];
                 gv.SDT = f["SDT"];
                 gv.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
-                gv.GIOI_TINH = f["Gioitinh"];
+                gv.GIOI_TINH = f["gioitinh"];
                 gv.EMAIL = f["email"];
                 gv.TRANG_THAI = true;
                 db.GIAO_VIEN.Add(gv);
@@ -100,7 +100,7 @@ namespace TrungTam.Areas.Admin.Controllers
             return View(gIAO_VIEN);
         }
         // POST: Admin/GIAO_VIEN/Delete/5
-        [HttpPost]
+
         public ActionResult Delete(string id)
         {
             //====================thay chỗ này==================

@@ -5,7 +5,7 @@
     int solop = 0;
     if (Model != null)
     {
-        lop = @Model.ToList();
+        lop = Model.ToList();
         solop = Model.Select(i => i.tengv).Distinct().Count();
     }
 }
@@ -17,7 +17,7 @@
     <br/>
     <div>Kính gửi phụ huynh học viên: @lop[1].tenhs;</div>
     <div>A. Tình hình học tập</div>
-    for (int i = 0; i <= solop; i++)
+    for (int i = 0; i < solop; i++)
     {
         <div>@lop[i].tenlop</div>
         //foreach (var m in mon)

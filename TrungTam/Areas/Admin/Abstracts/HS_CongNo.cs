@@ -14,7 +14,8 @@ namespace TrungTam.Areas.Admin.Abstracts
         public string ngaysinh { get; set; }
         public string gioitinh { get; set; }
         public string sdt { get; set; }
-        public decimal dongia { get; set; }
+        /*public IEnumerable<Nullable<decimal>> dongia { get; set; }*/
+        public Nullable<decimal> dongia { get; set; }
         public bool trangthaihd { get; set; }
     }
 }

@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class HOC_SINHController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         private BASE bASE = new BASE();
         // GET: Admin/HOC_SINH
         public ActionResult Index(int page = 1, int pageSize = 10)
@@ -116,7 +116,7 @@ namespace TrungTam.Areas.Admin.Controllers
         }
 
         // GET: Admin/HOC_SINH/Delete/5
-        [HttpPost]
+        //[HttpPost]
         public ActionResult Delete(string id)
         {
             HOC_SINH hs = db.HOC_SINH.Find(id);

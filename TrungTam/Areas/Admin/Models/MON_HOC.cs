@@ -18,6 +18,7 @@ namespace TrungTam.Areas.Admin.Models
         public MON_HOC()
         {
             this.BANG_GIA_HOC_PHI = new HashSet<BANG_GIA_HOC_PHI>();
+            this.TAILIEU = new HashSet<TAILIEU>();
         }
     
         public System.Guid MA_MON { get; set; }
@@ -25,5 +26,7 @@ namespace TrungTam.Areas.Admin.Models
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<BANG_GIA_HOC_PHI> BANG_GIA_HOC_PHI { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TAILIEU> TAILIEU { get; set; }
     }
 }

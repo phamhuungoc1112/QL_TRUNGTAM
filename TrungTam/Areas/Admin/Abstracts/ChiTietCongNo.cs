@@ -15,7 +15,7 @@ namespace TrungTam.Areas.Admin.Abstracts
         public string tenmon { get; set; }
         public string tenloai { get; set; }
         public string tenkhoi { get; set; }
-        public decimal giatien { get; set; }
+        public Nullable<decimal> giatien { get; set; }
         public Nullable<decimal> tiengiam { get; set; }
     }
 }

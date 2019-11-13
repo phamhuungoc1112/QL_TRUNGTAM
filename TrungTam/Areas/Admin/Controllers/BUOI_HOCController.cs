@@ -13,7 +13,7 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class BUOI_HOCController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         private BASE bd = new BASE();
         // GET: Admin/BUOI_HOC
         public ActionResult Index()
@@ -62,8 +62,8 @@ namespace TrungTam.Areas.Admin.Controllers
             {
                 return Redirect("/Home/Index");
             }
-            var chonlop = db.LOP_HOC.Where(p => p.MA_GV.Equals(id)).OrderBy(p => p.NGAY_AP_DUNG);
-            ViewBag.chonlop = chonlop.ToList();
+            var chonlop = db.LOP_HOC.Where(p => p.MA_GV.Equals(id) && p.TRANG_THAI == 0).OrderBy(p => p.NGAY_AP_DUNG).ToList();
+            ViewBag.chonlop = chonlop;
             return View();
         }
         //===================================================
@@ -248,6 +248,7 @@ namespace TrungTam.Areas.Admin.Controllers
                         {
                             item.NHAN_XET_GV = f["nhanxet" + item.MA_HS];
                             item.BAI_TAP_VN = f["BTVN" + item.MA_HS];
+                            item.DIEM = float.Parse(f["diem" + item.MA_HS]);
                         }
                     }
                 }
@@ -264,7 +265,7 @@ namespace TrungTam.Areas.Admin.Controllers
         {
             int id = bd.DayOfWeekk(idd);
             var thoigian = DateTime.Parse(idd);
-            var chonlop = db.THOI_KHOA_BIEU.Where(p => p.THU.Equals(id)).Include(q => q.LOP_HOC)
+            var chonlop = db.THOI_KHOA_BIEU.Where(p => p.THU.Equals(id) && p.LOP_HOC.TRANG_THAI == 0).Include(q => q.LOP_HOC)
                 .Select(x => new 
                 {
                     malop = x.LOP_HOC.MA_LOP,

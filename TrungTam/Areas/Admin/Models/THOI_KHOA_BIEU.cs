@@ -18,6 +18,7 @@ namespace TrungTam.Areas.Admin.Models
         public int THU { get; set; }
         public System.TimeSpan THOI_GIAN_BD { get; set; }
         public System.TimeSpan THOI_GIAN_KT { get; set; }
+        public System.Guid MA_TKB { get; set; }
     
         public virtual LOP_HOC LOP_HOC { get; set; }
     }

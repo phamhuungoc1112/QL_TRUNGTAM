@@ -7,12 +7,13 @@ using TrungTam.Areas.Admin.Controllers;
 using TrungTam.Areas.Admin.Models;
 using TrungTam.Function_Base;
 using TrungTam.Areas.Admin.Abstracts;
+using System.IO;
 
 namespace TrungTam.Areas.Admin.Controllers
 {
     public class TRANG_CHUController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         public ActionResult Index()
         {
             if (Session["ID"] == null)
@@ -29,6 +30,7 @@ namespace TrungTam.Areas.Admin.Controllers
             return View();
         }
         [HttpPost]
+        //[ValidateAntiForgeryToken]
         public ActionResult update(FormCollection f)
         {
             TRANG_CHU trangchu = new TRANG_CHU();
@@ -41,6 +43,52 @@ namespace TrungTam.Areas.Admin.Controllers
             trangchu.SDT2 = f["sdt2"];
             db.TRANG_CHU.Add(trangchu);
             db.SaveChanges();
+            return RedirectToAction("Index", "TRANG_CHU", new { area = "Admin" });
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult ChangeImage(FormCollection f, HttpPostedFileBase p)
+        {
+            //for(int i = 0; i < Request.Files.Count; i++)
+            //{
+            //    HttpPostedFileBase x = Request.Files[i];
+            //}         
+            HttpPostedFileBase tv10 = Request.Files["tv10"];
+            if (tv10 != null && tv10.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                tv10.SaveAs(Server.MapPath("~/Asset/admin/img/" + "tv10.jpg"));
+            }
+            HttpPostedFileBase tv11 = Request.Files["tv10"];
+            if (tv11 != null && tv11.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                tv11.SaveAs(Server.MapPath("~/Asset/admin/img/" + "tv11.jpg"));
+            }
+            HttpPostedFileBase tv12 = Request.Files["tv12"];
+            if (tv12 != null && tv12.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                tv12.SaveAs(Server.MapPath("~/Asset/admin/img/" + "tv12.jpg"));
+            }
+            HttpPostedFileBase tv8 = Request.Files["tv8"];
+            if (tv8 != null && tv8.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                tv8.SaveAs(Server.MapPath("~/Asset/admin/img/" + "tv8.jpg"));
+            }
+            HttpPostedFileBase tv6 = Request.Files["tv6"];
+            if (tv6 != null && tv6.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                tv6.SaveAs(Server.MapPath("~/Asset/admin/img/" + "tv6.jpg"));
+            }
+            HttpPostedFileBase that = Request.Files["that"];
+            if (that != null && that.ContentLength > 0)
+            {
+                //string pathSum = path + tv10.FileName;
+                that.SaveAs(Server.MapPath("~/Asset/admin/img/" + "that.jpg"));
+            }
             return RedirectToAction("Index", "TRANG_CHU", new { area = "Admin" });
         }
     }

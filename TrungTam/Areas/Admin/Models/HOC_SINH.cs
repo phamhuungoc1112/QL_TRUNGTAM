@@ -20,6 +20,7 @@ namespace TrungTam.Areas.Admin.Models
             this.CONG_NO = new HashSet<CONG_NO>();
             this.CT_BUOIHOC = new HashSet<CT_BUOIHOC>();
             this.CT_LOP_HOC = new HashSet<CT_LOP_HOC>();
+            this.DANH_GIA_CUOI_THANG = new HashSet<DANH_GIA_CUOI_THANG>();
         }
     
         public string MA_HS { get; set; }
@@ -34,6 +35,7 @@ namespace TrungTam.Areas.Admin.Models
         public Nullable<System.DateTime> NG_VAO_HOC { get; set; }
         public string PHU_HUYNH { get; set; }
         public Nullable<bool> TINH_TRANG { get; set; }
+        public string MON_DK { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CONG_NO> CONG_NO { get; set; }
@@ -41,5 +43,7 @@ namespace TrungTam.Areas.Admin.Models
         public virtual ICollection<CT_BUOIHOC> CT_BUOIHOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_LOP_HOC> CT_LOP_HOC { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<DANH_GIA_CUOI_THANG> DANH_GIA_CUOI_THANG { get; set; }
     }
 }

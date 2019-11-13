@@ -17,21 +17,38 @@
                     <li class="nav-item">
                         <a class="nav-link" href='~/Admin/Home_User/Thoikhoabieu'>Thời Khóa Biểu</a>
                     </li>
-                    <li class="nav-item" id="gv">
-                        <a class='nav-link' href='~/Admin/BUOI_HOC/GV'>Đánh Giá Buổi Học</a>
+                    <li class="nav-item">
+                        <div class="dropdown">
+                            <a class="nav-link dropdown-toggle "  id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Đánh giá
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <a class=" dropdown-item" href='~/Admin/BUOI_HOC/GV'>Đánh Giá Buổi Học</a>
+                                <a class=" dropdown-item" href='~/Admin/DANH_GIA_CUOI_THANG/Index'>Đánh Giá Cuối Tháng</a>
+                               
+                            </div>
+                        </div>
+                    </li>
+                    
+                    @*<li class="nav-item" id="gv">
+            <a class='nav-link' href='~/Admin/BUOI_HOC/GV'>Đánh Giá Buổi Học</a>
+        </li>
+        <li class="nav-item">
+            <a class='nav-link' href='~/Admin/DANH_GIA_CUOI_THANG/Index'>Đánh Giá Cuối Tháng</a>
+        </li>*@
+                    <li class="nav-item">
+                        <a class="nav-link" href="~/Admin/TAILIEUx/Index">Tài liệu</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Thông báo</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="~/Home/Logout">Đăng xuất</a>
-                    </li>
+            <a class="nav-link" href="~/Home/Logout">Đăng xuất</a>
+        </li>
                 </ul>
             </div>
             <div class="col-6 col-md-3 col-sm-4 col-lg-2  ">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small">Hello @Session["name"]</span>
-                    <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+                    @*<img class="img-profile rounded-circle" src="~/Asset/admin/img/">*@
+                    <img src="https://img.icons8.com/metro/26/000000/user-male-circle.png">
                 </a>
                 <!-- Dropdown - User Information -->
                 <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
@@ -144,3 +161,8 @@
         }
     </script>
 </section>
+<script>
+    $('.carousel').carousel({
+        interval: 9000
+    })
+</script>

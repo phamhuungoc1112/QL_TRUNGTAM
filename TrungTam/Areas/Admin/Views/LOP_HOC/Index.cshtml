@@ -1,7 +1,7 @@
 ﻿@model PagedList.IPagedList<TrungTam.Areas.Admin.Abstracts.LopHoc_New>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Edit";
     var id = Session["ID"];
     if (id.ToString().First().Equals('9'))
     {
@@ -12,10 +12,32 @@
         Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
     }
 }
+<style>
+    /*.my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
 
+    .table-wrapper-scroll-y {
+        display: block;
+    }*/
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+</style>
 <h2 class="Title_Content">Danh sách các lớp</h2>
 
-<table class="table table-bordered  table-responsive">
+<table id="dtVerticalScrollExample1" class="table table-striped table-bordered myTable table-hover table-responsive">
     @Html.AntiForgeryToken();
     <tr class="text-white bg-primary text-center">
         <th>
@@ -89,8 +111,8 @@
             }
 
                 <td>
-                    <button type="button" class="btn btn-warning">@Html.ActionLink("Chi tiết", "Details", new { id = item.malop }) </button>
-                    
+                    <a class="btn btn-info" href="/Admin/LOP_HOC/Details/@item.malop">Chi tiết</a>
+                    <a class="btn btn-warning" href="/Admin/LOP_HOC/Edit/@item.malop">Sửa</a>
                 </td>
         </tr>
         }
@@ -179,6 +201,13 @@
                     }
                 }
             })
+        });
+        $(document).ready(function () {
+            $('#dtVerticalScrollExample1').DataTable({
+                //"scrollY": "200px",
+                //"scrollCollapse": true,
+            });
+            $('.dataTables_length').addClass('bs-select');
         });
     </script>
 }

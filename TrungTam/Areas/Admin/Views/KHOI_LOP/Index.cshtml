@@ -16,18 +16,9 @@
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Khối Lớp</button>
 <div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Tên Khối Lớp" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
+    
     <table class="table table-bordered table-responsive table-hover myTable text-center">
-        <thead class="text-white bg-primary">
+        <thead class="text-white bg-primary text-center">
             <tr>
                 <th class="nowrap">
                     <span class="mr-1">Mã Khối Lớp</span>
@@ -49,10 +40,10 @@
                 </td>
                 <td>
                    
-                    <a href="~/Admin/KHOI_LOP/Edit/@item.MA_KHOI" type="button" class="btn btn-warning"> Sửa @*@Html.ActionLink("Sửa", "Edit", new { id = item.MA_KHOI })*@ </a>
+                    <a href="~/Admin/KHOI_LOP/Edit/@item.MA_KHOI" class="btn btn-warning"> Sửa @*@Html.ActionLink("Sửa", "Edit", new { id = item.MA_KHOI })*@ </a>
 
 
-                    <a href="~/Admin/KHOI_LOP/Delete/@item.MA_KHOI" type="button" class="btn btn-danger"> Xóa @*@Html.ActionLink("XoaSS", "Delete", new { id = item.MA_KHOI })*@</a>
+                    <a href="~/Admin/KHOI_LOP/Delete/@item.MA_KHOI" class="btn btn-danger"> Xóa @*@Html.ActionLink("XoaSS", "Delete", new { id = item.MA_KHOI })*@</a>
                 </td>
             </tr>
             }

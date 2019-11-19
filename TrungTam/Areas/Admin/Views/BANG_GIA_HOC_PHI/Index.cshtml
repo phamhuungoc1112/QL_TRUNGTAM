@@ -56,6 +56,7 @@
         <tbody id="tableDanhSach">
             @foreach (var item in Model)
             {
+              
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.NGAY_AP_DUNG)
@@ -75,7 +76,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.SO_BUOI)
                     </td>
-                    <td><button type="button" name="sua" class="btn btn-success sua" id="sua" value="@item.NGAY_AP_DUNG">Sửa</button>
+                    <td><button type="button" name="sua" class="btn btn-success sua" value="@item.NGAY_AP_DUNG" id="sua">Sửa</button>
                     <button type="button" name="xoa" class="btn btn-danger xoa" id="xoa" value="@item.NGAY_AP_DUNG">Xoá</button></td>
                 </tr>
             }

@@ -76,21 +76,36 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             return View();
         }
-        public ActionResult Details()
+        //public ActionResult Details()
+        //{
+        //    if (string.IsNullOrEmpty(Request.QueryString["id"]))
+        //    {
+        //         return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    DateTime a = DateTime.Parse(Request.QueryString["id"]);
+        //    var bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Include(b => b.KHOI_LOP).Include(b => b.LOAI_LOP).Include(b => b.MON_HOC);
+        //    ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
+        //    ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
+        //    ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
+        //    return View(bANG_GIA_HOC_PHI.Where(t=>t.NGAY_AP_DUNG.Equals(a)).OrderByDescending(m => m.MA_KHOI).ToList());
+        //}
+        
+        public ActionResult Details(string id)
         {
-            if (string.IsNullOrEmpty(Request.QueryString["id"]))
+            if (id == null)
             {
-                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            DateTime a = DateTime.Parse(Request.QueryString["id"]);
-            //ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
-            //ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
-            //ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
-            var bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Include(b => b.KHOI_LOP).Include(b => b.LOAI_LOP).Include(b => b.MON_HOC);
+            DateTime a = DateTime.Parse(id);
+            var bANG_GIA_HOC_PHI = db.BANG_GIA_HOC_PHI.Where(p => p.NGAY_AP_DUNG.Equals(a));
             ViewBag.listkhoi = db.KHOI_LOP.OrderByDescending(m => m.TEN_KHOI).ToList();
             ViewBag.listloailop = db.LOAI_LOP.OrderByDescending(m => m.TEN_LOAI).ToList();
             ViewBag.listmonhoc = db.MON_HOC.OrderByDescending(m => m.TEN_MON).ToList();
-            return View(bANG_GIA_HOC_PHI.Where(t=>t.NGAY_AP_DUNG.Equals(a)).OrderByDescending(m => m.MA_KHOI).ToList());
+            if (bANG_GIA_HOC_PHI == null)
+            {
+                return HttpNotFound();
+            }
+            return View(bANG_GIA_HOC_PHI.ToList());
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -103,10 +118,7 @@ namespace TrungTam.Areas.Admin.Controllers
             bhp.MA_MON = Guid.Parse(f["mamon"]);
             bhp.DON_GIA = decimal.Parse(f["dongia"]);
             string a = f["sobuoi"].Replace('.', ',');
-            //if(a.Contains("."))
-            //string kq = a[0] + ',' + a[1];
             bhp.SO_BUOI = float.Parse(a);
-            //db.BANG_GIA_HOC_PHI.Add(bhp);
             db.SaveChanges();
             return RedirectToAction("Index", "BANG_GIA_HOC_PHI");
         }

@@ -1,8 +1,16 @@
 ﻿@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.HOC_SINH>
 @using PagedList.Mvc;
 @{
-    ViewBag.Title = "IndexAdmin";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    ViewBag.Title = "Index";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
 
 <h2>IndexAdmin</h2>

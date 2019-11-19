@@ -69,6 +69,7 @@ namespace TrungTam.Areas.Admin.Controllers
                 hs.SDT = f["SDT"];
                 hs.NG_SINH = Convert.ToDateTime(f["ngaysinh"]);
                 hs.GIOI_TINH = f["Gioitinh"];
+                hs.MON_DK = f["mondk"];
                 hs.TRUONG = f["truong"];
                 hs.PHU_HUYNH = f["phuhuynh"];
                 hs.DIA_CHI = f["diachi"];
@@ -103,7 +104,7 @@ namespace TrungTam.Areas.Admin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,TINH_TRANG,KHOI,TRUONG,SDT,DIA_CHI,PHU_HUYNH")] HOC_SINH hOC_SINH)
+        public ActionResult Edit([Bind(Include = "MA_HS,HO_TEN,NG_SINH,GIOI_TINH,TINH_TRANG,KHOI,TRUONG,MON_DK,SDT,DIA_CHI,PHU_HUYNH,SDT_PH")] HOC_SINH hOC_SINH)
         {
             if (ModelState.IsValid)
             {

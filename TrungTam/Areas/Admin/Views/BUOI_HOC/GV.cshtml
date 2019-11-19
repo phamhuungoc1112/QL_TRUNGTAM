@@ -10,18 +10,6 @@
     <form action="/BUOI_HOC/nhanxetGV" method="post">
         @*Chọn lớp trong ngày đó*@
         <div class="row">
-            @*<div class="col-2">
-                    Lớp học :
-                </div>
-                <div class="col-2" id="listlop">
-                    <select class="dropdown-select" name="lopp" id="lop">
-                        <option>Chọn lớp</option>
-                        @foreach (var item in chonlop)
-                        {
-                            <option value="@item.MA_LOP">@item.TEN_LOP</option>
-                        }
-                    </select>
-                </div>*@
             <div class="col-6 input-group mb-3">
                 <div class="input-group-prepend">
                     <label class="input-group-text text-white bg-primary" for="lop">Chọn lớp</label>
@@ -42,15 +30,6 @@
                     @*danh sách các buổi của lớp đó*@
                 </select>
             </div>
-
-            @*<div class="col-2" style="display:none" id="lbl_buoi">
-                    Buổi :
-                </div>
-                <div class="col-2" style="display:none" id="select_buoi">
-                    <select class="dropdown-select" name="buoi" id="buoi">*@
-            @*danh sách các buổi của lớp đó*@
-            @*</select>
-                </div>*@
         </div>
         <hr />
         @*Danh sách học viên*@

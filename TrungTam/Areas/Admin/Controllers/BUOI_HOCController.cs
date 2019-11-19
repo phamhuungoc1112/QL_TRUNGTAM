@@ -218,9 +218,10 @@ namespace TrungTam.Areas.Admin.Controllers
                     ctbh.MA_BUOI = bh.MA_BUOI;
                     ctbh.MA_HS = item.MA_HS;
                     var diemdanh = f["diemdanh" + item.MA_HS];
+                    ctbh.LI_DO_VANG = f["lido" + item.MA_HS];
                     if (diemdanh.Equals("0"))
                     {
-                        ctbh.LI_DO_VANG = f["lido" + item.MA_HS];
+                        
                         ctbh.DIEM_DANH_HS = false;
                     }
                     else

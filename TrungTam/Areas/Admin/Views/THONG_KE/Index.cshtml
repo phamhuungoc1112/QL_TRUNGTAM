@@ -31,6 +31,7 @@
             }
         }
     }
+    var tongchi = ViewBag.chitieungoai_now + ViewBag.luong_now;
 }
 <div class="container-fluid">
 
@@ -75,7 +76,7 @@
             </div>
         </div>
 
-        <!-- Học phí tháng trước -->
+        <!--thu tháng này -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-info shadow h-100 py-2">
                 <div class="card-body">
@@ -111,22 +112,14 @@
             </div>
         </div>
 
-        <!-- Lương tháng trước -->
+        <!-- chi tháng này -->
         <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-warning shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">Chi tháng này</div>
-                            @if (chitiet != null)
-                            {
-                                double? tongchi = ViewBag.chitieungoai_now;
-                                foreach (var item in chitiet)
-                                {
-                                    tongchi += item.LUONG * item.SO_BUOI;
-                                }
                                 <div class="h5 mb-0 font-weight-bold text-gray-800">@string.Format("{0:0,0}", @tongchi)</div>
-                            }
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-comments fa-2x text-gray-300"></i>

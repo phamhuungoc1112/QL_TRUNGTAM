@@ -79,6 +79,14 @@ namespace TrungTam.Areas.Admin.Controllers
             }
             ViewBag.chitieungoai_now = chitieungoai_now;
             //----------------------------------------------
+            var luong1 = db.HOA_DON.Where(p => p.NGAY_THANH_TOAN.Month == thang && p.NGAY_THANH_TOAN.Year == year);
+            double? luong_now = 0;
+            foreach (var item in luong1)
+            {
+                luong_now += item.TONG_TIEN;
+            }
+            ViewBag.luong_now = luong_now;
+            //----------------------------------------------
             if (thongke_luong.Count() != 0)
                 ViewBag.thongke_luong = thongke_luong.ToList();
             else

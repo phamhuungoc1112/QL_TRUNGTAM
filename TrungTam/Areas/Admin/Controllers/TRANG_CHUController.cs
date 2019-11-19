@@ -31,17 +31,34 @@ namespace TrungTam.Areas.Admin.Controllers
         }
         [HttpPost]
         //[ValidateAntiForgeryToken]
-        public ActionResult update(FormCollection f)
+        public ActionResult updateFooter(FormCollection f)
         {
-            TRANG_CHU trangchu = new TRANG_CHU();
-            trangchu.NGAY_AP_DUNG = DateTime.Now;
-            trangchu.MUC_TIEU = f["muctieu"];
-            trangchu.GIOI_THIEU = f["gioithieu"];
+            DateTime time = DateTime.Parse("2019-08-28 00:00:00.000");
+            TRANG_CHU trangchu = db.TRANG_CHU.Find(time);
             trangchu.DIA_CHI = f["diachi"];
             trangchu.EMAIL = f["email"];
             trangchu.SDT1 = f["sdt1"];
             trangchu.SDT2 = f["sdt2"];
-            db.TRANG_CHU.Add(trangchu);
+            db.SaveChanges();
+            return RedirectToAction("Index", "TRANG_CHU", new { area = "Admin" });
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult updateMucTieu(FormCollection f)
+        {
+            DateTime time = DateTime.Parse("2019-08-28 00:00:00.000");
+            TRANG_CHU trangchu = db.TRANG_CHU.Find(time);
+            trangchu.MUC_TIEU = f["muctieu"];
+            db.SaveChanges();
+            return RedirectToAction("Index", "TRANG_CHU", new { area = "Admin" });
+        }
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public ActionResult updateGioiThieu(FormCollection f)
+        {
+            DateTime time = DateTime.Parse("2019-08-28 00:00:00.000");
+            TRANG_CHU trangchu = db.TRANG_CHU.Find(time);
+            trangchu.GIOI_THIEU = f["gioithieu"];
             db.SaveChanges();
             return RedirectToAction("Index", "TRANG_CHU", new { area = "Admin" });
         }

@@ -11,7 +11,7 @@ using TrungTam.Areas.Admin.Abstracts;
 using PagedList;
 namespace TrungTam.Areas.Admin.Controllers
 {
-    public class TAILIEUController : Controller
+    public class TAILIEUxController : Controller
     {
         private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         // GET: Admin/TAILIEU

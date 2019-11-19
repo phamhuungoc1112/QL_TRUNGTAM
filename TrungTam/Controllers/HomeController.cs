@@ -16,7 +16,7 @@ namespace TrungTam.Controllers
         private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
         public ActionResult Index()
         {
-            var noidung = db.TRANG_CHU.OrderBy(p => p.NGAY_AP_DUNG);
+            var noidung = db.TRANG_CHU.OrderByDescending(p => p.NGAY_AP_DUNG);
             ViewBag.noidung = noidung.ToList();
             var khuyenmai = db.KHUYEN_MAI.OrderBy(p => p.SO_MON_DK);
             ViewBag.khuyenmai = khuyenmai.ToList();

@@ -4606,6 +4606,12 @@
     <Content Include="Areas\Admin\Views\DANH_GIA_CUOI_THANG\IndexAdmin.cshtml" />
     <Content Include="Areas\Admin\Views\DANH_GIA_CUOI_THANG\PrintAllReport.cshtml" />
     <Content Include="Areas\Admin\Views\LOP_HOC\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\GIA_SU\tuyengiasu.cshtml" />
+    <Content Include="Areas\Admin\Views\Shared\Layout_G_S.cshtml" />
+    <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\KetQuaHocTap.cshtml" />
+    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Details.cshtml" />
     <EntityDeploy Include="Areas\Admin\Models\QL_TRUNGTAM.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>QL_TRUNGTAM.Designer.cs</LastGenOutput>
@@ -4613,12 +4619,6 @@
     <Content Include="Areas\Admin\Models\QL_TRUNGTAM.edmx.diagram">
       <DependentUpon>QL_TRUNGTAM.edmx</DependentUpon>
     </Content>
-    <Content Include="Areas\Admin\Views\GIA_SU\Edit.cshtml" />
-    <Content Include="Areas\Admin\Views\GIA_SU\Index.cshtml" />
-    <Content Include="Areas\Admin\Views\GIA_SU\tuyengiasu.cshtml" />
-    <Content Include="Areas\Admin\Views\Shared\Layout_G_S.cshtml" />
-    <Content Include="Areas\Admin\Views\DANH_GIA_THEO_THANG\KetQuaHocTap.cshtml" />
-    <Content Include="Areas\Admin\Views\BANG_GIA_HOC_PHI\Details.cshtml" />
     <None Include="Properties\PublishProfiles\qlTrungTam.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

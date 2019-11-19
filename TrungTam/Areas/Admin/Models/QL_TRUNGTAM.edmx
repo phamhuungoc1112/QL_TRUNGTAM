@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="sszzaxrw_QL_TRUNGTAM1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="sszzaxrw_QL_TRUNGTAM1Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="BANG_GIA_HOC_PHI">
           <Key>
             <PropertyRef Name="NGAY_AP_DUNG" />
@@ -114,7 +114,7 @@
             <PropertyRef Name="MA_DG" />
           </Key>
           <Property Name="MA_DG" Type="uniqueidentifier" Nullable="false" />
-          <Property Name="NHAN_XET" Type="text" />
+          <Property Name="NHAN_XET" Type="nvarchar" MaxLength="3000" />
           <Property Name="CHUYEN_CAN" Type="nvarchar" MaxLength="50" />
           <Property Name="NGAY_LAP" Type="date" />
           <Property Name="MA_LOP" Type="uniqueidentifier" />
@@ -744,7 +744,8 @@
             <End Role="THOI_KHOA_BIEU" EntitySet="THOI_KHOA_BIEU" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="sszzaxrw_QL_TRUNGTAM1Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -819,9 +820,9 @@
           <Property Name="NHAN_XET_GV" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="BAI_TAP_VN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="LI_DO_VANG" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DIEM" Type="Double" />
           <NavigationProperty Name="BUOI_HOC" Relationship="Self.FK_CT_BUOIHOC_BUOI_HOC" FromRole="CT_BUOIHOC" ToRole="BUOI_HOC" />
           <NavigationProperty Name="HOC_SINH" Relationship="Self.FK_CT_BUOIHOC_HOC_SINH" FromRole="CT_BUOIHOC" ToRole="HOC_SINH" />
-          <Property Name="DIEM" Type="Double" />
         </EntityType>
         <EntityType Name="CT_CONG_NO">
           <Key>
@@ -881,14 +882,14 @@
             <PropertyRef Name="MA_DG" />
           </Key>
           <Property Name="MA_DG" Type="Guid" Nullable="false" />
-          <Property Name="NHAN_XET" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="NHAN_XET" Type="String" MaxLength="3000" FixedLength="false" Unicode="true" />
           <Property Name="CHUYEN_CAN" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="NGAY_LAP" Type="DateTime" Precision="0" />
           <Property Name="MA_LOP" Type="Guid" />
           <Property Name="MA_HS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="DIEM_TB" Type="Double" />
           <NavigationProperty Name="HOC_SINH" Relationship="Self.FK_DANH_GIA_CUOI_THANG_HOC_SINH" FromRole="DANH_GIA_CUOI_THANG" ToRole="HOC_SINH" />
           <NavigationProperty Name="LOP_HOC" Relationship="Self.FK_DANH_GIA_CUOI_THANG_LOP_HOC" FromRole="DANH_GIA_CUOI_THANG" ToRole="LOP_HOC" />
-          <Property Name="DIEM_TB" Type="Double" />
         </EntityType>
         <EntityType Name="GHI_DANH">
           <Key>
@@ -1600,13 +1601,13 @@
           <EntitySetMapping Name="CT_BUOIHOC">
             <EntityTypeMapping TypeName="sszzaxrw_QL_TRUNGTAM1Model.CT_BUOIHOC">
               <MappingFragment StoreEntitySet="CT_BUOIHOC">
-                <ScalarProperty Name="DIEM" ColumnName="DIEM" />
                 <ScalarProperty Name="MA_BUOI" ColumnName="MA_BUOI" />
                 <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
                 <ScalarProperty Name="DIEM_DANH_HS" ColumnName="DIEM_DANH_HS" />
                 <ScalarProperty Name="NHAN_XET_GV" ColumnName="NHAN_XET_GV" />
                 <ScalarProperty Name="BAI_TAP_VN" ColumnName="BAI_TAP_VN" />
                 <ScalarProperty Name="LI_DO_VANG" ColumnName="LI_DO_VANG" />
+                <ScalarProperty Name="DIEM" ColumnName="DIEM" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1659,13 +1660,13 @@
           <EntitySetMapping Name="DANH_GIA_CUOI_THANG">
             <EntityTypeMapping TypeName="sszzaxrw_QL_TRUNGTAM1Model.DANH_GIA_CUOI_THANG">
               <MappingFragment StoreEntitySet="DANH_GIA_CUOI_THANG">
-                <ScalarProperty Name="DIEM_TB" ColumnName="DIEM_TB" />
                 <ScalarProperty Name="MA_DG" ColumnName="MA_DG" />
                 <ScalarProperty Name="NHAN_XET" ColumnName="NHAN_XET" />
                 <ScalarProperty Name="CHUYEN_CAN" ColumnName="CHUYEN_CAN" />
                 <ScalarProperty Name="NGAY_LAP" ColumnName="NGAY_LAP" />
                 <ScalarProperty Name="MA_LOP" ColumnName="MA_LOP" />
                 <ScalarProperty Name="MA_HS" ColumnName="MA_HS" />
+                <ScalarProperty Name="DIEM_TB" ColumnName="DIEM_TB" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

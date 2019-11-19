@@ -4,60 +4,60 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="4ee16228177b44c78d8322a26e7056e6" Name="Diagram1">
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.BANG_GIA_HOC_PHI" Width="1.5" PointX="3.75" PointY="2.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.BANG_LUONG" Width="1.5" PointX="0.75" PointY="8.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.BUOI_HOC" Width="1.5" PointX="3" PointY="12.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CONG_NO" Width="1.5" PointX="6" PointY="21.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CT_BUOIHOC" Width="1.5" PointX="8.25" PointY="12.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CT_CONG_NO" Width="1.5" PointX="8.25" PointY="9.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CT_HOADON" Width="1.5" PointX="8.25" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CT_HOADON_NGOAIGIO" Width="1.5" PointX="5.25" PointY="17" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CT_LOP_HOC" Width="1.5" PointX="11.25" PointY="12.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.CHI_TIEU_NGOAI" Width="1.5" PointX="5.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.DANH_GIA_CUOI_THANG" Width="1.5" PointX="11.25" PointY="9.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.GHI_DANH" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.GIA_SU" Width="1.5" PointX="8.75" PointY="4.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.GIAO_VIEN" Width="1.5" PointX="0.75" PointY="12.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.HOA_DON" Width="1.5" PointX="3" PointY="16.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.HOC_SINH" Width="1.5" PointX="6" PointY="6.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.KHOI_LOP" Width="1.5" PointX="1.5" PointY="5.25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.KHUYEN_MAI" Width="1.5" PointX="3.75" PointY="21.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.LOAI_LOP" Width="1.5" PointX="1.5" PointY="2.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.LOP_HOC" Width="1.5" PointX="6" PointY="11.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.MON_HOC" Width="1.5" PointX="1.5" PointY="20.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.NGOAI_GIO" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.TAI_KHOAN" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.TAILIEU" Width="1.5" PointX="3.75" PointY="25" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.THOI_KHOA_BIEU" Width="1.5" PointX="8.25" PointY="21.625" IsExpanded="true" />
-        <EntityTypeShape EntityType="QL_TRUNGTAM1Entities.TRANG_CHU" Width="1.5" PointX="10.75" PointY="3.75" IsExpanded="true" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BANG_GIA_HOC_PHI_KHOI_LOP" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BANG_GIA_HOC_PHI_LOAI_LOP" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BANG_GIA_HOC_PHI_MON_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_LOP_HOC_BANG_GIA_HOC_PHI" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BUOI_HOC_BANG_LUONG" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_NGOAI_GIO_BANG_LUONG1" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BUOI_HOC_GIAO_VIEN" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_BUOI_HOC_LOP_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_BUOIHOC_BUOI_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_HOADON_BUOI_HOC1" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CONG_NO_HOC_SINH" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CONG_NO_KHUYEN_MAI" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_CONG_NO_CONG_NO" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_BUOIHOC_HOC_SINH" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_CONG_NO_LOP_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_HOADON_HOA_DON" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_HOADON_NGOAIGIO_HOA_DON" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_HOADON_NGOAIGIO_NGOAI_GIO" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_LOP_HOC_HOC_SINH" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_CT_LOP_HOC_LOP_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_DANH_GIA_CUOI_THANG_HOC_SINH" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_DANH_GIA_CUOI_THANG_LOP_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_HOA_DON_GIAO_VIEN" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_LOP_HOC_GIAO_VIEN" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_NGOAI_GIO_GIAO_VIEN" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_THOI_KHOA_BIEU_LOP_HOC" ManuallyRouted="false" />
-        <AssociationConnector Association="QL_TRUNGTAM1Entities.FK_TAILIEU_MON_HOC" ManuallyRouted="false" />
+      <Diagram DiagramId="cab3bf954d09413cb2a533c2570d07ce" Name="Diagram1">
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.BANG_GIA_HOC_PHI" Width="1.5" PointX="3.75" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.BANG_LUONG" Width="1.5" PointX="0.75" PointY="10.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.BUOI_HOC" Width="1.5" PointX="3" PointY="13.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CONG_NO" Width="1.5" PointX="9" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CT_BUOIHOC" Width="1.5" PointX="8.25" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CT_CONG_NO" Width="1.5" PointX="11.25" PointY="14.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CT_HOADON" Width="1.5" PointX="8.25" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CT_HOADON_NGOAIGIO" Width="1.5" PointX="5.25" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CT_LOP_HOC" Width="1.5" PointX="11.25" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.CHI_TIEU_NGOAI" Width="1.5" PointX="10.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.DANH_GIA_CUOI_THANG" Width="1.5" PointX="8.25" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.GHI_DANH" Width="1.5" PointX="11.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.GIA_SU" Width="1.5" PointX="12.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.GIAO_VIEN" Width="1.5" PointX="0.75" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.HOA_DON" Width="1.5" PointX="3" PointY="18.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.HOC_SINH" Width="1.5" PointX="6" PointY="8.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.KHOI_LOP" Width="1.5" PointX="1.5" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.KHUYEN_MAI" Width="1.5" PointX="6.75" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.LOAI_LOP" Width="1.5" PointX="1.5" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.LOP_HOC" Width="1.5" PointX="6" PointY="13.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.MON_HOC" Width="1.5" PointX="1.5" PointY="7" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.NGOAI_GIO" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.TAI_KHOAN" Width="1.5" PointX="5.75" PointY="2" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.TAILIEU" Width="1.5" PointX="3.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.THOI_KHOA_BIEU" Width="1.5" PointX="8.25" PointY="23.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="sszzaxrw_QL_TRUNGTAM1Model.TRANG_CHU" Width="1.5" PointX="13.75" PointY="2" IsExpanded="true" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BANG_GIA_HOC_PHI_KHOI_LOP" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BANG_GIA_HOC_PHI_LOAI_LOP" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BANG_GIA_HOC_PHI_MON_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_LOP_HOC_BANG_GIA_HOC_PHI" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BUOI_HOC_BANG_LUONG" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_NGOAI_GIO_BANG_LUONG1" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BUOI_HOC_GIAO_VIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_BUOI_HOC_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_BUOIHOC_BUOI_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_HOADON_BUOI_HOC1" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CONG_NO_HOC_SINH" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CONG_NO_KHUYEN_MAI" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_CONG_NO_CONG_NO" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_BUOIHOC_HOC_SINH" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_CONG_NO_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_HOADON_HOA_DON" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_HOADON_NGOAIGIO_HOA_DON" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_HOADON_NGOAIGIO_NGOAI_GIO" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_LOP_HOC_HOC_SINH" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_CT_LOP_HOC_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_DANH_GIA_CUOI_THANG_HOC_SINH" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_DANH_GIA_CUOI_THANG_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_HOA_DON_GIAO_VIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_LOP_HOC_GIAO_VIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_NGOAI_GIO_GIAO_VIEN" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_THOI_KHOA_BIEU_LOP_HOC" ManuallyRouted="false" />
+        <AssociationConnector Association="sszzaxrw_QL_TRUNGTAM1Model.FK_TAILIEU_MON_HOC" ManuallyRouted="false" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

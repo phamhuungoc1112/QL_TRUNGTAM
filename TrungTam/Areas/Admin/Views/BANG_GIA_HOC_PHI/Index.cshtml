@@ -188,7 +188,8 @@
             event.target.setCustomValidity('Vui lòng nhập số buổi');
         };
         $('table tbody').on('click', 'button.sua', function () {
-            var ngayad = $('#sua').val();
+            //var ngayad = $('#sua').val();
+               var ngayad = $(this).closest('tr').find('button[name="sua"]').val();
                 location.href = '@Url.Action("Details", "BANG_GIA_HOC_PHI")?id=' + ngayad;
         });
         $('table tbody').on('click', 'button.xoa', function () {

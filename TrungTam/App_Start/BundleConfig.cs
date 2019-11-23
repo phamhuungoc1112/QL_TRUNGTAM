@@ -32,7 +32,10 @@ namespace TrungTam
                       "~/Content/sb-admin-2.css",
                       "~/Content/PagedList.css",                    
                       "~/Content/jquery-ui.css",
-                      "~/Content/style.css"));
+                      "~/Content/style.css",
+                      "~/Content/style1_css.css",
+                      "~/Content/style2_font.css"
+                      ));
             var fontCDNPath = "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i";
             bundles.Add(new StyleBundle("~/bundles/fonts", fontCDNPath).Include(
 

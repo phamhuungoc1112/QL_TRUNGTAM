@@ -13,10 +13,10 @@ namespace TrungTam.Areas.Admin.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class QL_TRUNGTAMEntities : DbContext
+    public partial class QL_TRUNGTAM1Entities : DbContext
     {
-        public QL_TRUNGTAMEntities()
-            : base("name=QL_TRUNGTAMEntities")
+        public QL_TRUNGTAM1Entities()
+            : base("name=QL_TRUNGTAM1Entities")
         {
         }
     
@@ -30,6 +30,14 @@ namespace TrungTam.Areas.Admin.Models
         public virtual DbSet<BUOI_HOC> BUOI_HOC { get; set; }
         public virtual DbSet<CONG_NO> CONG_NO { get; set; }
         public virtual DbSet<CT_BUOIHOC> CT_BUOIHOC { get; set; }
+        public virtual DbSet<CT_CONG_NO> CT_CONG_NO { get; set; }
+        public virtual DbSet<CT_HOADON> CT_HOADON { get; set; }
+        public virtual DbSet<CT_HOADON_NGOAIGIO> CT_HOADON_NGOAIGIO { get; set; }
+        public virtual DbSet<CT_LOP_HOC> CT_LOP_HOC { get; set; }
+        public virtual DbSet<CHI_TIEU_NGOAI> CHI_TIEU_NGOAI { get; set; }
+        public virtual DbSet<DANH_GIA_CUOI_THANG> DANH_GIA_CUOI_THANG { get; set; }
+        public virtual DbSet<GHI_DANH> GHI_DANH { get; set; }
+        public virtual DbSet<GIA_SU> GIA_SU { get; set; }
         public virtual DbSet<GIAO_VIEN> GIAO_VIEN { get; set; }
         public virtual DbSet<HOA_DON> HOA_DON { get; set; }
         public virtual DbSet<HOC_SINH> HOC_SINH { get; set; }
@@ -40,6 +48,8 @@ namespace TrungTam.Areas.Admin.Models
         public virtual DbSet<MON_HOC> MON_HOC { get; set; }
         public virtual DbSet<NGOAI_GIO> NGOAI_GIO { get; set; }
         public virtual DbSet<TAI_KHOAN> TAI_KHOAN { get; set; }
+        public virtual DbSet<TAILIEU> TAILIEU { get; set; }
         public virtual DbSet<THOI_KHOA_BIEU> THOI_KHOA_BIEU { get; set; }
+        public virtual DbSet<TRANG_CHU> TRANG_CHU { get; set; }
     }
 }

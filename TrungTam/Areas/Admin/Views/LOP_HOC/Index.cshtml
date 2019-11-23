@@ -1,173 +1,213 @@
-﻿@model IEnumerable<TrungTam.Areas.Admin.Models.LOP_HOC>
-
+﻿@model PagedList.IPagedList<TrungTam.Areas.Admin.Abstracts.LopHoc_New>
+@using PagedList.Mvc;
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
-    var listkhoi = (List<TrungTam.Areas.Admin.Models.KHOI_LOP>)ViewBag.listkhoi;
-    var listloailop = (List<TrungTam.Areas.Admin.Models.LOAI_LOP>)ViewBag.listloailop;
-    var listmonhoc = (List<TrungTam.Areas.Admin.Models.MON_HOC>)ViewBag.listmonhoc;
-    var listgiaovien = (List<TrungTam.Areas.Admin.Models.GIAO_VIEN>)ViewBag.listgiaovien;
+    ViewBag.Title = "Edit";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
+<style>
+    /*.my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
 
-<link href="~/Content/dropdown.css" rel="stylesheet" />
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm Loại Lương</button>
-<div class="card-body">
-    <div class="row mb-3">
-        <div class="col">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Giá" id="searchName">
-                <div class="input-group-prepend">
-                    <span class="input-group-text" id="btnTimNV"><i class="fa fa-search"></i></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
-            <tr>
-                <th class="nowrap">
-                    <span class="mr-1">Tên lớp</span>
-                </th>
-                <th>Loại lớp</th>
-                <th>Tên môn</th>
-                <th>Tên khối</th>
-                <th>Tên giáo viên</th>
-                <th>Sỉ số</th>
-                <th><em class="fa fa-cog"></em></th>
-            </tr>
-        </thead>
-        <tbody id="tableDanhSach">
-            @foreach (var item in Model)
+    .table-wrapper-scroll-y {
+        display: block;
+    }*/
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+</style>
+<h2 class="Title_Content">Danh sách các lớp</h2>
+
+<table id="dtVerticalScrollExample1" class="table table-striped table-bordered myTable table-hover table-responsive">
+    @Html.AntiForgeryToken();
+    <tr class="text-white bg-primary text-center">
+        <th>
+            Tên lớp
+        </th>
+        <th>
+            Sỉ số
+        </th>
+        <th>
+            Giáo viên
+        </th>
+        <th>
+            Khối
+        </th>
+        <th>
+            Loại
+        </th>
+        <th>
+            Môn
+        </th>
+        <th>Trạng thái</th>
+        <th>Ngày mở lớp</th>
+        <th>Ngày bắt đầu</th>
+        <th>Ngày kết thúc</th>
+        <th><em class="fa fa-cog"></em></th>
+    </tr>
+    <tbody>
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenlop)
+                <input type="hidden" id="malop" name="malop" value="@item.malop" />
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.siso)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.hoten)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenkhoi)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenloai)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.tenmon)
+            </td>
+
+            @if (item.trangthai == 1)
             {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.TEN_LOP)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.LOAI_LOP.TEN_LOAI)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MON_HOC.TEN_MON)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.KHOI_LOP.TEN_KHOI)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.GIAO_VIEN.HO_TEN)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.SI_SO)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id = item.MA_LOP }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.MA_LOP }) |
-                    @Html.ActionLink("Delete", "Delete", new { id = item.MA_LOP })
-                </td>
-            </tr>
+                <td style="color:green;">Đang mở <button class="btn btn-success bd">Bắt đầu học</button></td>
+                <td>@item.ngaymolop</td>
+                <td></td>
+                <td></td>
             }
-        </tbody>
-    </table>
-</div>
-<!--Modal-->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Lớp học</h2>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form action="/LOP_HOC/Create" method="post" role="form">
-                    @Html.AntiForgeryToken()
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            <input type="text" name="tenlop" id="tenlop" class="form-control input-sm" placeholder="Tên lớp ">
-                        </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            @*<input type="text" name="tenloai" id="tenloai" class="form-control input-sm" placeholder="Loại Lương ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="makhoi">
-                                    Chọn tên khối
-                                    @foreach (var item in listkhoi)
-                                    {
-                                        <option value="@item.MA_KHOI">@item.TEN_KHOI</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="maloai">
-                                    @foreach (var item in listloailop)
-                                    {
-                                        <option value="@item.MA_LOAI">@item.TEN_LOAI</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="mamon">
-                                    @foreach (var item in listmonhoc)
-                                    {
-                                        <option value="@item.MA_MON">@item.TEN_MON</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
-                    </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            @*<input type="number" name="dongia" id="dongia" class="form-control input-sm" placeholder="Đơn Giá ">*@
-                            <div class="dropdown">
-                                <select class="dropdown-select" name="magiaovien">
-                                    @foreach (var item in listgiaovien)
-                                    {
-                                        <option value="@item.MA_GV">@item.HO_TEN</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
-                    </div>
-                    <div class="modal-footer" id="modal-footer">
-                        <button id="btnThemNV" type="submit" class="btn btn-success">Thêm Bảng Lương</button>
-                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-                    </div>
-                </form>
-            </div>
-            <!-- Modal footer -->
+            else if (item.trangthai == 0)
+            {
+                <td style="color:orange; padding-bottom:2px;">Đang học <button class="btn btn-outline-danger kt">Kết thúc lớp học</button></td>
+                <td>@item.ngaymolop</td>
+                <td>@item.ngayhoc</td>
+                <td></td>
+            }
+            else
+            {
+                <td style="color:red;">Đã kết thúc</td>
+                <td>@item.ngaymolop</td>
+                <td>@item.ngayhoc</td>
+                <td>@item.ngayketthuc</td>
+            }
 
-        </div>
-    </div>
-</div>
+                <td>
+                    <a class="btn btn-info" href="/Admin/LOP_HOC/Details/@item.malop">Chi tiết</a>
+                    <a class="btn btn-warning" href="/Admin/LOP_HOC/Edit/@item.malop">Sửa</a>
+                </td>
+        </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+@section ClientScript{
+    <script>
 
+        $('table tbody').on('click', 'button.bd', function () {
+            var token = $("[name='__RequestVerificationToken']").val();
+            var malop = $(this).closest('tr').find('input[name="malop"]').val();
+            bootbox.confirm({
+                message: "Bạn có chắc chắn sẽ bắt đầu lớp không?",
+                buttons: {
+                    confirm: {
+                        label: "Có",
+                        className: "btn-danger"
+                    },
+                    cancel: {
+                        label: "Không",
+                        className: "btn-success"
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Admin/LOP_HOC/StatuClass",
+                            data: {
+                                __RequestVerificationToken: token,
+                                id: malop
+                            },
+                            type: "POST",
+                            success: function (response) {
+                                bootbox.alert({
+                                    message: "Thành công",
+                                    callback: function () {
+                                        location.href = '@Url.Action("Index", "LOP_HOC")';
+                                    }
+                                });
+                            },
+                            error: function () {
+                                bootbox.alert("Không thành công");
+                            }
+                        });
+                    }
+                }
+            })
+        });
+         $('table tbody').on('click', 'button.kt', function () {
+            var token = $("[name='__RequestVerificationToken']").val();
+            var malop = $(this).closest('tr').find('input[name="malop"]').val();
+            bootbox.confirm({
+                message: "Bạn có chắc chắn sẽ kết thúc lớp không?",
+                buttons: {
+                    confirm: {
+                        label: "Có",
+                        className: "btn-danger"
+                    },
+                    cancel: {
+                        label: "Không",
+                        className: "btn-success"
+                    }
+                },
+                callback: function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Admin/LOP_HOC/StatuTheEnd",
+                            data: {
+                                __RequestVerificationToken: token,
+                                id: malop
+                            },
+                            type: "POST",
+                            success: function (response) {
+                                bootbox.alert({
+                                    message: "Thành công",
+                                    callback: function () {
+                                        location.href = '@Url.Action("Index", "LOP_HOC")';
+                                    }
+                                });
+                            },
+                            error: function () {
+                                bootbox.alert("Không thành công");
+                            }
+                        });
+                    }
+                }
+            })
+        });
+        $(document).ready(function () {
+            $('#dtVerticalScrollExample1').DataTable({
+                //"scrollY": "200px",
+                //"scrollCollapse": true,
+            });
+            $('.dataTables_length').addClass('bs-select');
+        });
+    </script>
+}

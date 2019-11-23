@@ -17,17 +17,20 @@ namespace TrungTam.Areas.Admin.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public HOA_DON()
         {
-            this.BUOI_HOC = new HashSet<BUOI_HOC>();
+            this.CT_HOADON = new HashSet<CT_HOADON>();
+            this.CT_HOADON_NGOAIGIO = new HashSet<CT_HOADON_NGOAIGIO>();
         }
     
         public System.Guid MA_HD { get; set; }
         public string TEN_HD { get; set; }
         public string MA_GV { get; set; }
-        public Nullable<System.DateTime> NGAY_THANH_TOAN { get; set; }
-        public Nullable<decimal> TONG_TIEN { get; set; }
+        public System.DateTime NGAY_THANH_TOAN { get; set; }
+        public Nullable<double> TONG_TIEN { get; set; }
     
-        public virtual GIAO_VIEN GIAO_VIEN { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BUOI_HOC> BUOI_HOC { get; set; }
+        public virtual ICollection<CT_HOADON> CT_HOADON { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CT_HOADON_NGOAIGIO> CT_HOADON_NGOAIGIO { get; set; }
+        public virtual GIAO_VIEN GIAO_VIEN { get; set; }
     }
 }

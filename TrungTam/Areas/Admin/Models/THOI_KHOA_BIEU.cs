@@ -15,9 +15,10 @@ namespace TrungTam.Areas.Admin.Models
     public partial class THOI_KHOA_BIEU
     {
         public System.Guid MA_LOP { get; set; }
-        public string THU { get; set; }
+        public int THU { get; set; }
         public System.TimeSpan THOI_GIAN_BD { get; set; }
-        public Nullable<System.TimeSpan> THOI_GIAN_KT { get; set; }
+        public System.TimeSpan THOI_GIAN_KT { get; set; }
+        public System.Guid MA_TKB { get; set; }
     
         public virtual LOP_HOC LOP_HOC { get; set; }
     }

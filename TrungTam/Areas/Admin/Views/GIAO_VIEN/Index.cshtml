@@ -3,11 +3,44 @@
 @using PagedList.Mvc;
 @{
     ViewBag.Title = "Index";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">Thêm giáo viên</button>
+<style>
+    /*.my-custom-scrollbar {
+        position: relative;
+        height: 200px;
+        overflow: auto;
+    }
+
+    .table-wrapper-scroll-y {
+        display: block;
+    }*/
+    table.dataTable thead .sorting:after,
+    table.dataTable thead .sorting:before,
+    table.dataTable thead .sorting_asc:after,
+    table.dataTable thead .sorting_asc:before,
+    table.dataTable thead .sorting_asc_disabled:after,
+    table.dataTable thead .sorting_asc_disabled:before,
+    table.dataTable thead .sorting_desc:after,
+    table.dataTable thead .sorting_desc:before,
+    table.dataTable thead .sorting_desc_disabled:after,
+    table.dataTable thead .sorting_desc_disabled:before {
+        bottom: .5em;
+    }
+</style>
+<h2 class="Title_Content">Danh Sách Giáo Viên</h2>
+<button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#exampleModal"><i class="fa fa-plus-square mr-2"></i>Thêm giáo viên</button>
+
 <div class="card-body">
-    <div class="row mb-3">
+    @*<div class="row mb-3">
         <div class="col">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Tên giáo viên" id="searchName">
@@ -16,10 +49,11 @@
                 </div>
             </div>
         </div>
-    </div>
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
-            <tr>
+    </div>*@
+
+    <table id="dtVerticalScrollExample" class="table table-bordered table-responsive table-hover myTable">
+        <thead class="text-white text-center">
+            <tr class="bg-primary">
                 <th>Họ và tên giáo viên</th>
                 <th>
                     Ngày sinh
@@ -29,13 +63,13 @@
                 <th>Giới tính</th>
                 <th>Email</th>
                 <th>Số ĐT</th>
-                <th>Tên Đăng Nhập</th>
                 <th><em class="fa fa-cog"></em></th>
             </tr>
         </thead>
-        <tbody id="tableDanhSach">
+        <tbody id="tableDanhSach" class="text-center">
             @foreach (var item in Model)
             {
+            
                 <tr>
                     <td>
                         @Html.DisplayFor(modelItem => item.HO_TEN)
@@ -53,18 +87,17 @@
                         @Html.DisplayFor(modelItem => item.SDT)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.TAI_KHOAN.TAI_KHOAN1)
-                    </td>
-                    <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
-                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_GV })
-                        </button>
-                        <button id="btnDelete" type="button" class="btn btn-danger">
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MA_GV })
-                        </button>
+                        <a id="btnCapNhatNV" class="btn btn-warning text-white" href="~/Admin/GIAO_VIEN/Edit/@item.MA_GV">
+                            Sửa
+                        </a>
+                        @*<input type="submit" class="btn btn-danger" value="Xóa" onclick="return confirm('Bạn chắc chắn muốn xóa phần tử này ?');" />*@
+                        <a class="btn btn-danger text-white" href="~/Admin/GIAO_VIEN/Delete/@item.MA_GV" onclick="return confirm('Bạn chắc chắn muốn xóa giáo viên này ?');">
+                            Xoá
+                        </a>
                     </td>
                 </tr>
-            }                        
+             
+            }
         </tbody>
     </table>
     @Html.PagedListPager(Model, page => Url.Action("Index", new { page}))
@@ -75,13 +108,13 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h2 class="modal-title " id="exampleModalLabel">Thông Tin Giáo Viên</h2>
+                <h2 class="modal-title title_TieuDe" id="exampleModalLabel">Thêm Giáo Viên</h2>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form role="form" action="/GIAO_VIEN/Create" method="post">
+            <form role="form" action="/GIAO_VIEN/Create" method="post" onsubmit="return themGV()">
+                <div class="modal-body">
                     @Html.AntiForgeryToken()
                     <div class="form-group">
                         <div class="input-group">
@@ -110,17 +143,23 @@
                             </div>
                             <input type="tel" name="SDT" id="sdt" class="form-control input-sm" placeholder="Số ĐT">
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <span class="sp-thongbao" id="tbsdt"></span>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text"><i class="fa fa-address-book"></i></span>
-                            </div>
-                            <input type="text" name="Gioitinh" id="gioitinh" class="form-control input-sm" placeholder="Giới tính">
+                  
+
+                    <div class="input-group form-group mb-3">
+                        <div class="input-group-prepend" for="gioitinh">
+                            <span class="input-group-text"><i class="fa fa-address-book"></i></span>
                         </div>
-                        <span class="sp-thongbao" id="tbTen"></span>
+                        <select class="custom-select" name="gioitinh">
+                            <option selected>Chọn giới tính...</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+
+                        </select>
+                        <span class="sp-thongbao" id="tbgioitinh"></span>
                     </div>
+
                     <div class="form-group">
                         <div class="input-group">
                             <div class="input-group-prepend">
@@ -131,17 +170,23 @@
 
                         <span class="sp-thongbao" id="tbNgay"></span>
                     </div>
-
-
-                    <span class="sp-thongbao" id="tbChucVu"></span>
-            </div>
-            <div class="modal-footer" id="modal-footer">
-                <button id="btnThemNV" type="submit" class="btn btn-success">Thêm giáo viên</button>
-                <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
-            </div>
+                </div>
+                <div class="modal-footer" id="modal-footer">
+                    <button id="btnThemNV" type="submit" class="btn btn-primary">Thêm giáo viên</button>
+                    <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                </div>
             </form>
         </div>
         <!-- Modal footer -->
 
     </div>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#dtVerticalScrollExample').DataTable({
+            //"scrollY": "200px",
+            //"scrollCollapse": true,
+        });
+        $('.dataTables_length').addClass('bs-select');
+    });
+</script>

@@ -14,10 +14,8 @@ namespace TrungTam.Areas.Admin.Models
     
     public partial class TAI_KHOAN
     {
-        public string TAI_KHOAN1 { get; set; }
+        public string ID { get; set; }
+        public string TEN { get; set; }
         public string MAT_KHAU { get; set; }
-    
-        public virtual GIAO_VIEN GIAO_VIEN { get; set; }
-        public virtual HOC_SINH HOC_SINH { get; set; }
     }
 }

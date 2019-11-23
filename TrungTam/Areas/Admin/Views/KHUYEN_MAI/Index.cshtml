@@ -1,15 +1,23 @@
 ﻿@model IEnumerable<TrungTam.Areas.Admin.Models.KHUYEN_MAI>
 @{
     ViewBag.Title = "KhuyenMai";
-    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
 }
 
 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
     Thêm khuyến mãi
 </button>
-<div class="card-body">
-    <table class="table table-bordered table-hover myTable">
-        <thead class="text-primary">
+<div class="card-body ">
+    <table class="table  table-bordered table-responsive table-hover myTable text-center">
+        <thead class="text-white bg-primary text-center">
             <tr>
                 <th>Loại Khuyến mãi</th>
                 <th>
@@ -31,12 +39,13 @@
                         @Html.DisplayFor(modelItem => item.TIEN_GIAM)
                     </td>
                     <td>
-                        <button id="btnCapNhatNV" type="button" class="btn btn-success">
-                            @Html.ActionLink("Thay đổi", "Edit", new { id = item.MA_KM })
-                        </button>
-                        <button id="btnDelete" type="button" class="btn btn-danger">
-                            @Html.ActionLink("Xóa", "Delete", new { id = item.MA_KM })
-                        </button>
+                       
+                        <a id="btnCapNhatNV"  class="btn btn-warning" href="~/Admin/KHUYEN_MAI/Edit/@item.MA_KM">
+                           Sửa
+                        </a>
+                        <a id="btnDelete" class="btn btn-danger" href="~/Admin/KHUYEN_MAI/Delete/@item.MA_KM">
+                          Xóa
+                        </a>
                     </td>
                 </tr>
             }
@@ -70,7 +79,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fa fa-calendar"></i></span>
                             </div>
-                            <input type="number" name="somon" id="datepicker" class="form-control" placeholder="Số môn đăng kí">
+                            <input type="number" name="somon" id="soMDK" class="form-control" placeholder="Số môn đăng kí">
                         </div>
                         <span class="sp-thongbao" id="tbsomon"></span>
                     </div>
@@ -83,15 +92,14 @@
                         </div>
                         <span class="sp-thongbao" id="tbNgay"></span>
                     </div>
-</div>
-            <div class="modal-footer" id="modal-footer">
-                <button id="btnThemKM" type="submit" class="btn btn-success">Thêm</button>
-                <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    <div class="modal-footer" id="modal-footer">
+                        <button id="btnThemKM" type="submit" class="btn btn-warning">Thêm</button>
+                        <button id="btnDong" type="button" class="btn btn-danger" data-dismiss="modal">Đóng</button>
+                    </div>
+                </form>
             </div>
-            </form>
-        </div>
         <!-- Modal footer -->
-
+        </div>
     </div>
 </div>
 

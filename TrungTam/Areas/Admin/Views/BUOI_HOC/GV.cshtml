@@ -1,0 +1,150 @@
+﻿@model IEnumerable<TrungTam.Areas.Admin.Models.BUOI_HOC>
+
+@{
+    ViewBag.Title = "Nhận xét của giáo viên";
+    Layout = "~/Views/Shared/_Layout_gv.cshtml";
+    var chonlop = (List<TrungTam.Areas.Admin.Models.LOP_HOC>)ViewBag.chonlop;
+}
+<h2 class="Title_Content">Đánh Giá Buổi Học</h2>
+<div class="container pt-5">
+    <form action="/BUOI_HOC/nhanxetGV" method="post">
+        @*Chọn lớp trong ngày đó*@
+        <div class="row">
+            <div class="col-6 input-group mb-3">
+                <div class="input-group-prepend">
+                    <label class="input-group-text text-white bg-primary" for="lop">Chọn lớp</label>
+                </div>
+                <select class="custom-select" name="lopp" id="lop">
+                    <option selected>Chọn...</option>
+                    @foreach (var item in chonlop)
+                    {
+                        <option value="@item.MA_LOP">@item.TEN_LOP</option>
+                    }
+                </select>
+            </div>
+            <div class="col-6 input-group mb-3">
+                <div class="input-group-prepend" id="select_buoi">
+                    <label class="input-group-text text-white bg-primary" for="lop" id="select_buoi">Buổi</label>
+                </div>
+                <select class="custom-select" name="buoi" id="buoi">
+                    @*danh sách các buổi của lớp đó*@
+                </select>
+            </div>
+        </div>
+        <hr />
+        @*Danh sách học viên*@
+        <table class="table table-striped table-responsive table-bordered table-hover" id="listHS" style="display:none">
+            <thead class="text-white bg-primary">
+                <tr>
+                    <td>Họ và Tên</td>
+                    <td>Điện thoại</td>
+                    <td>Điểm danh</td>
+                    <td>Nhận xét của giáo viên</td>
+                    <td>BTVN</td>
+                    <td>Điểm buổi học</td>
+                </tr>
+            </thead>
+            <tbody id="HS"></tbody> @*tbody rỗng để data từ Ajax học viên chạy vào*@
+            <tr>
+                <td colspan="5">
+                    <center>
+                        <button type="submit" class="btn btn-success" name="save" id="save">Lưu</button>
+                        <button type="button" class="btn btn-warning">Quay lại</button>
+                    </center>
+                </td>
+            </tr>
+        </table>
+        @Html.AntiForgeryToken()
+        <div id="result" class="row">
+            @*data từ Ajax giáo viên chạy vào*@
+        </div>
+    </form>
+</div>
+@*Ajax load danh sách buổi*@
+<section>
+    <script>
+        $('#lop').change(function () {
+            $("#listHS").attr("Style", "display:none");
+            $("#detail").attr("Style", "display:none");
+            var malop = $('#lop').val();
+            if (malop != "Chọn lớp") {
+                $("div#lbl_buoi").attr("Style", "display:block");
+                $("div#select_buoi").attr("Style", "display:block");
+                $("select#buoi").html(""); //xoa noi dung
+                $("<option/>").html("Chọn buổi học").appendTo("select#buoi");
+                $.ajax({
+                    url: "/BUOI_HOC/LoadBuoi",
+                    data: { id: malop },
+                    dataType: "Json",
+                    type: "GET",
+                    success: function (response) {
+                        $(response).each
+                            (
+                                function (i, e) { //duyet mang doi tuong
+                                    if (malop == e.malop) {
+                                        $("<option value='" + e.mabuoi + "'/>").html("Buổi " + e.sttbuoi + " Ngày " + e.thoigian)
+                                            .appendTo("select#buoi");
+                                    }
+                                });
+                    }
+                });
+            }
+            else {
+                $("div#lbl_buoi").attr("Style", "display:none");
+                $("div#select_buoi").attr("Style", "display:none");
+            }
+        });
+    </script>
+</section>
+@*Ajax load thông tin học sinh - giáo viên của buổi học*@
+<section>
+    <script>
+        $('#buoi').change(function () {
+            $("tbody#HS").html(""); //xoa noi dung
+            $("tbody#GV").html(""); //xoa noi dung
+            var mabuoi = $('#buoi').val();
+            var malop = $('#lop').val();
+            if (mabuoi != "Chọn buổi học") {
+                $("#listHS").attr("Style", "display:block");
+                $("#detail").attr("Style", "display:block");
+                //Ajax học sinh
+                $.ajax({
+                    url: "/BUOI_HOC/Load_CTBuoi",
+                    data: { id: mabuoi },
+                    dataType: "Json",
+                    type: "GET",
+                    success: function (response) {
+                        $(response).each
+                            (
+                                function (i, e) { //duyet mang doi tuong
+                                    var tr = $("<tr/>");
+                                    $("<input type='hidden' name='mahs" + e.mahs + "' value='" + e.mahs + "' />").appendTo(tr);
+                                    $("<td/>").html(e.hoten).appendTo(tr);//bo sung <td> vao <tr>
+                                    $("<td/>").html(e.dienthoai).appendTo(tr);//bo sung <td> vao <tr>
+                                    if (e.diemdanhhs) {
+                                        $("<input type='hidden' name='diemdanh" + e.mahs + "' value='1' />").appendTo(tr);
+                                        $("<td/>").html("Có").appendTo(tr);
+                                        $("<td/>").html("<input type='text' name='nhanxet" + e.mahs + "'/>").appendTo(tr);
+                                        $("<td/>").html("<input type='text' name='BTVN" + e.mahs + "'/>").appendTo(tr);
+                                        $("<td/>").html("<input id='diem' type='number' name='diem" + e.mahs + "' step='any' pattern='[-+]?[0-9]*[.,]?[0-9]+' min='0' max='10' />").appendTo(tr);
+                                    }
+                                    else {
+                                        $("<input type='hidden' name='diemdanh" + e.mahs + "' value='0' />").appendTo(tr);
+                                        $("<td/>").html("Vắng vì " + e.lido).appendTo(tr);
+                                    }
+                                    tr.appendTo("tbody#HS");// bo sung <tr> vao <tbody>
+                                });
+                    }
+                });
+            }
+            else {
+                $("#listHS").attr("Style", "display:none");
+                $("#detail").attr("Style", "display:none");
+            }
+        });
+        var input = document.getElementById('diem');
+        input.oninvalid = function (event) {
+            event.target.setCustomValidity('Vui lòng nhập số điểm');
+        };
+    </script>
+</section>

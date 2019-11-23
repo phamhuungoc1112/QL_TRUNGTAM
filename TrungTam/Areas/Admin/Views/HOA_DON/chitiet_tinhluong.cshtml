@@ -1,0 +1,72 @@
+﻿
+@{
+    ViewBag.Title = "Chitietluong";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
+    var chitietfull = (List<TrungTam.Areas.Admin.Abstracts.TINH_LUONG>)ViewBag.chitiet;
+    //var chitiet_ngoaigio = (List<TrungTam.Areas.Admin.Abstracts.TINH_LUONG>)ViewBag.chitiet_ngoaigio;
+    var stt = 0;
+}
+<h2 class="Title_Content">Chi tiết lương của tháng</h2>
+<div class="card-body">
+    <table class="table table-bordered table-hover myTable">
+        <thead class="text-white text-center">
+            <tr class="bg-primary">
+                <th>STT</th>
+                <th>Hoạt động</th>
+                <th>Số buổi/Số lần</th>
+                <th>Lương</th>
+            </tr>
+        </thead>
+        <tbody id="tableDanhSach" class="text-center">
+            @foreach (var item in chitietfull)
+            {
+                stt += 1;
+                <tr>
+                    <td>
+                        @stt
+                    </td>
+                    <td>
+                        @item.TEN_LOAI
+                    </td>
+                    <td>
+                        @item.SO_BUOI
+                    </td>
+                    <td>
+                        <div class="price">
+                            <span class="price-new">@string.Format("{0:0,0}", item.LUONG) &nbsp;₫</span>
+                        </div>
+                    </td>
+                </tr>
+            }
+            @*@foreach (var item in chitiet_ngoaigio)
+            {
+                stt += 1;
+                <tr>
+                    <td>
+                        @stt
+                    </td>
+                    <td>
+                        @item.TEN_LOAI
+                    </td>
+                    <td>
+                        @item.SO_LUONG
+                    </td>
+                    <td>
+                        @item.LUONG
+                    </td>
+                </tr>
+            }*@
+        </tbody>
+    </table>
+    <center>
+        <a href="~/Admin/HOA_DON/Create" class="btn btn-warning">Quay lại</a>
+    </center>
+</div>

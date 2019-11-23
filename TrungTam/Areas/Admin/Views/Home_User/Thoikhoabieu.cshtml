@@ -1,0 +1,135 @@
+﻿
+
+@{
+    ViewBag.Title = "Index";
+    var id = Session["ID"];
+    if(id.ToString().First().Equals('2'))
+    {
+        Layout = "~/Views/Shared/_Layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_Layout_gv.cshtml";
+    }
+}
+
+<div class="container pt-5">
+    <h2 class="Title_Content">Thời Khóa Biểu</h2>
+    <div class="table-responsive ">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+                <tr class="bg-primary text-white text-center">
+                    <th class="bg-primary text-white">Ca học</th>
+                    <th>Thứ 2</th>
+                    <th>Thứ 3</th>
+                    <th>Thứ 4</th>
+                    <th>Thứ 5</th>
+                    <th>Thứ 6</th>
+                    <th>Thứ 7</th>
+                    <th>Chủ nhật</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                <tr id="sang">
+                    <th class="bg-primary text-white text-center">Sáng</th>
+                    <td id="1A"></td>
+                    <td id="2A"></td>
+                    <td id="3A"></td>
+                    <td id="4A"></td>
+                    <td id="5A"></td>
+                    <td id="6A"></td>
+                    <td id="0A"></td>
+                </tr>
+                <tr id="chieu">
+                    <th class="bg-primary text-white text-center">Chiều</th>
+                    <td id="1B"></td>
+                    <td id="2B"></td>
+                    <td id="3B"></td>
+                    <td id="4B"></td>
+                    <td id="5B"></td>
+                    <td id="6B"></td>
+                    <td id="0B"></td>
+
+                </tr>
+                <tr id="toi">
+                    <th class="bg-primary text-white text-center">Tối</th>
+                    <td id="1C"></td>
+                    <td id="2C"></td>
+                    <td id="3C"></td>
+                    <td id="4C"></td>
+                    <td id="5C"></td>
+                    <td id="6C"></td>
+                    <td id="0C"></td>
+
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<section>
+    <script>
+        window.onload = function () {
+            $.ajax({
+                url: "/Home_User/lol",
+                data: { id: 1 },
+                dataType: "Json",
+                type: "GET",
+                success: function (response) {
+                    $(response).each
+                        (
+                        function (i, e) { //duyet mang doi tuong
+                            if (e.THOI_GIAN_BD < "12:59:00") {
+                                var buoi = "A";
+                            }
+                            else if (e.THOI_GIAN_BD < "17:59:00") {
+                                var buoi = "B";
+                            }
+                            else
+                            {
+                                var buoi = "C";
+                            }
+                            switch (e.THU) {
+                                case 1:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#1"+buoi);
+                                        break;
+                                    }
+                                case 2:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#2" + buoi);
+                                        break;
+                                    }
+                                case 3:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#3" + buoi);
+                                        break;
+                                    }
+                                case 4:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#4" + buoi);
+                                        break;
+                                    }
+                                case 5:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#5" + buoi);
+                                        break;
+                                    }
+                                case 6:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#6" + buoi);
+                                        break;
+                                    }
+                                case 0:
+                                    {
+                                        $("<p/>").html(e.TEN_LOP + "<br/> Bắt đầu: " + e.THOI_GIAN_BD + "<br/> Kết thúc : " + e.THOI_GIAN_KT).appendTo("#0" + buoi);
+                                        break;
+                                    }
+                            }
+                        });
+                }
+            });
+        }
+    </script>
+</section>
+

@@ -1,0 +1,71 @@
+﻿@model List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang>
+   
+@{
+
+    ViewBag.Title = "PrintReportMonth";
+    Layout = "~/Areas/Admin/Views/Shared/_layout_report.cshtml";
+    //List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang> lop = new List<TrungTam.Areas.Admin.Abstracts.ReportCuoiThang>();
+    //  var id = Session["ID"];
+    //if (id.ToString().First().Equals('9'))
+    //{
+    //    Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    //}
+    //else
+    //{
+    //    Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    //}
+    //nè ông
+    int solop = 0;
+    Array lop = null;
+    if (Model != null)
+    {
+        solop = Model.Select(i => i.tengv).Distinct().Count();
+        lop = @Model.ToArray();
+    }
+
+
+}
+<h4>Trung Tâm BDVH <br />KHOA HỌC TRẢI NGHIỆM <hr /></h4>
+<br />
+@if (lop != null)
+{
+    <h3 style="text-align:center;">PHIẾU BÁO CÁO KẾT QUẢ HỌC TẬP THÁNG </h3>
+    <h4>Kính gửi phụ huynh học viên: @Model[0].tenhs</h4>
+    @*<div>A. Chuyên cần: @Model[0].chuyencan/ @Model[0].tongbuoi sô buổi</div>*@
+    <h4>A. Tình hình học tập:</h4>
+    //nó không có boder
+    <table class="table table-striped  table-bordered table-hover text-center">
+        <thead>
+            <tr>
+                <th>Môn</th>
+                <th>Giáo viên</th>
+                <th>Nhận xét</th>
+                <th>Điểm trung bình</th>
+                <th>Chuyên cần</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @for (int i = 0; i < Model.Count(); i++)
+            {
+                <tr>
+                    <td>@Model[i].tenmon</td>
+                    <td>@Model[i].tengv</td>
+                    <td>@Model[i].nhanxet</td>
+                    <td>
+                        @Model[i].diemtb
+                    </td>
+                    <td>@Model[i].chuyencan / @Model[i].tongbuoi</td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+    @*<div>Học phí tháng mới: @string.Format("{0:0,0}", Model[0].hocphi)</div>*@
+    <div style="text-align:right">Giám đốc tổ chức</div>
+}
+else
+{ <h2 style="text-align:center;color:red;">CHƯA CÓ ĐÁNH GIÁ </h2>}
+
+
+

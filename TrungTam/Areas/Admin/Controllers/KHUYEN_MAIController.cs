@@ -12,11 +12,18 @@ namespace TrungTam.Areas.Admin.Controllers
 {
     public class KHUYEN_MAIController : Controller
     {
-        private QL_TRUNGTAMEntities db = new QL_TRUNGTAMEntities();
+        private QL_TRUNGTAM1Entities db = new QL_TRUNGTAM1Entities();
 
         // GET: Admin/KHUYEN_MAI
         public ActionResult Index()
         {
+            if (Session["ID"] == null)
+                return Redirect("/Home/Index");
+            var id = Session["ID"].ToString();
+            if (id.First() != '9')
+            {
+                return Redirect("/Home/Index");
+            }
             return View(db.KHUYEN_MAI.ToList());
         }
         // GET: Admin/KHUYEN_MAI/Create
@@ -24,24 +31,7 @@ namespace TrungTam.Areas.Admin.Controllers
         {
             return View();
         }
-
-        // POST: Admin/KHUYEN_MAI/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Create([Bind(Include = "MA_KM,TEN_KM,SO_MON_DK,TIEN_GIAM")] KHUYEN_MAI kHUYEN_MAI)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        kHUYEN_MAI.MA_KM = Guid.NewGuid();
-        //        db.KHUYEN_MAI.Add(kHUYEN_MAI);
-        //        db.SaveChanges();
-        //        return RedirectToAction("Index");
-        //    }
-
-        //    return View(kHUYEN_MAI);
-        //}
+        
         //===================================================
         [HttpPost]
         [ValidateAntiForgeryToken]

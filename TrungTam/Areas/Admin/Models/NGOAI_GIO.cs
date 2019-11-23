@@ -14,11 +14,22 @@ namespace TrungTam.Areas.Admin.Models
     
     public partial class NGOAI_GIO
     {
-        public System.Guid MA_LUONG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public NGOAI_GIO()
+        {
+            this.CT_HOADON_NGOAIGIO = new HashSet<CT_HOADON_NGOAIGIO>();
+        }
+    
+        public System.Guid MA_NGOAI_GIO { get; set; }
+        public Nullable<System.Guid> MA_LUONG { get; set; }
         public string MA_GV { get; set; }
-        public Nullable<System.DateTime> NGAY_LAM { get; set; }
+        public System.DateTime NGAY_LAM { get; set; }
+        public int SO_LUONG { get; set; }
+        public Nullable<bool> TINH_TRANG { get; set; }
     
         public virtual BANG_LUONG BANG_LUONG { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CT_HOADON_NGOAIGIO> CT_HOADON_NGOAIGIO { get; set; }
         public virtual GIAO_VIEN GIAO_VIEN { get; set; }
     }
 }

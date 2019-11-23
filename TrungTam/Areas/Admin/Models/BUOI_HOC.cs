@@ -18,21 +18,23 @@ namespace TrungTam.Areas.Admin.Models
         public BUOI_HOC()
         {
             this.CT_BUOIHOC = new HashSet<CT_BUOIHOC>();
-            this.HOA_DON = new HashSet<HOA_DON>();
+            this.CT_HOADON = new HashSet<CT_HOADON>();
         }
     
         public System.Guid MA_BUOI { get; set; }
-        public string TEN_BUOI { get; set; }
-        public Nullable<bool> DIEM_DANH_GV { get; set; }
-        public Nullable<int> SI_SO_THUC { get; set; }
+        public Nullable<int> STT_BUOI { get; set; }
+        public System.DateTime THOI_GIAN { get; set; }
+        public Nullable<bool> TINH_TRANG { get; set; }
+        public string MA_GV { get; set; }
         public Nullable<System.Guid> MA_LUONG { get; set; }
         public Nullable<System.Guid> MA_LOP { get; set; }
     
         public virtual BANG_LUONG BANG_LUONG { get; set; }
+        public virtual GIAO_VIEN GIAO_VIEN { get; set; }
         public virtual LOP_HOC LOP_HOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<CT_BUOIHOC> CT_BUOIHOC { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<HOA_DON> HOA_DON { get; set; }
+        public virtual ICollection<CT_HOADON> CT_HOADON { get; set; }
     }
 }

@@ -1,0 +1,66 @@
+﻿@model PagedList.IPagedList<TrungTam.Areas.Admin.Models.HOC_SINH>
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+    var id = Session["ID"];
+    if (id.ToString().First().Equals('9'))
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Areas/Admin/Views/Shared/_layout_vanphong.cshtml";
+    }
+}
+
+<h2>IndexAdmin</h2>
+
+<div><input class="form-control-sm" type="text" id="datepicker" name="datepicker" value="@DateTime.Now.ToString("dd/MM/yyyy")" disabled /></div>
+<table class="table table-bordered table-responsive table-hover" id="listHS">
+    <thead class="text-center bg-primary text-white">
+        <tr>
+            <th>Họ tên</th>
+            <th>Ngày sinh</th>
+            <th>Điện thoại</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody id="row">
+        @if (Model != null)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.HO_TEN</td>
+                    <td>@item.NG_SINH</td>
+                    <td>@item.SDT</td>
+                    <td><button class="btn btn-danger xuat" id="xuat">Xuất phiếu học tập</button></td>
+                    <td><input type="hidden" name="mahs" value="@item.MA_HS" /></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, page => Url.Action("IndexAdmin", new { page }))
+
+@section ClientScript{
+    <script>
+         $('#datepicker').datepicker({
+            showOn: "button",
+            buttonImage: "/Asset/admin/img/calendar.png",
+            buttonImageOnly: true,
+            changeMonth: true,
+            changeYear: true,
+            showButtonPanel: true,
+            dateFormat: 'dd/mm/yy',
+            buttonText: "Select true"
+        });
+        $('table tbody').on('click', 'button.xuat', function () {
+            var mahs = $(this).closest('tr').find('input[name="mahs"]').val();
+            var date1 = $('#datepicker').val();
+            var redirectwindow = window.open('@Url.Action("PrintReportMonth","DANH_GIA_CUOI_THANG")?id=' + mahs + '&date=' + date1, '_blank');
+            redirectwindow.location;
+
+        });
+    </script>
+}
